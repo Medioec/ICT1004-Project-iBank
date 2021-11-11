@@ -79,3 +79,29 @@ div.page-bg {
 
 }
 /*Page body end*/
+/*Footer start*/
+footer {
+    border-top: solid;
+    font-style: italic;
+    font-size: 12px;
+}
+
+ul.columns {
+    list-style-type: none;
+    columns: 3;
+    -webkit-column: 3;
+    -moz-columns: 3;
+    padding: 0;
+    margin: 0;
+}
+
+ul.footer-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.copyright {
+    text-align: center;
+}
+/*Footer end*/
