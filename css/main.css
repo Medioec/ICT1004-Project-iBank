@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11 Nov 2021, 9:32:55 am
+    Author     : Eric
+*/
+
+/* Navbar */
+div.nav-wrapper {
+    position:fixed;
+    top: 0;
+    height: 40px;
+    z-index: 2;
+    width: 100%;
+}
+nav.navbar {
+    margin: auto;
+    width: 70vw;
+    top: 0;
+}
+div.navbar-collapse {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 50px;
+}
+@media (min-width: 1200px) {
+    div.navbar-collapse {
+    justify-content: space-between;
+    }
+}
+ul.navbar-col-2 {
+    margin-right: 0;
+}
+@media (min-width: 1200px) {
+    ul.navbar-col-2 {
+        
+    }
+}
+ul.navbar-col-1 {
+    min-width: 10rem;
+}
+/* End navbar */
