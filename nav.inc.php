@@ -1,8 +1,8 @@
 <div class="nav-wrapper">
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
+        <a class="company-logo" href="index.php">
             <img src="" alt="SITE LOGO"
-                 title="Home" height="30" width="30" />
+                 title="Home"/>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -34,6 +34,9 @@
                       <a class="dropdown-item" href="">Financing</a>
                       <a class="dropdown-item" href="">Corporate</a>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="new_transfer.php">Transaction</a>
                 </li>
             </ul>
             <ul class="navbar-nav mt-lg-0 navbar-col-2">
