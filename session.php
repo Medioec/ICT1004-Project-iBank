@@ -7,7 +7,8 @@
 	$dbsuccess = false;
 	
 	if (isset($_SESSION['customer_username'])) {
-	$session_user = $_SESSION['customer_username'];
+		$session_user = $_SESSION['customer_username'];
+	}
    
 	$session_sql = "SELECT `active` FROM `customer_credentials` WHERE `customer_username` = ?";
 	$session_statement = $connect->prepare($session_sql);
@@ -21,11 +22,12 @@
 	}
 	catch (PDOException $e) {
 		$dbsuccess = false;
+	}
 	
 	if(($_SESSION['loggedin']!="1") || ($isActive=="0") || (!isset($isActive)) || ($_SESSION['otp']!="1")){
 		$_SESSION['loggedin']="0";
 		header("location:login.php");
-   }
+    }
 
 	echo "<html oncontextmenu=\"return false\">";
 ?>

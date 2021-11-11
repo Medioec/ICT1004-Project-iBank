@@ -14,4 +14,7 @@ and open the template in the editor.
         ?>
         <p>Test string<p>
     </body>
+    <?php
+        include "footer.inc.php";
+    ?>
 </html>

@@ -1,6 +1,6 @@
 <div class="nav-wrapper">
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-        <a class="company-logo" href="index.php">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="company-logo" href="">
             <img src="" alt="SITE LOGO"
                  title="Home"/>
         </a>
@@ -35,8 +35,15 @@
                       <a class="dropdown-item" href="">Corporate</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="new_transfer.php">Transaction</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Transfer
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <a class="dropdown-item" href="transfer_to_own.php">To own account</a>
+                      <a class="dropdown-item" href="transfer_to_other.php">To other account</a>
+                      <a class="dropdown-item" href="">View history</a>
+                    </div>
                 </li>
             </ul>
             <ul class="navbar-nav mt-lg-0 navbar-col-2">
