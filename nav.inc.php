@@ -10,10 +10,10 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mt-lg-0 navbar-col-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="#dogs">Home</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#cats">About</a>
+                    <a class="nav-link" href="about.php">About</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +38,7 @@
             </ul>
             <ul class="navbar-nav mt-lg-0 navbar-col-2">
                 <li class="nav-item">
-                    <a class="nav-link" href="">Sign-in</a>
+                    <a class="nav-link" href="/login.php">Sign-in</a>
                 </li>
             </ul>
         </div>
