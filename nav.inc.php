@@ -48,7 +48,7 @@
             </ul>
             <ul class="navbar-nav mt-lg-0 navbar-col-2">
                 <li class="nav-item">
-                    <a class="nav-link" href="/login.php">Sign-in</a>
+                    <a class="nav-link" href="login.php">Sign-in</a>
                 </li>
             </ul>
         </div>

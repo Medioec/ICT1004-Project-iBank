@@ -86,10 +86,10 @@ button.navbar-toggler {
     z-index: -1;
 }
 @media (min-width: 1200px) {
-    div.page-bg {
+    .page-bg {
         background-color:lightgray;
-        background: url("/images/bg1.jpg");
-        background-size: 100%;
+        background: url("../images/bg1.jpg");
+        background-size: cover;
     }
 }
 .page-body {
