@@ -1,7 +1,7 @@
 <?php
 	// Database connection variables and credentials
         
-	$config = parse_ini_file('../../../private/db-config.ini');
+	$config = parse_ini_file('../../private/db-config.ini');
 	$servername = $config['servername'];
 	$username = $config['username'];
 	$password = $config['password'];

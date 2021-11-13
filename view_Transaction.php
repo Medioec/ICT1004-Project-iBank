@@ -58,6 +58,9 @@
                                 include "php/datatableTemplate.php"
                             ?>
                         </form>
+                        <?php
+                            include "php/connect.php"
+                        ?>
                     </div>
                 </div>
             <?php
