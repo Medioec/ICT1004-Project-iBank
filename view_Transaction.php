@@ -29,43 +29,37 @@
                     </div>
                     <div class="main-content">
                         <h2>View transactions</h2>
-                        <form action="">
+                        <form method="post">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="from-account-select">Account:</label>
+                                    <label class="input-group-text" for="account-select">Account:</label>
                                 </div>
-                                <select class="custom-select" id="from-account-select" name="transferFromAccountIn">
+                                <select class="custom-select" id="account-select" name="accountIn">
                                     <option selected>Choose account...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
                                 </select>
                             </div>
                             <div class="row">
                                 <div class="date-entry form-group col-4">
                                     <label for="from-date">From Date:</label>
-                                    <input type="date" class="form-control" id="from-date" name="fromDateIn" placeholder="To Date">
+                                    <input type="date" class="form-control" id="from-date" name="fromDateIn" placeholder="From Date:">
                                 </div>
                                 <div class="date-entry form-group col-4">
                                     <label for="to-date">To Date:</label>
-                                    <input type="date" class="form-control" id="to-date" name="toDateIn" placeholder="To Date">
+                                    <input type="date" class="form-control" id="to-date" name="toDateIn" placeholder="To Date:">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary" type="submit">Submit</button>
                             </div>
-                            <?php
-                                include "php/datatableTemplate.php"
-                            ?>
                         </form>
-                        <?php
-                            include "php/connect.php"
-                        ?>
+                        <?php include "php/transactionHandler.php";?>
                     </div>
                 </div>
-            <?php
-                include "footer.inc.php";
-            ?>
+            <?php include "footer.inc.php";?>
             </div>
     </body>
 </html>

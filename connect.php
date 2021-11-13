@@ -1,7 +1,7 @@
 <?php
 	// Database connection variables and credentials
         
-	$config = parse_ini_file('../../../private/db-config.ini');
+	$config = parse_ini_file('../../private/db-config.ini');
 	$servername = $config['servername'];
 	$username = $config['username'];
 	$password = $config['password'];
@@ -12,7 +12,7 @@
 		
 		$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$connect->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		echo "Connected successfully"; 
+		// echo "Connected successfully"; 
 	}
 	
 	catch(PDOException $e) {
