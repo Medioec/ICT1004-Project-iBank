@@ -21,13 +21,21 @@ div.nav-wrapper {
 }
 nav.navbar {
     margin: auto;
+    z-index: 2;
     width: 100vw;
     top: 0;
     justify-content: space-between;
+    background-color:darkorchid;
+}
+div.collapseNav {
+
 }
 @media (min-width: 1200px) {
     nav.navbar {
     width: 70vw;
+    }
+    div.collapseNav{
+        width: 70vw;
     }
 }
 div.navbar-collapse {
@@ -38,11 +46,14 @@ div.navbar-collapse {
 }
 @media (min-width: 768px) {
     div.navbar-collapse {
-    justify-content: center;
+        justify-content: center;
     }
 }
 a.dropdown-item {
     padding: 0.25rem 0.5rem;
+}
+a.nav-link {
+    color: rgb(251, 209, 255)!important;
 }
 ul.navbar-col-2 {
     margin-right: 0;
@@ -62,17 +73,30 @@ button.navbar-toggler {
 }
 .side-menu {
     margin-left: 20px;
-    padding-top: 40px;
-    min-width: 170px;
-    margin-top: 80px;
-    border-radius: 15px;
-    display: none;
+    padding-top: 20px;
+    width: fit-content;
+    height: fit-content;
+    margin-top: 100px;
+    border-radius: 5px;
+    background-color: rgb(181, 90, 209);
 }
-@media (min-width: 768px) {
+.side-menu h2 {
+    margin-left: 20px;
+    color:rgb(251, 209, 255)
+}
+.list-group-item {
+    width: 170px;
+}
+.list-group {
+    margin: 16px 10px 10px 10px;
+    width: fit-content;
+}
+@media (max-width: 768px) {
     .side-menu {
-        display: block;
+        display: none;
     }
 }
+
 /*Page body*/
 .page-bg {
     background-color:white;
@@ -134,19 +158,28 @@ button.navbar-toggler {
     max-width: 1000px;
     padding: 40px;
     margin-top: 80px;
+    margin-right: 40px;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: white;
 
 }
-@media (min-width: 768px) {
-    .main-content {
-        margin-right: 40px;
-    }
-}
 .input-group-text{
     width: 130px;
     min-width: 90px;
+}
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 100%;
+
+    }
+}
+@media (max-width: 500px) {
+    .minw-500 {
+        min-width: 500px;
+    }
 }
 /*Page body end*/
 /*Footer start*/
