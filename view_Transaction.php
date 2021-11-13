@@ -35,18 +35,18 @@
                                     <label class="input-group-text" for="from-account-select">Account:</label>
                                 </div>
                                 <select class="custom-select" id="from-account-select" name="transferFromAccountIn">
-                                    <option selected>Choose...</option>
+                                    <option selected>Choose account...</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
                                 </select>
                             </div>
                             <div class="row">
-                                <div class="form-group col-4">
+                                <div class="date-entry form-group col-4">
                                     <label for="from-date">From Date:</label>
                                     <input type="date" class="form-control" id="from-date" name="fromDateIn" placeholder="To Date">
                                 </div>
-                                <div class="form-group col-4">
+                                <div class="date-entry form-group col-4">
                                     <label for="to-date">To Date:</label>
                                     <input type="date" class="form-control" id="to-date" name="toDateIn" placeholder="To Date">
                                 </div>

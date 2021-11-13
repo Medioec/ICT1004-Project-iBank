@@ -35,7 +35,7 @@
                                     <label class="input-group-text" for="from-account-select">Transfer from:</label>
                                 </div>
                                 <select class="custom-select" id="from-account-select" name="transferFromAccountIn">
-                                    <option selected>Choose...</option>
+                                    <option selected>Choose account...</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>

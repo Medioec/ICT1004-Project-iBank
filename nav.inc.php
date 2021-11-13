@@ -35,6 +35,9 @@
                       <a class="dropdown-item" href="">Corporate</a>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="view_accounts.php">Accounts</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="transferLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Transfer

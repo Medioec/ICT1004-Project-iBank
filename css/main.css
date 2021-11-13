@@ -182,6 +182,10 @@ button.navbar-toggler {
     }
 }
 /*Page body end*/
+/* Forms*/
+div.date-entry {
+    min-width: 200px;
+}
 /*Footer start*/
 footer {
     border-top: solid;
