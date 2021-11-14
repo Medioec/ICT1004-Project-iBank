@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html>
     <?php
@@ -14,7 +15,7 @@
                         <h2>Links</h2>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="view_accounts.php">View accounts</a>
+                                <a class="side-menu-link text-secondary" href="accounts_view.php">View accounts</a>
                             </li>
                             <li class="list-group-item">
                                 <a class="side-menu-link text-secondary" href="transfer_to_own.php">Transfer to own account</a>
@@ -29,7 +30,7 @@
                     </div>
                     <div class="main-content">
                         <h2>Account Balances</h2>
-                        <?php include "php/balanceHandler.php";?>
+                        <?php include "balanceHandler.php";?>
                     </div>
                 </div>
                 <?php include "footer.inc.php";?>

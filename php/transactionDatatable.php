@@ -7,13 +7,13 @@
             $tableData .= '<tr>';
             if ($row['credit_id'] == $accountId)
             {
-                $appendSign = '+';
+                $appendSign = '+$';
                 $transferDirection = 'From';
                 $otherAccount = $row['debit_id'];
             }
             else
             {
-                $appendSign = '-';
+                $appendSign = '-$';
                 $transferDirection = 'To';
                 $otherAccount = $row['credit_id'];
             }

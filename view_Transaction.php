@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html>
     <?php
@@ -14,7 +15,7 @@
                         <h2>Links</h2>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="view_accounts.php">View accounts</a>
+                                <a class="side-menu-link text-secondary" href="accounts_view.php">View accounts</a>
                             </li>
                             <li class="list-group-item">
                                 <a class="side-menu-link text-secondary" href="transfer_to_own.php">Transfer to own account</a>
@@ -34,8 +35,8 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="account-select">Account:</label>
                                 </div>
-                                <select class="custom-select" id="account-select" name="accountIn">
-                                    <option selected>Choose account...</option>
+                                <select class="custom-select" id="account-select" name="accountIn" required="true">
+                                    <option value="">Choose account...</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -56,7 +57,7 @@
                                 <button class="btn btn-primary" type="submit">Submit</button>
                             </div>
                         </form>
-                        <?php include "php/transactionHandler.php";?>
+                        <?php include "php/transactionViewHandler.php";?>
                     </div>
                 </div>
                 <?php include "footer.inc.php";?>
