@@ -1,41 +1,4 @@
 <?php
-    echo "test 3";
-    include_once "php/inputCheckHandler.php";
-    echo"test2";
-    function getTransaction()
-    {   
-        echo"test";
-        $accountId = $fromDate = $toDate = "";
-        $accountId = sanitize_input($_POST["accountIn"]);
-        $fromDate = sanitize_input($_POST["fromDateIn"]);
-        $toDate = sanitize_input($_POST["toDateIn"]);
-        if(!$toDate){$toDate = date("Y-m-d");}
-        if(!$fromDate){$fromDate = date("Y-m-d");}
-        $abort = checkValidNum($accountId) + checkValidNum($fromDate) + checkValidNum($toDate);
-        if($abort){return;}
-        include_once "connect.php";
-        include_once "transactionDatatable.php";
-        
-        $action = "SELECT * FROM `transaction_data` WHERE 
-            (`credit_id` = ? OR `debit_id` = ?)
-            AND (`timestamp` BETWEEN ? AND ?);";
-        
-        $stmt = $connect->prepare($action);
-        $stmt->bindParam(1,$accountId, PDO::PARAM_STR);
-        $stmt->bindParam(2,$accountId, PDO::PARAM_STR);
-        $stmt->bindParam(3,$fromDate, PDO::PARAM_STR);
-        $stmt->bindParam(4,$toDate, PDO::PARAM_STR);
-        
-        try {
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-        catch(PDOException $e) {
-            //echo "Retrieve failed: " . $e->getMessage();
-        }
-        formTransactionTable($result, $accountId);
-    }
-
     function makeTransaction()
     {
         $customerId = "2";
@@ -47,7 +10,7 @@
 
         include_once "connect.php";
 
-        $action = "SELECT `account_id` FROM `bank_accounts_ref` WHERE (`account_id` = ? AND `customer_id` = ?);";
+        $action = "SELECT `account_id` from `bank_accounts_ref` where (`account_id` = ? and `customer_id` = ?);";
 
         $stmt = $connect->prepare($action);
         $stmt->bindParam(1, $accountId, PDO::PARAM_STR);
@@ -63,7 +26,7 @@
 
         $fetchedAccountId = $result[0][0];
 
-        $action = "SELECT `account_id`,`balance` FROM `bank_account` WHERE `account_id` = ?;";
+        $action = "SELECT `account_id`,`balance` from `bank_account` where `account_id` = ?;";
 
         $stmt = $connect->prepare($action);
         $stmt->bindParam(1, $otherAccountId, PDO::PARAM_STR);
@@ -125,7 +88,7 @@
 
         $currentTimestamp = date("Y-m-d h:i:sa");
         //add new transaction data
-        $action = "INSERT into `transaction_data`(`credit_id`,`debit_id`,`amount`,`type`,`timestamp`) VALUES (?,?,?,?,?);";
+        $action = "INSERT into `transaction_data`(`credit_id`,`debit_id`,`amount`,`type`,`timestamp`) values (?,?,?,?,?);";
         $stmt = $connect->prepare($action);
         $stmt->bindParam(1, $fetchedOtherAccountId, PDO::PARAM_STR);
         $stmt->bindParam(2, $fetchedAccountId, PDO::PARAM_STR);
@@ -142,7 +105,7 @@
             return;
         }
         //update destination balance
-        $action = "UPDATE `bank_account` SET `balance` = `balance` + ? WHERE `account_id` = ?;";
+        $action = "UPDATE `bank_account` set `balance` = `balance` + ? where `account_id` = ?;";
         $stmt = $connect->prepare($action);
         $stmt->bindParam(1, $amountIn, PDO::PARAM_STR);
         $stmt->bindParam(2, $fetchedOtherAccountId, PDO::PARAM_STR);
@@ -156,7 +119,7 @@
             return;
         }
         //update user balance
-        $action = "UPDATE `bank_account` SET `balance` = `balance` - ? WHERE `account_id` = ?;";
+        $action = "UPDATE `bank_account` set `balance` = `balance` - ? where `account_id` = ?;";
         $stmt = $connect->prepare($action);
         $stmt->bindParam(1, $amountIn, PDO::PARAM_STR);
         $stmt->bindParam(2, $fetchedAccountId, PDO::PARAM_STR);
@@ -177,10 +140,4 @@
         echo $transferSuccessPage;
 
     }
-
-    if (basename($_SERVER['PHP_SELF']) == "view_transaction.php")
-    { getTransaction(); }
-    //if (basename($_SERVER['PHP_SELF']) == "confirm_transfer.php")
-    //{ makeTransaction(); }
-
 ?>

@@ -6,7 +6,7 @@
         return $data;
     }
     function checkValidNum($data) {
-        if(!preg_match("/^[0-9-]*+$/", $data)){ //lazy check to check for digits and dashes only
+        if(!preg_match("/^[ 0-9-:]+$/", $data)){ //lazy check to check for digits, colon and dashes only
             return 1;
         }
     }
