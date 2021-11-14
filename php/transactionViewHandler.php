@@ -15,7 +15,7 @@
         
         $action = "SELECT * FROM `transaction_data` WHERE 
             (`credit_id` = ? OR `debit_id` = ?)
-            AND (`timestamp` BETWEEN ? AND ?);";
+            AND (`timestamp` BETWEEN ? AND ?) ORDER BY `timestamp` DESC;";
         
         $stmt = $connect->prepare($action);
         $stmt->bindParam(1,$accountId, PDO::PARAM_STR);

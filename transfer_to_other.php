@@ -34,7 +34,7 @@
                     <div class="main-content">
                         <h2>Transfer to other account</h2>
                         <form action="transfer_confirm.php" method="post">
-                            <?php include "php/validateTransferHelper.php"?>
+                            <?php include "php/transferValidateHelper.php"?>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="from-account-select">Transfer from:</label>

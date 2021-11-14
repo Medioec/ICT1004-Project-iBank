@@ -30,7 +30,7 @@
                     </div>
                     <div class="main-content">
                         <h2>Account Balances</h2>
-                        <?php include "balanceHandler.php";?>
+                        <?php include "php/balanceHandler.php";?>
                     </div>
                 </div>
                 <?php include "footer.inc.php";?>
