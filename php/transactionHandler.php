@@ -4,25 +4,26 @@
     $accountId = sanitize_input($_POST["accountIn"]);
     $fromDate = sanitize_input($_POST["fromDateIn"]);
     $toDate = sanitize_input($_POST["toDateIn"]);
-    $abort = checkValidNum($accountId) + checkValidNum($fromDate) + checkValidNum($toDate);
-    if(!$accountId){$accountId = -1;}
+    if(!$accountId||$accountId == "Choose account..."){$accountId = "-1";}
     if(!$toDate){$toDate = date("Y-m-d");}
     if(!$fromDate){$fromDate = date("Y-m-d");}
+    $abort = checkValidNum($accountId) + checkValidNum($fromDate) + checkValidNum($toDate);
 
     function getTransaction($accountId, $fromDate, $toDate, $abort)
     {   
-        echo $fromDate;
-        if($abort){ return;}
+        if($abort){return;}
         include_once "connect.php";
         include_once "transactionDatatable.php";
         
         $action = "SELECT * FROM `transaction_data` WHERE 
-            (`credit_id` = $accountId OR `debit_id` = $accountId)
+            (`credit_id` = ? OR `debit_id` = ?)
             AND (`timestamp` BETWEEN ? AND ?);";
         
         $stmt = $connect->prepare($action);
-        $stmt->bindParam(1,$fromDate, PDO::PARAM_STR);
-        $stmt->bindParam(2,$toDate, PDO::PARAM_STR);
+        $stmt->bindParam(1,$accountId, PDO::PARAM_STR);
+        $stmt->bindParam(2,$accountId, PDO::PARAM_STR);
+        $stmt->bindParam(3,$fromDate, PDO::PARAM_STR);
+        $stmt->bindParam(4,$toDate, PDO::PARAM_STR);
         
         try {
             $stmt->execute();
@@ -30,7 +31,7 @@
 
         }
         catch(PDOException $e) {
-            echo "Retrieve failed: " . $e->getMessage();
+            //echo "Retrieve failed: " . $e->getMessage();
         }
         formTransactionTable($result, $accountId);
     }

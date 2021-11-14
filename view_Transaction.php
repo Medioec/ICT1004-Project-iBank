@@ -59,7 +59,7 @@
                         <?php include "php/transactionHandler.php";?>
                     </div>
                 </div>
-            <?php include "footer.inc.php";?>
+                <?php include "footer.inc.php";?>
             </div>
     </body>
 </html>
