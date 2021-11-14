@@ -1,5 +1,6 @@
 <?php
     $_SESSION["verifyTransfer"] = 0;
+    $_SESSION["originTransactionPage"] = $_SERVER['REQUEST_URI'];
 
     if($_SESSION["inputInvalid"] == 1)
     {

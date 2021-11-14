@@ -59,7 +59,7 @@
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         catch(PDOException $e) {
-            //echo "Retrieve failed: " . $e->getMessage();
+            echo "Retrieve failed: " . $e->getMessage();
         }
 
         $fetchedOtherAccountId = $result[0]['account_id'];

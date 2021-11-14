@@ -36,7 +36,7 @@
                         <p>You are about to transfer $<?php echo $_SESSION["amountIn"];?> to:</p> 
                         <p>Account no: <?php echo $_SESSION["fetchedOtherAccountId"];?></p> 
                         <p>Please confirm if you wish to proceed with the transaction.</p>
-                        <?php echo $_SESSION["originTransactionPage"]."test";?>
+                        
                         
                         <form method="post">
                             <div class="form-check">
