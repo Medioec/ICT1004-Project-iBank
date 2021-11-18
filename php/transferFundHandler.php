@@ -1,6 +1,12 @@
 <?php
     include_once "php/inputCheckHandler.php";
 
+    if(isset($_POST["verifyTransfer"])) {
+        if ($_POST["verifyTransfer"] == 1) {
+            $_SESSION["verifyTransfer"] = 1;
+        }
+    }
+
     if ($_SESSION["verifyTransfer"] == 1)
     {
         executeTransaction();
@@ -17,7 +23,7 @@
         $accountId = sanitize_input($_POST["transferFromAccountIn"]);
         $otherAccountId = sanitize_input($_POST["transferToAccountIn"]);
         $amountIn = sanitize_input($_POST["transferAmountIn"]);
-        $abort = checkValidNum($accountId) + checkValidNum($otherAccountId) + checkValidNum($amountIn);
+        $abort = checkValidNum($accountId) + checkValidNum($otherAccountId) + checkValidMoney($amountIn);
         if($abort)
         {
             $_SESSION["accountId"] = $accountId;

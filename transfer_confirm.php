@@ -38,15 +38,15 @@
                         <p>Please confirm if you wish to proceed with the transaction.</p>
                         
                         
-                        <form method="post">
+                        <form class="form-validate" method="post" novalidate>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="transferConfirmationCheckbox" required="true">
-                                <label class="form-check-label" for="transferConfirmationCheckbox">I wish to proceed</label>
+                                <label class="form-check-label mb-3" for="transferConfirmationCheckbox">I wish to proceed</label>
                             </div>
-                            <?php $_SESSION["verifyTransfer"] = 1;?>
+                            <input type="hidden" name="verifyTransfer" value = 1>
                             <div class="form-group">
                                 <a type="button" class="btn btn-secondary" href="<?php echo $_SESSION["originTransactionPage"];?>">Back</a>
-                                <button type="submit" class="btn btn-danger">Submit</button>
+                                <button type="submit" class="btn btn-danger submit-button">Submit</button>
                             </div>
                         </form>
                     </div>

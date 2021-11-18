@@ -28,9 +28,9 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="main-content">
+                    <main class="main-content">
                         <h2>View transactions</h2>
-                        <form method="post">
+                        <form class="form-validate" method="post" novalidate>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="account-select">Account:</label>
@@ -42,6 +42,9 @@
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please make a valid selection
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="date-entry form-group col-4">
@@ -54,11 +57,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <button class="btn btn-primary submit-button" type="submit">Submit</button>
                             </div>
                         </form>
                         <?php include "php/transactionViewHandler.php";?>
-                    </div>
+                    </main>
                 </div>
                 <?php include "footer.inc.php";?>
             </div>
