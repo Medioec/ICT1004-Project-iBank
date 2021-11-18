@@ -1,16 +1,13 @@
 <?php 
     session_start();
     include "php/transferUnset.php";
+    include "php/transferFundHandler.php";
 ?>
 <!DOCTYPE html>
 <html>
-    <?php
-        include "head.inc.php";
-    ?>
+    <?php include "head.inc.php"; ?>
     <body>
-        <?php
-            include "nav.inc.php";
-        ?>
+        <?php include "nav.inc.php"; ?>
         <div class="page-bg"></div>
             <div class="page-body">
                 <div class="page-content">
@@ -33,7 +30,7 @@
                     </div>
                     <main class="main-content">
                         <h2>Transfer to other account</h2>
-                        <form class="form-validate" action="transfer_confirm.php" method="post" novalidate>
+                        <form class="form-validate" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" novalidate>
                             <?php include "php/transferValidateHelper.php"?>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -53,7 +50,8 @@
                             <div class="form-group">
                                 <label for="to_account_other_select">Enter account number:</label>
                                 <input class="form-control" type="text" id="to_account_other_select" name="transferToAccountIn"
-                                    max length="45" placeholder="Enter Account No." pattern="^[0-9]+$" required="true">
+                                    max length="45" placeholder="Enter Account No." pattern="^[0-9]+$" required="true"
+                                    value="<?php echo $_SESSION["otherAccountId"];?>">
                             <div class="invalid-feedback">
                                 Please enter an account number
                             </div>
@@ -63,22 +61,21 @@
                             <div class="form-group">
                                 <label for="transfer-amount">Amount:</label>
                                 <input class="form-control" type="text" id="transfer-amount" name="transferAmountIn"
-                                    max length="45" placeholder="Enter amount" pattern="^[0-9]+$" required="true">
+                                    max length="45" placeholder="Enter amount" pattern="^[0-9]+$" required="true"
+                                    value="<?php echo $_SESSION["amountIn"];?>">
                             <div class="invalid-feedback">
                                 Please enter a valid amount
                             </div>
                             </div>
                             
-
+                            <input type="hidden" name="verifyTransfer" value = 1>
                             <div class="form-group">
                                 <button class="btn btn-primary submit-button" type="submit">Submit</button>
                             </div>
                         </form>
                     </main>
                 </div>
-            <?php
-                include "footer.inc.php";
-            ?>
+            <?php include "footer.inc.php"; ?>
             </div>
     </body>
 </html>
