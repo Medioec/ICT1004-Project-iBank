@@ -216,4 +216,31 @@ ul.footer-list {
 .copyright {
     text-align: center;
 }
+
+/*Go back 1 page button*/
+.return_btn{
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 8px;
+}
+/*Return to index page button*/
+.home_btn
+{
+    background-color: blue;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 8px;
+}
+
 /*Footer end*/

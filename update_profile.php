@@ -32,7 +32,7 @@
 
                             <div class="form-group">
                                 <label for="lname">Full name</label>
-                                <input class="form-control" type="text" id="fullname" required name="lname" value="<?php echo $fullname ?>">
+                                <input class="form-control" type="text" id="fullname" required name="fullname" value="<?php echo $fullname ?>">
                             </div>
                             
                             <div class="form-group">
@@ -81,7 +81,7 @@
                                 <input class="form-control" type="password" id="new_pwd" required name="new_pwd"><br>
                                 
                                 <label for="new_pwd">Confirm New Password</label>
-                                <input class="form-control" type="password" id="cfm_new_pwd" required name="cfm_new_pwd">
+                                <input class="form-control" type="password" id="cfm_pwd" required name="cfm_pwd">
                             </div>
 
                             

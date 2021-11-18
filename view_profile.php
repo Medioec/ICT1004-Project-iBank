@@ -42,7 +42,7 @@
 
                             <div class="form-group" id="nullable2">
                                 <label for="street2">Street 2</label>
-                                <input class="form-control" type="text" id="street2" required name="street2" value="<?php echo $street2 ?>">
+                                <input class="form-control" type="text" id="street2" required name="street2" value="<?php echo $street2 ?>"disabled>
                             </div>
                             
                             <div class="form-group">
