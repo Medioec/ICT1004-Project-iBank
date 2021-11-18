@@ -14,9 +14,7 @@
                 <div class="page-content">
                     <div class="main-content">
                         <h1 style="text-align:center">Update Profile Details</h1>
-                        
-                        <p>*Implementing process_update_profile.php for user to update personal details*</p>
-
+                       
                         <form action="process_update_profile.php" method="post">
                             
                             <h4>Basic Info</h4>

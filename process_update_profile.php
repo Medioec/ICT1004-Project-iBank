@@ -1,8 +1,8 @@
 <html>
     <head>
-        <?php
-        include "head.inc.php";
-        ?>
+    <?php
+    include "head.inc.php";
+    ?>
     </head>
     <body>
         <?php
