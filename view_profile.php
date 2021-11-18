@@ -9,25 +9,24 @@
         include "nav.inc.php";
         ?>
         
-        
         <?php
         // PDO
-        include_once "connect.php";
-        
-        $query = $conn->prepare("SELECT * FROM user_data WHERE customer_id=?");
-        $stmt = $connect->prepare($query);
-        $stmt->bindParam(1, $customer_id, PDO::PARAM_INT);
-        $stmt->bindParam(2,$fname, PDO::PARAM_STR);
-        $stmt->bindParam(3,$lname, PDO::PARAM_STR);
-        $stmt->bindParam(4,$fullname, PDO::PARAM_STR);
-        $stmt->bindParam(5,$street1, PDO::PARAM_STR);
-        $stmt->bindParam(6,$street2, PDO::PARAM_STR);
-        $stmt->bindParam(7,$postal, PDO::PARAM_STR);
-        $stmt->bindParam(8,$email, PDO::PARAM_STR);
-        $stmt->bindParam(9,$phone, PDO::PARAM_STR);
-        
-        $stmt->execute();
-        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//        include_once "connect.php";
+//        
+//        $query = $conn->prepare("SELECT * FROM user_data WHERE customer_id=?");
+//        $stmt = $connect->prepare($query);
+//        $stmt->bindParam(1, $customer_id, PDO::PARAM_INT);
+//        $stmt->bindParam(2,$fname, PDO::PARAM_STR);
+//        $stmt->bindParam(3,$lname, PDO::PARAM_STR);
+//        $stmt->bindParam(4,$fullname, PDO::PARAM_STR);
+//        $stmt->bindParam(5,$street1, PDO::PARAM_STR);
+//        $stmt->bindParam(6,$street2, PDO::PARAM_STR);
+//        $stmt->bindParam(7,$postal, PDO::PARAM_STR);
+//        $stmt->bindParam(8,$email, PDO::PARAM_STR);
+//        $stmt->bindParam(9,$phone, PDO::PARAM_STR);
+//        
+//        $stmt->execute();
+//        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         ?>
         
@@ -43,7 +42,8 @@
         $stmt = $conn->prepare("SELECT * FROM user_data WHERE customer_id=?");
         // Hard coded - TO CHANGE TO SESSION
         //$stmt->bind_param("s", $_SESSION[""]);
-        $stmt->bind_param("i", 1);
+        $id = 1;
+        $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -78,7 +78,7 @@
 
                         <form>
                             <h4>Basic Info</h4>
-                            <div class="form-group">
+                            <div class="form-group" id="nullable1">
                                 <label for="fname">First name</label>
                                 <input class="form-control" type="text" id="fname" required name="fname" value="<?php echo $fname ?>" disabled>
                             </div>
@@ -98,9 +98,9 @@
                                 <input class="form-control" type="text" id="street1" required name="street1" value="<?php echo $street1 ?>" disabled>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="nullable2">
                                 <label for="street2">Street 2</label>
-                                <input class="form-control" type="text" id="street2" required name="street2" value="<?php echo $street2 ?>" disabled>
+                                <input class="form-control" type="text" id="street2" required name="street2" value="<?php echo $street2 ?>">
                             </div>
                             
                             <div class="form-group">
@@ -132,12 +132,20 @@
             ?>
             </main>
         
-        <!-- Check if fname is empty -->
+        <!-- Check if form input is empty -->
         <script>
-            var hide = document.getElementById("fnamegroup");
-            var input = document.getElementById("fname");
-            if(input.value === ""){
-                fnamegroup.style.display = "none";
+            var nullable1 = document.getElementById("nullable1");
+            var fname = document.getElementById("fname");
+            
+            var nullable2 = document.getElementById("nullable2");
+            var street2 = document.getElementById("street2");
+            
+            if(fname.value === ""){
+                nullable1.style.display = "none";
+            }
+            
+            if(street2.value === ""){
+                nullable2.style.display = "none";
             }
         </script>
         
