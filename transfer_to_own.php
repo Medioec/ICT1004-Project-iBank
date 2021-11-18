@@ -31,9 +31,9 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="main-content">
+                    <main class="main-content">
                         <h2>Transfer to own account</h2>
-                        <form action="transfer_confirm.php" method="post">
+                        <form class="form-validate" action="transfer_confirm.php" method="post" novalidate>
                             <?php 
                                 include_once "php/transferValidateHelper.php";
                             ?>
@@ -47,6 +47,9 @@
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please make a valid selection
+                                </div>
                             </div>
 
                             <div class="input-group mb-3">
@@ -59,19 +62,28 @@
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please make a valid selection
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="transfer-amount">Amount:</label>
-                                <input class="form-control" type="number" id="transfer-amount" name="transferAmountIn"
-                                    max length="45" placeholder="Enter amount" pattern="^[0-9]+$" required="true">
+                            <label for="transfer-amount">Amount:</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input class="form-control" type="text" id="transfer-amount" name="transferAmountIn"
+                                    max length="45" placeholder="Enter amount" pattern="[0-9]+.?[0-9]*" required="true" title="Enter a valid amount to transfer">
+                            <div class="invalid-feedback">
+                                Please enter a valid amount
                             </div>
-
+                            </div>
+                            
                             <div class="form-group">
-                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <button class="btn btn-primary submit-button" type="submit">Submit</button>
                             </div>
                         </form>
-                    </div>
+                    </main>
                 </div>
             <?php
                 include "footer.inc.php";

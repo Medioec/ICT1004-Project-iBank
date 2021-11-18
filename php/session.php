@@ -18,7 +18,7 @@
 		$session_statement->execute();
 		$getActive = $statement->fetchAll(PDO::FETCH_ASSOC);
 		$dbsuccess = true;
-		$isActive = $getActive[0][active];
+		$isActive = $getActive[0]['active'];
 	}
 	catch (PDOException $e) {
 		$dbsuccess = false;

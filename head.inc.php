@@ -21,12 +21,8 @@
             crossorigin="anonymous">
     </script>
     <!-- Datatables -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"></script>
-    <script defer src="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css"></script>
-    <script defer src="https://cdn.datatables.net/select/1.3.3/css/select.bootstrap4.min.css"></script>
-    <script defer src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script defer src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-    <script defer src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css"/>
+    <script defer type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
     <!-- Custom JS -->
     <script defer src="js/main.js"></script>
 </head>
