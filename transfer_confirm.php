@@ -1,16 +1,15 @@
 <?php
     session_start();
     include "php/transferFundHandler.php";
+    if (!$_SESSION["transferInputVerified"]) {
+        header("Location: transfer_to_own.php");
+    }
 ?>
 <!DOCTYPE html>
 <html>
-    <?php
-        include "head.inc.php";
-    ?>
+    <?php include "head.inc.php"; ?>
     <body>
-        <?php
-            include "nav.inc.php";
-        ?>
+        <?php include "nav.inc.php"; ?>
         <div class="page-bg"></div>
             <div class="page-body">
                 <div class="page-content">
@@ -43,7 +42,7 @@
                                 <input type="checkbox" class="form-check-input" id="transferConfirmationCheckbox" required="true">
                                 <label class="form-check-label mb-3" for="transferConfirmationCheckbox">I wish to proceed</label>
                             </div>
-                            <input type="hidden" name="verifyTransfer" value = 1>
+                            <input type="hidden" name="confirmTransfer" value = 1>
                             <div class="form-group">
                                 <a type="button" class="btn btn-secondary" href="<?php echo $_SESSION["originTransactionPage"];?>">Back</a>
                                 <button type="submit" class="btn btn-danger submit-button">Submit</button>

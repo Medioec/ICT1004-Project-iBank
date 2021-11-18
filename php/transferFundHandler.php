@@ -1,17 +1,24 @@
 <?php
     include_once "php/inputCheckHandler.php";
 
+    $confirmTransfer = 0;
+    if(isset($_POST["confirmTransfer"])) {
+        if ($_POST["confirmTransfer"]) {
+            $confirmTransfer = 1;
+        }
+    }
+    $toVerify = 0;
     if(isset($_POST["verifyTransfer"])) {
-        if ($_POST["verifyTransfer"] == 1) {
-            $_SESSION["verifyTransfer"] = 1;
+        if ($_POST["verifyTransfer"]) {
+            $toVerify = 1;
         }
     }
 
-    if ($_SESSION["verifyTransfer"] == 1)
+    if ($confirmTransfer)
     {
         executeTransaction();
 	}
-    else 
+    else if ($toVerify)
     {
         verifyTransaction();
     }
@@ -24,14 +31,14 @@
         $otherAccountId = sanitize_input($_POST["transferToAccountIn"]);
         $amountIn = sanitize_input($_POST["transferAmountIn"]);
         $abort = checkValidNum($accountId) + checkValidNum($otherAccountId) + checkValidMoney($amountIn);
+        $_SESSION["accountId"] = $accountId;
+        $_SESSION["otherAccountId"] = $otherAccountId;
+        $_SESSION["amountIn"] = $amountIn;
         if($abort)
         {
-            $_SESSION["accountId"] = $accountId;
-            $_SESSION["otherAccountId"] = $otherAccountId;
-            $_SESSION["amountIn"] = $amountIn;
             $_SESSION["inputInvalid"] = 1;
             
-            header("Location: ".$_SESSION["originTransactionPage"]);
+            //header("Location: ".$_SESSION["originTransactionPage"]);
             return;
         }
 
@@ -73,28 +80,24 @@
         //check for problems
         if($fetchedOtherAccountId == null||$fetchedAccountId == null||$abort||($amountIn <= 0) ){
 
-            $_SESSION["accountId"] = $accountId;
-            $_SESSION["otherAccountId"] = $otherAccountId;
-            $_SESSION["amountIn"] = $amountIn;
             $_SESSION["inputInvalid"] = 1;
             
-            header("Location: ".$_SESSION["originTransactionPage"]);
+            //header("Location: ".$_SESSION["originTransactionPage"]);
             return;
         }
 
         if( ($fetchedAccountBalance - $amountIn) <= 0){
-            $_SESSION["accountId"] = $accountId;
-            $_SESSION["otherAccountId"] = $otherAccountId;
-            $_SESSION["amountIn"] = $amountIn;
             $_SESSION["inputInvalid"] = 2;
             
-            header("Location: ".$_SESSION["originTransactionPage"]);
+            //header("Location: ".$_SESSION["originTransactionPage"]);
             return;
         }
 
         $_SESSION["fetchedOtherAccountId"] = $fetchedOtherAccountId;
         $_SESSION["fetchedAccountId"] = $fetchedAccountId;
         $_SESSION["amountIn"] = $amountIn;
+        $_SESSION["transferInputVerified"] = 1;
+        header("Location: transfer_confirm.php");
 
     }
     function executeTransaction()
@@ -155,6 +158,7 @@
 
         $_SESSION["amountIn"] = $amountIn;
         $_SESSION["otherAccountId"] = $fetchedOtherAccountId;
+        //$_SESSION["transferInputVerified"] = 0;
 
         header("Location: transfer_success.php");
     }

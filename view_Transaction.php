@@ -1,13 +1,9 @@
 <?php session_start();?>
 <!DOCTYPE html>
 <html>
-    <?php
-        include "head.inc.php";
-    ?>
+    <?php include "head.inc.php"; ?>
     <body>
-        <?php
-            include "nav.inc.php";
-        ?>
+        <?php include "nav.inc.php"; ?>
         <div class="page-bg"></div>
             <div class="page-body minw-500">
                 <div class="page-content minw-500">
