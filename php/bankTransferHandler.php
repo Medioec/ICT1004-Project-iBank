@@ -98,7 +98,7 @@
 
         $stmt->execute();
 
-        if(!stmt->execute())
+        if(!$stmt->execute())
         {
             $transferErrorPage = file_get_contents("transfer_error.php", false, NULL);
             echo $transferErrorPage;
@@ -112,7 +112,7 @@
         
         $stmt->execute();
 
-        if(!stmt->execute())
+        if(!$stmt->execute())
         {
             $transferErrorPage = file_get_contents("transfer_error.php", false, NULL);
             echo $transferErrorPage;
@@ -126,7 +126,7 @@
         
         $stmt->execute();
 
-        if(!stmt->execute())
+        if(!$stmt->execute())
         {
             $transferErrorPage = file_get_contents("transfer_error.php", false, NULL);
             echo $transferErrorPage;

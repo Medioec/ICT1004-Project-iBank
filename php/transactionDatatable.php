@@ -25,11 +25,11 @@
 
         $table = '
 
-            <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+            <table id="example" class="table table-striped table-bordered dt-responsive wrap" style="width:100%">
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Transaction Details</th>
+                        <th>Details</th>
                         <th>Amount</th>
                     </tr>
                 </thead>

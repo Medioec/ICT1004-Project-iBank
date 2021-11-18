@@ -1,7 +1,7 @@
 <div class="nav-wrapper">
     <nav class="navbar navbar-expand-md navbar-dark minw-500">
         <a class="company-logo" href="">
-            <img src="" alt="SITE LOGO"
+            <img src="images/Logo1.png" alt="SITE LOGO"
                  title="Home"/>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
