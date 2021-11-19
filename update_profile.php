@@ -76,10 +76,10 @@
 
                             <div class="form-group" id="ifYes">
                                 <label for="new_pwd">New Password</label>
-                                <input class="form-control" type="password" id="new_pwd" required name="new_pwd"><br>
+                                <input class="form-control" type="password" id="new_pwd" name="new_pwd"><br>
                                 
                                 <label for="new_pwd">Confirm New Password</label>
-                                <input class="form-control" type="password" id="cfm_pwd" required name="cfm_pwd">
+                                <input class="form-control" type="password" id="cfm_pwd" name="cfm_pwd">
                             </div>
 
                             

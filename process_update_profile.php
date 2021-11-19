@@ -1,8 +1,8 @@
 <html>
     <head>
-    <?php
-    include "head.inc.php";
-    ?>
+        <?php
+        include "head.inc.php";
+        ?>
     </head>
     <body>
         <?php
@@ -160,37 +160,39 @@
                             $pwd_hashed = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
                         }
                     }
+                    
+                    // If user decides to change password, Check if new_pwd is !empty
 
-
-
-                    // PASSWORD VALIDATION FOR NEW PASWWORD
-                    if (empty($_POST['new_pwd']) || empty($_POST["cfm_pwd"])) {
-                        $errorMsg .= "Please enter your new password and confirm new password.<br>";
-                        $success = false;
-                    }
-                    // VALIDATING USING REGEX
-                    else {
-                        if (strlen($_POST['new_pwd']) < '8') {
-                            $errorMsg = "Your Password Must Contain At Least 8 Characters!<br>";
+                    if (!empty($_POST['new_pwd'])) {
+                        // PASSWORD VALIDATION FOR NEW PASWWORD
+                        if (empty($_POST['new_pwd']) || empty($_POST["cfm_pwd"])) {
+                            $errorMsg .= "Please enter your new password and confirm new password.<br>";
                             $success = false;
-                        } elseif (!preg_match("#[0-9]+#", $_POST["new_pwd"])) {
-                            $errorMsg = "Your Password Must Contain At Least 1 Number!<br>";
-                            $success = false;
-                        } elseif (!preg_match("#[A-Z]+#", $_POST["new_pwd"])) {
-                            $errorMsg = "Your Password Must Contain At Least 1 Capital Letter!<br>";
-                            $success = false;
-                        } elseif (!preg_match("#[a-z]+#", $_POST["new_pwd"])) {
-                            $errorMsg = "Your Password Must Contain At Least 1 Lowercase Letter!<br>";
-                            $success = false;
-                        } elseif ($_POST['new_pwd'] == $_POST['pwd']) {
-                            $errorMsg = "New password cannot be same as Old password!<br>";
-                            $success = false;
-                        } elseif ($_POST['new_pwd'] !== $_POST['cfm_pwd']) {
-                            $errorMsg = "Your New Password Does Not Match!<br>";
-                            $success = false;
-                        } else {
-                            // HASH THE PASSWORD
-                            $new_pwd_hashed = password_hash($_POST["new_pwd"], PASSWORD_DEFAULT);
+                        }
+                        // VALIDATING USING REGEX
+                        else {
+                            if (strlen($_POST['new_pwd']) < '8') {
+                                $errorMsg = "Your Password Must Contain At Least 8 Characters!<br>";
+                                $success = false;
+                            } elseif (!preg_match("#[0-9]+#", $_POST["new_pwd"])) {
+                                $errorMsg = "Your Password Must Contain At Least 1 Number!<br>";
+                                $success = false;
+                            } elseif (!preg_match("#[A-Z]+#", $_POST["new_pwd"])) {
+                                $errorMsg = "Your Password Must Contain At Least 1 Capital Letter!<br>";
+                                $success = false;
+                            } elseif (!preg_match("#[a-z]+#", $_POST["new_pwd"])) {
+                                $errorMsg = "Your Password Must Contain At Least 1 Lowercase Letter!<br>";
+                                $success = false;
+                            } elseif ($_POST['new_pwd'] == $_POST['pwd']) {
+                                $errorMsg = "New password cannot be same as Old password!<br>";
+                                $success = false;
+                            } elseif ($_POST['new_pwd'] !== $_POST['cfm_pwd']) {
+                                $errorMsg = "Your New Password Does Not Match!<br>";
+                                $success = false;
+                            } else {
+                                // HASH THE PASSWORD
+                                $new_pwd_hashed = password_hash($_POST["new_pwd"], PASSWORD_DEFAULT);
+                            }
                         }
                     }
 
@@ -201,7 +203,7 @@
                         updatePassword();
                         echo "<h3>Your profile details have been updated</h3><br>";
                         date_default_timezone_set('Asia/Singapore');
-                        echo "<h5>".date("Y/m/d")." ".date("h:i:sa")."</h5><br>";
+                        echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
                         echo "<p><button onclick='goHome()' class='home_btn'>Home</button></p>";
                         echo "<br><br><br><br><br><br><br>";
                     } else {
@@ -228,36 +230,36 @@
                 ?>
             </div>
 
-                <?php
+            <?php
 
-                // Function to update user details
-                function updateUserDetails() {
-                    global $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $email, $errorMsg, $success;
-                    // Create database connection.
-                    // TO DO - CHANGE TO PDO
-                    $config = parse_ini_file('../../private/db-config.ini');
-                    $conn = new mysqli($config['servername'], $config['username'],
-                            $config['password'], $config['dbname']);
-                    // Check connection
-                    if ($conn->connect_error) {
-                        $errorMsg = "Connection failed: " . $conn->connect_error;
+            // Function to update user details
+            function updateUserDetails() {
+                global $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $email, $errorMsg, $success;
+                // Create database connection.
+                // TO DO - CHANGE TO PDO
+                $config = parse_ini_file('../../private/db-config.ini');
+                $conn = new mysqli($config['servername'], $config['username'],
+                        $config['password'], $config['dbname']);
+                // Check connection
+                if ($conn->connect_error) {
+                    $errorMsg = "Connection failed: " . $conn->connect_error;
+                    $success = false;
+                } else {
+                    // Prepare the statement:
+                    $stmt = $conn->prepare("UPDATE user_data SET first_name=?, last_name=?, full_name=?, street1=?, street2=?, postal=?, email=?, phone=? WHERE customer_id=?");
+                    // HARD CODED - TO DO CHANGE TO SESSION
+                    $id = 1;
+                    $stmt->bind_param("ssssssssi", $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $id);
+                    $stmt->execute();
+                    if (!$stmt->affected_rows != 1) {
+                        $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                         $success = false;
-                    } else {
-                        // Prepare the statement:
-                        $stmt = $conn->prepare("UPDATE user_data SET first_name=?, last_name=?, full_name=?, street1=?, street2=?, postal=?, email=?, phone=? WHERE customer_id=?");
-                        // HARD CODED - TO DO CHANGE TO SESSION
-                        $id = 1;
-                        $stmt->bind_param("ssssssssi", $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $id);
-                        $stmt->execute();
-                        if (!$stmt->affected_rows != 1) {
-                            $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-                            $success = false;
-                        }
-                        $stmt->close();
                     }
-                    $conn->close();
+                    $stmt->close();
                 }
-                ?>
+                $conn->close();
+            }
+            ?>
 
             <?php
 
