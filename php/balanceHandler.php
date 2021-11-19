@@ -4,8 +4,8 @@
     {   
         $customerId = $_SESSION["customerId"];
 
-        include_once "connect.php";
-        include_once "balanceDatatable.php";
+        include "connect.php";
+        include "balanceDatatable.php";
         
         $action = "SELECT * FROM `bank_account` 
             WHERE `account_id` IN

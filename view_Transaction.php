@@ -1,4 +1,10 @@
-<?php session_start();?>
+<?php 
+    session_start(); 
+    include "php/inputCheckHandler.php";
+    if ($_SESSION["originTransactionPage"] != $_SERVER["REQUEST_URI"]) {
+        include "php/transferUnset.php";
+    }
+?>
 <!DOCTYPE html>
 <html>
     <?php include "head.inc.php"; ?>
@@ -27,16 +33,14 @@
                     <main class="main-content">
                         <h2>View transactions</h2>
                         <form class="form-validate" method="post" novalidate>
+                            <?php include_once "php/viewTransactionValidateHelper.php";?>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="account-select">Account:</label>
                                 </div>
                                 <select class="custom-select" id="account-select" name="accountIn" required="true">
                                     <option value="">Choose account...</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
+                                    <?php include_once "php/viewTransactionAccountSelect.php";?>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please make a valid selection
@@ -45,18 +49,21 @@
                             <div class="row">
                                 <div class="date-entry form-group col-4">
                                     <label for="from-date">From Date:</label>
-                                    <input type="date" class="form-control" id="from-date" name="fromDateIn" placeholder="From Date:">
+                                    <input type="date" class="form-control" id="from-date" name="fromDateIn" placeholder="From Date:"
+                                    value="<?php echo sanitize_input($_POST["fromDateIn"]);?>">
                                 </div>
                                 <div class="date-entry form-group col-4">
                                     <label for="to-date">To Date:</label>
-                                    <input type="date" class="form-control" id="to-date" name="toDateIn" placeholder="To Date:">
+                                    <input type="date" class="form-control" id="to-date" name="toDateIn" placeholder="To Date:"
+                                    value="<?php echo sanitize_input($_POST["toDateIn"]);?>">
                                 </div>
                             </div>
+                            <input type="hidden" name="submit-button-clicked" value="1"></input>
                             <div class="form-group">
                                 <button class="btn btn-primary submit-button" type="submit">Submit</button>
                             </div>
                         </form>
-                        <?php include "php/transactionViewHandler.php";?>
+                        <div class="table-responsive"><?php include "php/transactionViewHandler.php";?></div>
                     </main>
                 </div>
                 <?php include "footer.inc.php";?>

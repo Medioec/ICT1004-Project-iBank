@@ -114,7 +114,6 @@ button.navbar-toggler {
 @media (min-width: 1200px) {
     .page-bg {
         background-color:lightgray;
-        background: url("../images/bg1.jpg");
         background-size: cover;
     }
 }
@@ -140,7 +139,7 @@ button.navbar-toggler {
 }
 .page-content {
     margin:auto;
-    margin-top: 50px;
+    margin-top: 80px;
     display: flex;
     flex-direction: row;
     margin-bottom: 100px;

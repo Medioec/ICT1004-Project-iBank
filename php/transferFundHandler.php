@@ -1,5 +1,6 @@
 <?php
     include_once "php/inputCheckHandler.php";
+    include "./php/connect.php";
 
     $confirmTransfer = 0;
     if(isset($_POST["confirmTransfer"])) {
@@ -16,14 +17,14 @@
 
     if ($confirmTransfer)
     {
-        executeTransaction();
+        executeTransaction($connect);
 	}
     else if ($toVerify)
     {
-        verifyTransaction();
+        verifyTransaction($connect);
     }
 
-    function verifyTransaction()
+    function verifyTransaction($connect)
     {
         $customerId = $_SESSION["customerId"];
         $accountId = $otherAccountId = $amountIn = $abort = "";
@@ -31,8 +32,8 @@
         $otherAccountId = sanitize_input($_POST["transferToAccountIn"]);
         $amountIn = sanitize_input($_POST["transferAmountIn"]);
         $abort = checkValidNum($accountId) + checkValidNum($otherAccountId) + checkValidMoney($amountIn);
-        $_SESSION["accountId"] = $accountId;
-        $_SESSION["otherAccountId"] = $otherAccountId;
+        $_SESSION["accountIdIn"] = $accountId;
+        $_SESSION["otherAccountIdIn"] = $otherAccountId;
         $_SESSION["amountIn"] = $amountIn;
         if($abort)
         {
@@ -41,8 +42,6 @@
             //header("Location: ".$_SESSION["originTransactionPage"]);
             return;
         }
-
-        include_once "connect.php";
 
         $action = "SELECT `account_id`,`balance` FROM `bank_account` WHERE (`account_id` = 
             (select `account_id` FROM `bank_accounts_ref` WHERE (account_id = ? AND customer_id = ?)));";
@@ -100,9 +99,8 @@
         header("Location: transfer_confirm.php");
 
     }
-    function executeTransaction()
+    function executeTransaction($connect)
     {
-        include_once "connect.php";
         $fetchedOtherAccountId = $_SESSION["fetchedOtherAccountId"];
         $fetchedAccountId = $_SESSION["fetchedAccountId"];
         $amountIn = $_SESSION["amountIn"];
@@ -157,7 +155,7 @@
         }
 
         $_SESSION["amountIn"] = $amountIn;
-        $_SESSION["otherAccountId"] = $fetchedOtherAccountId;
+        $_SESSION["otherAccountIdIn"] = $fetchedOtherAccountId;
         //$_SESSION["transferInputVerified"] = 0;
 
         header("Location: transfer_success.php");
