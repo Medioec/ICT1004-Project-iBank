@@ -5,47 +5,53 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-//Load Composer's autoloader
-require '/var/www/phpmailer/vendor/autoload.php';
-/*
-//Create an instance; passing `true` enables exceptions
-$mail = new PHPMailer(true);
+function phpMailer($userEmail, $userName, $rndno) {
+    //Load Composer's autoloader
+    require '/var/www/phpmailer/vendor/autoload.php';
+    //echo "script start";
 
-//From email address and name
-$mail->isSMTP();
-$mail->Host = 'smtp.gmail.com';
-$mail->Port = 587;
-$mail->SMTPAuth = true;
-$mail->SMTPSecure = 'tls';
+    //Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailer(true);
 
-//Username (email address).
-$mail->Username = 'double04bank@gmail.com';
+    //From email address and name
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 587;
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'tls';
 
-// Google account password.
-$mail->Password = 'longlongpassword123456';
+    /* Username (email address). */
+    $mail->Username = 'double04bank@gmail.com';
 
-//To address and name
-$mail->addAddress("ec18815@gmail.com", "Test name"); //Recipient name is optional
+    /* Google account password. */
+    $mail->Password = 'longlongpassword123456';
 
-//Address to which recipient will reply
-$mail->addReplyTo("reply@yourdomain.com", "Reply");
+    //To address and name
+    $mail->addAddress($userEmail); //Recipient name is optional
 
-//CC and BCC
-//$mail->addCC("cc@example.com");
-//$mail->addBCC("bcc@example.com");
+    //Address to which recipient will reply
+    //$mail->addReplyTo('double04bank@gmail.com', "Reply");
 
-//Send HTML or Plain Text email
-$mail->isHTML(true);
+    //CC and BCC
+    //$mail->addCC("cc@example.com");
+    //$mail->addBCC("bcc@example.com");
 
-$mail->Subject = "Subject Text";
-$mail->Body = "<i>Mail body in HTML</i>"; 
-$mail->AltBody = "This is the plain text version of the email content";
+    //Send HTML or Plain Text email
+    $mail->isHTML(true);
 
-try {
-    $mail->send();
-    echo "Message has been sent successfully";
-} catch (Exception $e) {
-    echo "Mailer Error: " . $mail->ErrorInfo;
+    $mail->Subject = "Double' o4 Bank OTP";
+    $mail->Body = "<h2>Hey there!\n</h2> <p>Please enter this One-Time Password in the 2FA page.\nUsername:".$userName."\nOTP:".$rndno."</p>";
+    $mail->AltBody = "Hey there, please enter this One-Time Password in the 2FA page. Your Username:".$userName."; OTP:".$rndno."";
+    
+    $success = false;
+    try {
+        $mail->send();
+        $success = true;
+        //echo "Message has been sent successfully";
+    } catch (Exception $e) {
+        $success = false;
+        //echo "Mailer Error: " . $mail->ErrorInfo;
+    }
+    return $success;
 }
-*/
 ?>
