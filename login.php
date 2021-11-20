@@ -30,10 +30,10 @@
                                 <input class="form-control" type="password" id="password" required name="password"
                                     placeholder="Enter password">
                             </div>
-                            <!-- temp disable
+                            
                             <div class="form-group">
                                 <div class="g-recaptcha" data-sitekey="6Lcj-EQUAAAAAOR5N9iKG3EUYwJGecrPrCl4rJrc"></div>
-                            </div> -->
+                            </div>
                             <div class="form-check">
                                 <label>
                                     <input type="checkbox" name="agree">
