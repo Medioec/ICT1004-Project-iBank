@@ -1,5 +1,5 @@
 <?php 
-    session_start(); 
+    include "php/session.php";
     include "php/inputCheckHandler.php";
     if ($_SESSION["originTransactionPage"] != $_SERVER["REQUEST_URI"]) {
         include "php/transferUnset.php";

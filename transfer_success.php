@@ -27,7 +27,7 @@
                     <div class="main-content">
                         <h2>Transaction Complete</h2>
                         <p>You have successfully transferred $<?php echo $_SESSION["amountIn"];?> to Account no. <?php echo $_SESSION["otherAccountIdIn"];?>.<p>
-
+                        <a type="button" class="btn btn-primary" href="<?php echo $_SESSION["originTransactionPage"];?>">Back</a>
                     </div>
                     <?php include "./php/transferUnset.php";?>
                 </div>

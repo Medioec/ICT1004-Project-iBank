@@ -4,12 +4,12 @@
 	
 	session_start();
 	
-	//Session vars customer_username customerId
+	//Session vars username customerId
 
 	$dbsuccess = false;
 	
-	if (isset($_SESSION['customer_username'])) {
-		$session_user = $_SESSION['customer_username'];
+	if (isset($_SESSION['username'])) {
+		$session_user = $_SESSION['username'];
 	}
    
 	$session_sql = "SELECT `active` FROM `customer_credentials` WHERE `customer_username` = ?";
@@ -18,7 +18,7 @@
 	
 	try {
 		$session_statement->execute();
-		$getActive = $statement->fetchAll(PDO::FETCH_ASSOC);
+		$getActive = $session_statement->fetchAll(PDO::FETCH_ASSOC);
 		$dbsuccess = true;
 		$isActive = $getActive[0]['active'];
 	}

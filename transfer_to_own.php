@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    include "php/session.php";
     include "php/transferFundHandler.php";
     include "inputCheckHandler.php";
     if ($_SESSION["originTransactionPage"] != $_SERVER["REQUEST_URI"]) {

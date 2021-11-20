@@ -45,7 +45,8 @@
                             <input type="hidden" name="confirmTransfer" value = 1>
                             <div class="form-group">
                                 <a type="button" class="btn btn-secondary" href="<?php echo $_SESSION["originTransactionPage"];?>">Back</a>
-                                <button type="submit" class="btn btn-danger submit-button">Submit</button>
+                                <button type="submit" class="btn btn-danger submit-button">Transfer $<?php echo $_SESSION["amountIn"];?> 
+                                to account <?php echo $_SESSION["fetchedOtherAccountId"];?></button>
                             </div>
                         </form>
                     </div>
