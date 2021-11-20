@@ -34,13 +34,6 @@
                             <div class="form-group">
                                 <div class="g-recaptcha" data-sitekey="6Lcj-EQUAAAAAOR5N9iKG3EUYwJGecrPrCl4rJrc"></div>
                             </div>
-                            <div class="form-check">
-                                <label>
-                                    <input type="checkbox" name="agree">
-                                    Agree to terms and conditions.
-                                </label>
-                            </div>
-
                             <div class="form-group">
                                 <button class= "btn btn-primary" type="submit" name="submit">Submit</button>
                             </div>

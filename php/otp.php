@@ -97,7 +97,7 @@ if (isset($_POST['try'])) {
                 
                 $_SESSION['otp'] = "1";
                 $_SESSION['loggedin'] = "1";
-                $_SESSION['customer_id'] = $otpResult[0]['customer_id'];
+                $_SESSION['customerId'] = $otpResult[0]['customer_id'];
                 
                 echo "<h2>Redirecting to Homepage</h2>";
                 echo "<h4>Click on the button if the page does not redirect.</h4>";
@@ -105,6 +105,26 @@ if (isset($_POST['try'])) {
                 
                 header('Refresh: 3; URL=../index.php');
                 //echo "<script>window.location.href = '../index.php';</script>";
+
+                //get customer name
+                $action = 'SELECT `first_name`, `last_name` FROM `user_data` WHERE `customer_id` = ?;';
+                $stmt = $connect->prepare($action);
+                $stmt->bindParam(1, $_SESSION["customerId"], PDO::PARAM_STR);
+                try {
+                    $stmt->execute();
+                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    //echo "Retrieve failed: " . $e->getMessage();
+                }
+                $_SESSION["firstName"] = $result[0]['first_name'];
+                $_SESSION["lastName"] = $result[0]['last_name'];
+
+                if ($_SESSION["firstName"]) {
+                    $_SESSION["displayName"] = $_SESSION["firstName"];
+                } else {
+                    $_SESSION["displayName"] = $_SESSION["lastName"];
+                }
                 
             }
             else {
