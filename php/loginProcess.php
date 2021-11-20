@@ -1,3 +1,4 @@
+<?php session_start();?>
 <html>
     <head>
         <title>Login Results</title>
@@ -18,13 +19,27 @@
 <?php
 include_once ('recaptchalib.php');
 
-session_start();
+include_once ('connect.php');
+
+//temporary testing without login
+$session_user = "test";
+if (!isset($_SESSION['customer_id'])) {
+    $action = 'SELECT `customer_id` FROM `customer_credentials` WHERE `customer_username` = ?;';
+    $stmt = $connect->prepare($action);
+    $stmt->bindParam(1, $session_user, PDO::PARAM_STR);
+    try {
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch(PDOException $e) {
+        //echo "Retrieve failed: " . $e->getMessage();
+    }
+    $_SESSION["customerId"] = $result[0]['customer_id'];
+}
 
 $secret = "6Lcj-EQUAAAAAD-ujIV87baNc6XHVg0VpPqaabxc";
 $response = null;
 $reCaptcha = new ReCaptcha($secret);
-
-include_once ('connect.php');
 
 
 if (isset($_POST['username'])) {
@@ -36,8 +51,9 @@ if (isset($_POST['username'])) {
                 $_POST["g-recaptcha-response"]
             );
         }
-
-        if ($response != null && $response->success) {
+        //temp disable
+        //if ($response != null && $response->success)
+        if (1) {
                 $thispassword = $_POST['password'];
                 $pwSql = "SELECT `password_hash`, `active` FROM `customer_credentials` "
                         . "WHERE `customer_id` = (SELECT `customer_id` FROM `customer_credentials` "
@@ -51,6 +67,39 @@ if (isset($_POST['username'])) {
 
                     $_SESSION['username']=$thisusername;
                     $_SESSION['loggedin']="1";
+                    
+                    //get customer id
+                    $action = 'SELECT `customer_id` FROM `customer_credentials` WHERE `customer_username` = ?;';
+                    $stmt = $connect->prepare($action);
+                    $stmt->bindParam(1, $session_user, PDO::PARAM_STR);
+                    try {
+                        $stmt->execute();
+                        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    }
+                    catch(PDOException $e) {
+                        //echo "Retrieve failed: " . $e->getMessage();
+                    }
+                    $_SESSION["customerId"] = $result[0]['customer_id'];
+
+                    //get customer name
+                    $action = 'SELECT `first_name`, `last_name` FROM `user_data` WHERE `customer_id` = ?;';
+                    $stmt = $connect->prepare($action);
+                    $stmt->bindParam(1, $_SESSION["customerId"], PDO::PARAM_STR);
+                    try {
+                        $stmt->execute();
+                        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    }
+                    catch(PDOException $e) {
+                        //echo "Retrieve failed: " . $e->getMessage();
+                    }
+                    $_SESSION["firstName"] = $result[0]['first_name'];
+                    $_SESSION["lastName"] = $result[0]['last_name'];
+
+                    if ($_SESSION["firstName"]) {
+                        $_SESSION["displayName"] = $_SESSION["firstName"];
+                    } else {
+                        $_SESSION["displayName"] = $_SESSION["lastName"];
+                    }
                     
                     $successSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','LOGIN - CUSTOMER',?,CURRENT_TIMESTAMP)";
                     $successLog = $connect->prepare($successSql);

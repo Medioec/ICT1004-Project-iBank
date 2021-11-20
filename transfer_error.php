@@ -30,7 +30,7 @@
                     <div class="main-content">
                         <h2>Transaction Error</h2>
                         <p>An error has occured on the server side. Please try again at a later time.<p>
-
+                        <a type="button" class="btn btn-primary" href="<?php echo $_SESSION["originTransactionPage"];?>">Back</a>
                     </div>
                 </div>
                 <?php include "footer.inc.php";?>

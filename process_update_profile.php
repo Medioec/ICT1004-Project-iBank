@@ -1,3 +1,4 @@
+<?php include "php/session.php";?>
 <html>
     <head>
         <?php
@@ -280,8 +281,8 @@
                     $stmt = $conn->prepare("UPDATE customer_credentials SET password_hash=? WHERE customer_id=?");
 
                     // HARD CODED - TO DO CHANGE TO SESSION
-                    $id = 1;
-                    $stmt->bind_param("si", $new_pwd_hashed, $id);
+                    //$id = 1;
+                    $stmt->bind_param("si", $new_pwd_hashed, $_SESSION["customerId"]);
                     $stmt->execute();
 
                     if (!$stmt->affected_rows != 1) {

@@ -1,13 +1,16 @@
 <?php
-    session_start();
-    include "php/transferUnset.php";
+    include "php/session.php";
     include "php/transferFundHandler.php";
+    include "inputCheckHandler.php";
+    if ($_SESSION["originTransactionPage"] != $_SERVER["REQUEST_URI"]) {
+        include "./php/transferUnset.php";
+    }
 ?>
 <!DOCTYPE html>
 <html>
-    <?php include "head.inc.php"; ?>
+    <?php include "head.inc.php";?>
     <body>
-        <?php include "nav.inc.php"; ?>
+        <?php include "nav.inc.php";?>
         <div class="page-bg"></div>
             <div class="page-body">
                 <div class="page-content">
@@ -31,16 +34,14 @@
                     <main class="main-content">
                         <h2>Transfer to own account</h2>
                         <form class="form-validate" method="post" novalidate>
-                            <?php include_once "php/transferValidateHelper.php"; ?>
+                            <?php include "php/transferValidateHelper.php"; ?>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="from-account-select">Transfer from:</label>
                                 </div>
                                 <select class="custom-select" id="from-account-select" name="transferFromAccountIn" required="true">
                                     <option value="">Choose account...</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
+                                    <?php include "php/accountSelect.php";?>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please make a valid selection
@@ -53,9 +54,7 @@
                                 </div>
                                 <select class="custom-select" id="to-account-select" name="transferToAccountIn" required="true">
                                     <option value="">Choose account...</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
+                                    <?php include "php/accountSelect2.php";?>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please make a valid selection
@@ -69,7 +68,7 @@
                                 </div>
                                 <input class="form-control" type="text" id="transfer-amount" name="transferAmountIn"
                                     max length="45" placeholder="Enter amount" pattern="[0-9]+.?[0-9]*" required="true" title="Enter a valid amount to transfer"
-                                    value="<?php echo $_SESSION["amountIn"];?>">
+                                    value="<?php echo $_SESSION['amountIn'];?>">
                             <div class="invalid-feedback">
                                 Please enter a valid amount
                             </div>
@@ -78,6 +77,7 @@
                             <div class="form-group">
                                 <button class="btn btn-primary submit-button" type="submit">Submit</button>
                             </div>
+                            <?php //include "php/transferUnset.php";?>
                         </form>
                     </main>
                 </div>

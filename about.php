@@ -1,3 +1,4 @@
+<?php session_start();?>
 <html>
     <?php
         include "head.inc.php";

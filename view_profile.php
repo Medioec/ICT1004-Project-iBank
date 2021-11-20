@@ -1,3 +1,4 @@
+<?php include "php/session.php";?>
 <html>
     <head>
     <?php

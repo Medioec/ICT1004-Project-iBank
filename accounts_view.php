@@ -30,7 +30,7 @@
                     </div>
                     <div class="main-content">
                         <h2>Account Balances</h2>
-                        <?php include "php/balanceHandler.php";?>
+                        <div class="table-responsive"><?php include "php/balanceHandler.php";?></div>
                     </div>
                 </div>
                 <?php include "footer.inc.php";?>

@@ -11,7 +11,7 @@
         }
 
         $table = '
-            <table id="balance-table" class="table table-striped table-bordered dt-responsive wrap" style="width:100%">
+            <table id="balance-table" class="table table-striped wrap" style="width:100%">
                 <thead>
                     <tr>
                         <th>Account</th>

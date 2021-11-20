@@ -7,8 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
 require '/var/www/phpmailer/vendor/autoload.php';
-echo "script start";
-
+/*
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
@@ -19,10 +18,10 @@ $mail->Port = 587;
 $mail->SMTPAuth = true;
 $mail->SMTPSecure = 'tls';
 
-/* Username (email address). */
+//Username (email address).
 $mail->Username = 'double04bank@gmail.com';
 
-/* Google account password. */
+// Google account password.
 $mail->Password = 'longlongpassword123456';
 
 //To address and name
@@ -39,7 +38,7 @@ $mail->addReplyTo("reply@yourdomain.com", "Reply");
 $mail->isHTML(true);
 
 $mail->Subject = "Subject Text";
-$mail->Body = "<i>Mail body in HTML</i>";
+$mail->Body = "<i>Mail body in HTML</i>"; 
 $mail->AltBody = "This is the plain text version of the email content";
 
 try {
@@ -48,4 +47,5 @@ try {
 } catch (Exception $e) {
     echo "Mailer Error: " . $mail->ErrorInfo;
 }
+*/
 ?>

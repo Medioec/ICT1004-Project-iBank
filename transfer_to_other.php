@@ -1,7 +1,10 @@
 <?php 
-    session_start();
-    include "php/transferUnset.php";
+    include "php/session.php";
+    include "php/inputCheckHandler.php";
     include "php/transferFundHandler.php";
+    if ($_SESSION["originTransactionPage"] != $_SERVER["REQUEST_URI"]) {
+        include "php/transferUnset.php";
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,9 +41,7 @@
                                 </div>
                                 <select class="custom-select" id="from-account-select" name="transferFromAccountIn" required="true">
                                     <option value="">Choose account...</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
+                                    <?php include "php/accountSelect.php";?>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please make a valid selection
@@ -51,7 +52,7 @@
                                 <label for="to_account_other_select">Enter account number:</label>
                                 <input class="form-control" type="text" id="to_account_other_select" name="transferToAccountIn"
                                     max length="45" placeholder="Enter Account No." pattern="^[0-9]+$" required="true"
-                                    value="<?php echo $_SESSION["otherAccountId"];?>">
+                                    value="<?php echo $_SESSION["otherAccountIdIn"];?>">
                             <div class="invalid-feedback">
                                 Please enter an account number
                             </div>
@@ -72,6 +73,7 @@
                             <div class="form-group">
                                 <button class="btn btn-primary submit-button" type="submit">Submit</button>
                             </div>
+                            <?php //include "php/transferUnset.php";?>
                         </form>
                     </main>
                 </div>
