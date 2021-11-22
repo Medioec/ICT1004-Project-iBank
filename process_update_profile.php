@@ -115,7 +115,7 @@
                         // Additional check on last name field.
                         $phone = sanitize_input($_POST["phone"]);
                         if (!filter_var($phone, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Postal Code.";
+                            $errorMsg .= "Invalid Phone Number.";
                             $success = false;
                         }
                     }
