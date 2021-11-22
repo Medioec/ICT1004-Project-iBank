@@ -55,9 +55,10 @@
                                 <input class="form-control" type="email" id="email" required name="email"  value="<?php echo $email ?>" >
                             </div>
                             
+                            <!-- TO DO Alter DB to allow char(20), accepting country code -->
                             <div class="form-group">
-                                <label for="postal">Phone</label>
-                                <input class="form-control" type="text" id="phone" required name="phone"  value="<?php echo $phone ?>" >
+                                <label for="postal">Phone</label><br>
+                                <input class="form-control" type="tel" id="phone" required name="phone" size="150" value="<?php echo $phone ?>" >
                             </div>
                             
                             <h4>Password</h4>
@@ -94,6 +95,23 @@
                 include "footer.inc.php";
             ?>
             </main>
+        
+        <script src="phonecc/js/intlTelInput.js"></script>
+        <script>
+        // Vanilla Javascript
+        var input = document.querySelector("#phone");
+        window.intlTelInput(input,({
+        }));
+ 
+        $(document).ready(function() {
+            $('.iti__flag-container').click(function() { 
+              var countryCode = $('.iti__selected-flag').attr('title');
+              var countryCode = countryCode.replace(/[^0-9]/g,'');
+              $('#phone').val("");
+              $('#phone').val("+"+countryCode+" "+ $('#phone').val());
+           });
+        });
+        </script>
         </div>
     </body>
 </html>

@@ -1,4 +1,4 @@
-<?php// include "php/session.php";?>
+<?php //include "php/session.php";?>
 <html>
     <head>
     <?php
@@ -10,7 +10,6 @@
         include "nav.inc.php";
         include "php/viewUserData.php"
         ?>
-        
         
         <div class="page-bg"></div>
             <main class="page-body">
@@ -59,7 +58,7 @@
                             
                             <div class="form-group">
                                 <label for="postal">Phone</label>
-                                <input class="form-control" type="text" id="phone" required name="phone" value="<?php echo $phone?>" disabled>
+                                <input class="form-control" type="tel" id="phone" required name="phone" value="<?php echo $phone?>" disabled>
                             </div>
                             
 
