@@ -1,4 +1,4 @@
-<?php include "php/session.php";?>
+<?php //include "php/session.php";?>
 <html>
     <head>
     <?php

@@ -1,4 +1,4 @@
-<?php include "php/session.php";?>
+<?php// include "php/session.php";?>
 <html>
     <head>
     <?php
@@ -17,7 +17,7 @@
                 <div class="page-content">
                     <div class="main-content">
                        
-                        <h1>Hello, <?php $_SESSION[''] ?></h1>
+                        <h1>Hello, <?php $_SESSION['displayName'] ?></h1>
 
                         <form>
                             <h4>Basic Info</h4>
