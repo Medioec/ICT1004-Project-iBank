@@ -58,10 +58,14 @@
                 ?>
             </ul>
             <ul class="navbar-nav mt-lg-0 navbar-col-2">
-                <?php if (!isset($_SESSION["customerId"])) {
+                <?php
+                if (!isset($_SESSION["customerId"])) {
                     echo'
                     <li class="nav-item">
-                        <a class="nav-link" href="login.php">Sign-in</a>
+                        <a class="nav-link bi bi-box-arrow-in-right" href="login.php"> Sign-in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link bi bi-person-circle" href="registration.php"> Sign-up</a>
                     </li>
                     ';
                 } else {
