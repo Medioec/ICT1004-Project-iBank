@@ -116,6 +116,24 @@
                             $success = false;
                         }
                     }
+                    
+                    
+                    // USERNAME VALIDATION AND SANITIZATION (Required)
+                    if (empty($_POST["username"])) {
+                        $errorMsg .= "Username is required.<br>";
+                        $success = false;
+                    } else {
+                        // Additional check on last name field.
+                        $username = sanitize_input($_POST["username"]);
+                        
+                        if(!preg_match('/^[A-Za-z][A-Za-z0-9]{5,31}$/', $username)){
+                            $errorMsg .= "Username should contain only alphanumeric characters, length 5-30.";
+                            $success = false;
+                        }
+                        else{
+                            checkUsernameExist();
+                        }
+                    }
 
                     // PASSWORD VALIDATION FOR CURRENT PASWWORD (Required)
                     if (empty($_POST['pwd'])) {
@@ -125,19 +143,19 @@
                     // VALIDATING USING REGEX
                     else {
                         if (strlen($_POST['pwd']) < '8') {
-                            $errorMsg = "Password Must Contain At Least 8 Characters!<br>";
+                            $errorMsg .= "Password Must Contain At Least 8 Characters!<br>";
                             $success = false;
                         } elseif (!preg_match("#[0-9]+#", $_POST["pwd"])) {
-                            $errorMsg = "Password Must Contain At Least 1 Number!<br>";
+                            $errorMsg .= "Password Must Contain At Least 1 Number!<br>";
                             $success = false;
                         } elseif (!preg_match("#[A-Z]+#", $_POST["pwd"])) {
-                            $errorMsg = "Password Must Contain At Least 1 Capital Letter!<br>";
+                            $errorMsg .= "Password Must Contain At Least 1 Capital Letter!<br>";
                             $success = false;
                         } elseif (!preg_match("#[a-z]+#", $_POST["pwd"])) {
-                            $errorMsg = "Password Must Contain At Least 1 Lowercase Letter!<br>";
+                            $errorMsg .= "Password Must Contain At Least 1 Lowercase Letter!<br>";
                             $success = false;
                         } elseif ($_POST['pwd'] !== $_POST['cfm_pwd']) {
-                            $errorMsg = "Password Does Not Match!<br>";
+                            $errorMsg .= "Password Does Not Match!<br>";
                             $success = false;
                         }
                         // IF Passed REGEX validation, Cross check with DB for current password
@@ -153,9 +171,10 @@
                         registerUser();
                         updateCredential();
                         
-                        // TO-DO Implement PHP mail to send success registration email
                         echo "<h3>Registration Successful!</h3><br>";
                         echo "<h3>" . $_POST["lname"] . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h3><br>";
+                        // TO-DO Implement PHP mail to send success registration email
+                        echo "<h3> A confirmation email has been sent to ". $POST_["email"]. "</h3>";
                         date_default_timezone_set('Asia/Singapore');
                         echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
                         echo "<p><button onclick='goHome()' class='home_btn'>Home</button></p>";
@@ -189,7 +208,6 @@
 
 
             <?php
-
             // Function to check if email has been used
             function checkEmailExist() {
                 global $email, $errorMsg, $success;
@@ -210,7 +228,40 @@
                     $stmt->execute();
                     $result = $stmt->get_result();
                     if ($result->num_rows > 0) {
-                        $errorMsg = "This email has been registered.<br>";
+                        $errorMsg .= "This email has been registered.<br>";
+                        $success = false;
+                    }
+                    $stmt->close();
+                }
+                $conn->close();
+            }
+            ?>
+            
+            
+            
+            <?php
+
+            // Function to check if username has been used
+            function checkUsernameExist() {
+                global $username, $errorMsg, $success;
+
+                // Create database connection.
+                $config = parse_ini_file('../../private/db-config.ini');
+                $conn = new mysqli($config['servername'], $config['username'],
+                        $config['password'], $config['dbname']);
+
+                // Check connection
+                if ($conn->connect_error) {
+                    $errorMsg = "Connection failed: " . $conn->connect_error;
+                    $success = false;
+                } else {
+                    $stmt = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_username=?");
+                    $username = $_POST["username"];
+                    $stmt->bind_param("s", $username);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0) {
+                        $errorMsg .= "Username has been taken, Please select another username.<br>";
                         $success = false;
                     }
                     $stmt->close();
@@ -253,7 +304,7 @@
 
             // Function to register user into DB
             function updateCredential() {
-                global $pwd_hashed, $errorMsg, $success;
+                global $username, $pwd_hashed, $errorMsg, $success;
                 // Create database connection.
                 // TODO - CHANGE TO PDO
                 $config = parse_ini_file('../../private/db-config.ini');
@@ -270,7 +321,7 @@
                     // TO DO - customer_username, OTP, password_token, active
                     $dump = 'asdf';
                     $active = 1;
-                    $stmt_userCredential->bind_param("ssssi", $dump, $pwd_hashed, $dump, $dump, $active);
+                    $stmt_userCredential->bind_param("ssssi", $username, $pwd_hashed, $dump, $dump, $active);
                     $stmt_userCredential->execute();
 
                     if ($stmt_userCredential->affected_rows != 1) {

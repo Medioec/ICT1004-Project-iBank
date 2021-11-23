@@ -61,7 +61,12 @@
                             </div>
                             <hr>
                             
-                            <h4>Password</h4><br>
+                            <h4>Login Details</h4><br>
+
+                            <div class="form-group">
+                                <label for="username">Create a username</label>
+                                <input class="form-control" type="text" id="username" name="username" placeholder="Username (This will be used for login)" maxlength="30" required>
+                            </div>
                             
                             <div class="form-group">
                                 <label for="pwd">Set a Password</label>
@@ -71,6 +76,13 @@
                             <div class="form-group">
                                 <label for="pwd">Confirm Password</label>
                                 <input class="form-control" type="password" id="cfm_pwd" name="cfm_pwd" placeholder="Re-enter your password" required>
+                            </div>
+
+                            <div class="form-check">
+                                <label>
+                                    <input type="checkbox" name="agree" required>
+                                    Agree to terms and conditions.
+                                </label>
                             </div>
                             
                             <div class="form-group">
