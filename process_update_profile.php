@@ -171,7 +171,7 @@
                                 $errorMsg = "New Password Must Contain At Least 1 Lowercase Letter!<br>";
                                 $success = false;
                             } elseif ($_POST['new_pwd'] !== $_POST['cfm_pwd']) {
-                                $errorMsg = "New New Password Does Not Match!<br>";
+                                $errorMsg = "New Password Does Not Match!<br>";
                                 $success = false;
                             }elseif ($_POST['new_pwd'] == $_POST['pwd']) {
                                 $errorMsg = "New password cannot be same as Old password!<br>";
@@ -270,7 +270,7 @@
             <?php
             // Function to update user details into DB
             function updateUserDetails() {
-                global $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $email, $errorMsg, $success;
+                global $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $errorMsg, $success;
                 // Create database connection.
                 // TODO - CHANGE TO PDO
                 $config = parse_ini_file('../../private/db-config.ini');
@@ -288,7 +288,7 @@
                     $id = 1;
                     $stmt->bind_param("ssssssssi", $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $id);
                     $stmt->execute();
-                    if (!$stmt->affected_rows != 1) {
+                    if ($stmt->affected_rows != 1) {
                         $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                         $success = false;
                     }
@@ -321,7 +321,7 @@
                     $stmt->bind_param("si", $new_pwd_hashed, $id);
                     $stmt->execute();
 
-                    if (!$stmt->affected_rows != 1) {
+                    if ($stmt->affected_rows != 1) {
                         $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                         $success = false;
                     }
