@@ -61,9 +61,11 @@
                                 <input class="form-control" type="tel" id="phone" required name="phone" value="<?php echo $phone?>" disabled>
                             </div>
                             
+                            <hr><br>
 
                             <div class="form-group">
                             <button class= "btn btn-primary" type="button" onClick="location.href='./update_profile.php'">Update Details</button>
+                            <button class= "btn btn-danger" type="button" onClick="location.href='./deactivate_account.php'">Delete Account</button>
                             </div>
                         </form>
                     </div>

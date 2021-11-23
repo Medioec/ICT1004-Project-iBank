@@ -159,22 +159,22 @@
                         // VALIDATING USING REGEX
                         else {
                             if (strlen($_POST['new_pwd']) < '8') {
-                                $errorMsg = "New Password Must Contain At Least 8 Characters!<br>";
+                                $errorMsg .= "New Password Must Contain At Least 8 Characters!<br>";
                                 $success = false;
                             } elseif (!preg_match("#[0-9]+#", $_POST["new_pwd"])) {
-                                $errorMsg = "New Password Must Contain At Least 1 Number!<br>";
+                                $errorMsg .= "New Password Must Contain At Least 1 Number!<br>";
                                 $success = false;
                             } elseif (!preg_match("#[A-Z]+#", $_POST["new_pwd"])) {
-                                $errorMsg = "New Password Must Contain At Least 1 Capital Letter!<br>";
+                                $errorMsg .= "New Password Must Contain At Least 1 Capital Letter!<br>";
                                 $success = false;
                             } elseif (!preg_match("#[a-z]+#", $_POST["new_pwd"])) {
-                                $errorMsg = "New Password Must Contain At Least 1 Lowercase Letter!<br>";
+                                $errorMsg .= "New Password Must Contain At Least 1 Lowercase Letter!<br>";
                                 $success = false;
                             } elseif ($_POST['new_pwd'] !== $_POST['cfm_pwd']) {
-                                $errorMsg = "New Password Does Not Match!<br>";
+                                $errorMsg .= "New Password Does Not Match!<br>";
                                 $success = false;
                             }elseif ($_POST['new_pwd'] == $_POST['pwd']) {
-                                $errorMsg = "New password cannot be same as Old password!<br>";
+                                $errorMsg .= "New password cannot be same as Old password!<br>";
                                 $success = false;
                             } 
                             else {
@@ -252,7 +252,7 @@
 
                         // Check if current password user has entered == DB password
                         if (!password_verify($_POST["pwd"], $curr_pwd_hashed)) {
-                            $errorMsg = "Incorrect Password... Please verify with your current password";
+                            $errorMsg .= "Incorrect Password... Please verify with your current password";
                             $success = false;
                         }
 
