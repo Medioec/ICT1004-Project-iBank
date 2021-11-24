@@ -20,7 +20,7 @@ function changepwdCheck() {
     else document.getElementById('ifYes').style.display = 'none';
 
 };
-
+//Validates forms using bootstrap styling
 function validateForm(e) {
     var inputList = document.querySelectorAll(".form-control,.form-check-input");
     var valid = 1;

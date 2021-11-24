@@ -156,7 +156,7 @@
 
         $_SESSION["amountIn"] = $amountIn;
         $_SESSION["otherAccountIdIn"] = $fetchedOtherAccountId;
-        //$_SESSION["transferInputVerified"] = 0;
+        $_SESSION["transferSuccess"] = 1;
 
         header("Location: transfer_success.php");
     }
