@@ -18,7 +18,7 @@
                             For New members, please register at the registration page
                             <a href="register.php">Sign In page</a>. 
                         </p>
-                        <form action="php/loginProcess.php" method="post">
+                        <form action="loginProcess.php" method="post">
                             <div class="form-group">
                                 <label for="email">Email:</label>
                                 <input class="form-control" type="text" id="email" required name="username" size="30"

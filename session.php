@@ -1,7 +1,7 @@
 <?php
-	
-	require_once ('connect.php');
-	
+        //define('ROOTPATH', $_SERVER['DOCUMENT_ROOT']);
+        //set_include_path(ROOTPATH);
+	include_once ('php/connect.php');
 	session_start();
 	
 	$dbsuccess = false;
@@ -26,7 +26,7 @@
 	
 	if(($_SESSION['loggedin']!="1") || ($isActive=="0") || (!isset($isActive)) || ($_SESSION['otp']!="1")){
 		$_SESSION['loggedin']="0";
-		header("location:login.php");
+		//header("location: login.php");
     }
 
 	echo "<html oncontextmenu=\"return false\">";

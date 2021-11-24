@@ -1,4 +1,5 @@
 <?php
+    session_start();
     if ($_POST["confirm-logout"] != 1) {
         echo '
         <h2>Confirm Logout</h2>

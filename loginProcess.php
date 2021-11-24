@@ -7,13 +7,13 @@ ob_start();
     <head>
         <title>Login Results</title>
         <?php
-        include "../head.inc.php";
+        include "head.inc.php";
         ?>
-        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
         <?php
-        include "../nav.inc.php";
+        include "nav.inc.php";
         ?>
         <div class="page-bg"></div>
             <main class="page-body">
@@ -21,7 +21,7 @@ ob_start();
                     <div class="main-content">
 
 <?php
-include_once ('recaptchalib.php');
+include_once ('php/recaptchalib.php');
 
 $secret = "6Lcj-EQUAAAAAD-ujIV87baNc6XHVg0VpPqaabxc";
 $response = null;
@@ -32,9 +32,9 @@ $errorMsg = "<h2>Oops!</h2>"
         . "<h4>An error were detected: %s</h4>"
         . "<p>Please contact an administrator for help.</p>"
         . "<p>Redirecting back to Login page. Click on the button if the page does not redirect.</p>"
-        . "<a class='btn btn-danger' href='../login.php'>Return to Login</a>";
+        . "<a class='btn btn-danger' href='login.php'>Return to Login</a>";
 
-include_once ('connect.php');
+include_once ('php/connect.php');
 
 
 if (isset($_POST['username'])) {
@@ -73,7 +73,7 @@ if (isset($_POST['username'])) {
                     
                     if(isset($emailResult[0]['email'])) {
                         $lname = $emailResult[0]['last_name'];
-                        include_once ('sendmail.php');
+                        include_once ('php/sendmail.php');
                         $rndno=rand(100000, 999999);
                         if (phpMailer($emailResult[0]['email'], $thisusername, $rndno)) {
                             // Success
@@ -101,8 +101,8 @@ if (isset($_POST['username'])) {
                             $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
                             $failLog->execute();
                             
-                            header('Refresh: 3; URL=../login.php');
-                            //echo "<script>window.location.href = '../login.php';</script>";
+                            header('Refresh: 3; URL=login.php');
+                            //echo "<script>window.location.href = 'login.php';</script>";
                         }
                     }
                     else {
@@ -112,8 +112,8 @@ if (isset($_POST['username'])) {
                         $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
                         $failLog->execute();
                         
-                        header('Refresh: 3; URL=../login.php');
-                        //echo "<script>window.location.href = '../login.php';</script>";
+                        header('Refresh: 3; URL=login.php');
+                        //echo "<script>window.location.href = 'login.php';</script>";
                     }
                 }
                 else {
@@ -123,8 +123,8 @@ if (isset($_POST['username'])) {
                     $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
                     $failLog->execute();
                     
-                    header('Refresh: 3; URL=../login.php');
-                    //echo "<script>window.location.href = '../login.php';</script>";
+                    header('Refresh: 3; URL=login.php');
+                    //echo "<script>window.location.href = 'login.php';</script>";
                 }
         }
         else {
@@ -134,8 +134,8 @@ if (isset($_POST['username'])) {
             $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
             $failLog->execute();
             
-            header('Refresh: 3; URL=../login.php');
-            //echo "<script>window.location.href = '../login.php';</script>";
+            header('Refresh: 3; URL=login.php');
+            //echo "<script>window.location.href = 'login.php';</script>";
         }
     }
 }
@@ -145,8 +145,8 @@ else {
     $failLog = $connect->prepare($failSql);
     $failLog->execute();
     
-    header('Refresh: 3; URL=../login.php');
-    //echo "<script>window.location.href = '../login.php';</script>";
+    header('Refresh: 3; URL=login.php');
+    //echo "<script>window.location.href = 'login.php';</script>";
 }
 $connect->close();
 
