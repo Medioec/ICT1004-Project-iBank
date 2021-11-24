@@ -1,11 +1,7 @@
 <?php
-    $_SESSION["customerId"] = 2; //temporary session var to remove when login is done
-    function getBalance()
+    function getBalance($connect)
     {   
         $customerId = $_SESSION["customerId"];
-
-        include "connect.php";
-        include "balanceDatatable.php";
         
         $action = "SELECT * FROM `bank_account` 
             WHERE `account_id` IN
@@ -22,7 +18,12 @@
         catch(PDOException $e) {
             //echo "Retrieve failed: " . $e->getMessage();
         }
-        formBalanceTable($result);
+        if ($result) {
+            formBalanceTable($result);
+        } else {
+            echo '
+            <p>An error has occured in displaying this data. Please try again later.</p>
+            ';
+        }
     }
-    getBalance();
 ?>

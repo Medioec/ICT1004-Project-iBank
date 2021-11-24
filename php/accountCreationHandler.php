@@ -1,11 +1,5 @@
 <?php
-if ($_POST["submitClicked"]) {
-    include_once "php/inputCheckHandler";
-    include "php/connect.php";
-    createAccount();
-}
-
-function createAccount() {
+function createAccount($connect) {
     $accountType = sanitize_input($_POST["createType"]);
     $valid = $accountType == "Savings"||$accountType == "Checking";
     $success = 1;
@@ -47,5 +41,5 @@ function createAccount() {
             header("Location: accounts_create_success.php");
         }
     }
-    
 }
+?>

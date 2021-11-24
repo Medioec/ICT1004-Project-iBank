@@ -1,27 +1,6 @@
 <?php
-    include_once "php/inputCheckHandler.php";
-    include_once "php/connect.php";
-    include_once "php/transactionDatatable.php";
-
     function getTransaction($connect)
     {
-
-        //temporary testing without login
-        $session_user = "test";
-        if (!isset($_SESSION['customer_id'])) {
-            $action = 'SELECT `customer_id` FROM `customer_credentials` WHERE `customer_username` = ?;';
-            $stmt = $connect->prepare($action);
-            $stmt->bindParam(1, $session_user, PDO::PARAM_STR);
-            try {
-                $stmt->execute();
-                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-            catch(PDOException $e) {
-                //echo "Retrieve failed: " . $e->getMessage();
-            }
-            $_SESSION["customerId"] = $result[0]['customer_id'];
-        }
-
         $accountId = $fromDate = $toDate = "";
         $accountId = sanitize_input($_POST["accountIn"]);
         $fromDate = sanitize_input($_POST["fromDateIn"]);
@@ -75,8 +54,5 @@
             echo "Retrieve failed: " . $e->getMessage();
         }
         formTransactionTable($result, $accountId);
-    }
-    if ($_POST["submit-button-clicked"] == 1) {
-        getTransaction($connect);
     }
 ?>

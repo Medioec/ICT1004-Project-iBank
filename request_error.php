@@ -1,4 +1,5 @@
 <?php
+include "session.php";
 if (!$_SESSION["sqlFailed"]) {
     header("Location: accounts_view.php");
 }
@@ -15,7 +16,7 @@ if (!$_SESSION["sqlFailed"]) {
         <div class="page-bg"></div>
             <div class="page-body minw-500">
                 <div class="page-content minw-500">
-                    <?php include "sideMenu.php";?>
+                    <?php include "sideMenu.inc.php";?>
                     <div class="main-content">
                         <h2>Request Error</h2>
                         <p>An error has occured on the server side. Please try again at a later time.<p>
