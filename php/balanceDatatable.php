@@ -45,7 +45,7 @@ if (0) {
                             <p class="card-text">$'.$row["balance"].'</p>
                         </div>
                         <div class=col-auto>
-                            <button class="btn btn-primary" type="submit" name="accountId" value="'.$row["account_id"].'">Manage</a>
+                            <button class="btn btn-primary mt-3" type="submit" name="accountId" value="'.$row["account_id"].'">Manage</a>
                         </div>
                     </div>
                 </div>
