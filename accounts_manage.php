@@ -72,8 +72,7 @@
                     <div class="main-content">
                         <h2>Account Detail</h2>
                         <h3>Your transactions over the past month:</h3>
-                        <?php 
-                        include "php/genericFormValidate.php";
+                        <?php
                         formTransactionTable($result, $accountId);
                         ?>
                         <h2>Delete Account</h2>

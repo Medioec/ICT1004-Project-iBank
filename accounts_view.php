@@ -20,7 +20,7 @@ if (isset($_POST["accountId"])) {
                 <?php include "sideMenu.inc.php";?>
                     <div class="main-content">
                         <h2>Account Balances</h2>
-                        <?php getBalance($connect);?>
+                        <?php $_SESSION["originTransactionPage"] = $_SERVER['REQUEST_URI']; getBalance($connect);?>
                     </div>
                 </div>
                 <?php include "footer.inc.php";?>
