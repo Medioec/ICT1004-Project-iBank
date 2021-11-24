@@ -226,7 +226,7 @@
             <?php            
             // Function to cross check current password = password in DB
             function checkCurrentPwd() {
-                global $fname, $lname, $email, $pwd_hashed, $errorMsg, $success;
+                global $curr_pwd_hashed, $errorMsg, $success;
 
                 // Create database connection.
                 $config = parse_ini_file('../../private/db-config.ini');
@@ -252,7 +252,7 @@
 
                         // Check if current password user has entered == DB password
                         if (!password_verify($_POST["pwd"], $curr_pwd_hashed)) {
-                            $errorMsg .= "Incorrect Password... Please verify with your current password";
+                            $errorMsg .= "Incorrect Password... Please verify with your current password<br>";
                             $success = false;
                         }
 
