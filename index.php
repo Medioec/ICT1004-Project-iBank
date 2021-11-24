@@ -14,13 +14,13 @@ and open the template in the editor.
         ?>
         <div class='page-bg'></div>
             <div class="page-body minw-500">
-                <div class="page-content minw-500">
+                <div class="header_content">
                     <header class="">
                         <h1 class="">Welcome to Double'O4 Banking</h1>
                     </header>                  
                 </div>
                 <div class="page_carousel">  
-                    <main class="page-content minw-500">
+                    <main class="content">
                         <div id="carousel" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#carousel" data-slide-to="0" class="active"></li>
