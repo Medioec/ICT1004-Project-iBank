@@ -22,6 +22,9 @@
     include_once "connect.php";
     $thiscustomerid = $_SESSION['customerId'];
     
+    $months = array(1 => 'Jan.', 2 => 'Feb.', 3 => 'Mar.', 4 => 'Apr.', 5 => 'May', 6 => 'Jun.', 7 => 'Jul.', 8 => 'Aug.', 9 => 'Sep.', 10 => 'Oct.', 11 => 'Nov.', 12 => 'Dec.');
+    
+    
     // Get individual balance amount for bank accounts tied to customer id
     $balanceSql = "SELECT `balance` FROM bank_account "
             . "WHERE `account_id` IN "
@@ -48,11 +51,11 @@
     $accountINArray = implode(',', array_fill(0, count($accountArray), '?'));
     
     // Get credit bank transactions from account number
-    $creditTransactionSql = "SELECT SUM(`amount`) AS `total`, monthname(timestamp) AS `month` "
+    $creditTransactionSql = "SELECT SUM(`amount`) AS `total`, MONTH(`timestamp`) AS `month` "
             . "FROM `transaction_data` "
             . "WHERE `credit_id` IN (".$accountINArray.")  AND (`timestamp` > timestamp(DATE_SUB(NOW(), INTERVAL 4 MONTH))) "
-            . "GROUP BY `timestamp` "
-            . "ORDER BY `timestamp` ASC;"; 
+            . "GROUP BY MONTH(`timestamp`) "
+            . "ORDER BY MONTH(`timestamp`) ASC;"; 
     $creditTransactionStmt = $connect->prepare($creditTransactionSql);
     $c = 0;
     foreach ($accountArray as $key=> $acc) {
@@ -63,11 +66,11 @@
     $creditTransactionResult = $creditTransactionStmt->fetchAll(PDO::FETCH_ASSOC);
     
     // Get debit bank transactions from account number
-    $debitTransactionSql = "SELECT SUM(`amount`) AS `total`, monthname(timestamp) AS `month` "
+    $debitTransactionSql = "SELECT SUM(`amount`) AS `total`, MONTH(`timestamp`) AS `month` "
             . "FROM `transaction_data` "
             . "WHERE `debit_id` IN (".$accountINArray.")  AND (`timestamp` > timestamp(DATE_SUB(NOW(), INTERVAL 4 MONTH))) "
-            . "GROUP BY `timestamp` "
-            . "ORDER BY `timestamp` ASC;"; 
+            . "GROUP BY MONTH(`timestamp`) "
+            . "ORDER BY MONTH(`timestamp`) ASC;"; 
     $debitTransactionStmt = $connect->prepare($debitTransactionSql);
     $c = 0;
     foreach ($accountArray as $key=> $acc) {
@@ -80,10 +83,11 @@
     // Get all the months of the transactions
     $dMonthArray = array_column($debitTransactionResult, 'month');
     $cMonthArray = array_column($creditTransactionResult, 'month');
-    $monthArray = array_values(array_unique(array_merge ($cMonthArray, $dMonthArray)));
+    $tempArray = array_merge($cMonthArray, $dMonthArray);
+    sort($tempArray );
+    $monthArray = array_values(array_unique($tempArray));
     
     $cTotalArray = array();
-    
     $c = 0;
     foreach ($monthArray as $month) {
         if(in_array($month,$creditTransactionResult[$c])) {
@@ -109,6 +113,18 @@
         $c++;
     }
     
+    for($x =0; $x < count($monthArray); $x++) {
+        foreach ($months as $monthnumber => $monthname) {
+            if($monthArray[$x] == $monthnumber){
+                $monthArray[$x] = $monthname;
+            }
+        }
+    }
+//    print_r($creditTransactionResult);
+//    echo "<br>";
+//    print_r($debitTransactionResult);
+//    echo "<br>";
+//    print_r($monthArray);
     ?>
     <script>
         // Doughnut Account Chart
