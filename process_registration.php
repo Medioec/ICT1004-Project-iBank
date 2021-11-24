@@ -24,7 +24,7 @@
                     // FIRST NAME VALIDATION AND SANITIZATION (Nullable)
                     $fname = sanitize_input($_POST["fname"]);
                     if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
-                        $errorMsg .= "Invalid Name format.";
+                        $errorMsg .= "Invalid Name format.<br>";
                         $success = false;
                     }
 
@@ -36,7 +36,7 @@
                         // Additional check on last name field.
                         $lname = sanitize_input($_POST["lname"]);
                         if (!filter_var($lname, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Name format.";
+                            $errorMsg .= "Invalid Name format.<br>";
                             $success = false;
                         }
                     }
@@ -49,7 +49,7 @@
                         // Additional check on last name field.
                         $fullname = sanitize_input($_POST["fullname"]);
                         if (!filter_var($fullname, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Name format.";
+                            $errorMsg .= "Invalid Name format.<br>";
                             $success = false;
                         }
                     }
@@ -62,7 +62,7 @@
                         // Additional check on last name field.
                         $street1 = sanitize_input($_POST["street1"]);
                         if (!filter_var($street1, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Street Name.";
+                            $errorMsg .= "Invalid Street Name.<br>";
                             $success = false;
                         }
                     }
@@ -71,7 +71,7 @@
                     // Additional check on last name field.
                     $street2 = sanitize_input($_POST["street2"]);
                     if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
-                        $errorMsg .= "Invalid Street Name.";
+                        $errorMsg .= "Invalid Street Name.<br>";
                         $success = false;
                     }
 
@@ -83,7 +83,7 @@
                         // Additional check on last name field.
                         $postal = sanitize_input($_POST["postal"]);
                         if (!filter_var($postal, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Postal Code.";
+                            $errorMsg .= "Invalid Postal Code.<br>";
                             $success = false;
                         }
                     }
@@ -112,7 +112,7 @@
                         // Additional check on last name field.
                         $phone = sanitize_input($_POST["phone"]);
                         if (!filter_var($phone, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Phone Number.";
+                            $errorMsg .= "Invalid Phone Number.<br>";
                             $success = false;
                         }
                     }
@@ -127,7 +127,7 @@
                         $username = sanitize_input($_POST["username"]);
                         
                         if(!preg_match('/^[A-Za-z][A-Za-z0-9]{5,31}$/', $username)){
-                            $errorMsg .= "Username should contain only alphanumeric characters, length 5-30.";
+                            $errorMsg .= "Username should contain only alphanumeric characters, length 5-30.<br>";
                             $success = false;
                         }
                         else{
@@ -182,9 +182,9 @@
                     }
                     // Else, show unsuccessful messages
                     else {
-                        echo "<h3>Registration Unsuccessful</h3>";
+                        echo "<h3><i class='bi bi-exclamation-square'></i> Registration Unsuccessful</h3>";
                         echo "<h5>The following errors were detected:</h5>";
-                        echo "<p style='color:red'>" . $errorMsg . "</p>";
+                        echo "<p style='color:red'>". $errorMsg . "</p>";
                         echo "<p><button onclick='goBack()' class='return_btn'>Return to update details</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
                     }

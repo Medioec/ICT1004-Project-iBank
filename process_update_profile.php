@@ -198,7 +198,7 @@
                     // Else, show unsuccessful messages
                     else {
                         echo "<h3>Unsuccessful Update</h3>";
-                        echo "<h5>The following errors were detected:</h5>";
+                        echo "<h5><i class='bi bi-exclamation-square'></i> The following errors were detected:</h5>";
                         echo "<p style='color:red'>" . $errorMsg . "</p>";
                         echo "<p><button onclick='goBack()' class='return_btn'>Return to update details</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
