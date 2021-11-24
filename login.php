@@ -16,7 +16,7 @@
                         <h1>Member Login</h1>
                         <p>   
                             For New members, please register at the registration page
-                            <a href="register.php">Sign In page</a>. 
+                            <a href="register.php">Sign Up page</a>. 
                         </p>
                         <form action="loginProcess.php" method="post">
                             <div class="form-group">
