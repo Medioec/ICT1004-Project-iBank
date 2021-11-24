@@ -1,36 +1,26 @@
-<?php session_start();?>
+<?php
+include "session.php";
+include "php/connect.php";
+include "php/balanceHandler.php";
+include "php/balanceDatatable.php";
+include "php/inputCheckHandler.php";
+if (isset($_POST["accountId"])) {
+    $_SESSION["selectedAccount"] = sanitize_input($_POST["accountId"]);
+    header("Location: accounts_manage.php");
+}
+?>
 <!DOCTYPE html>
 <html>
-    <?php
-        include "head.inc.php";
-    ?>
+    <?php include "head.inc.php";?>
     <body>
-        <?php
-            include "nav.inc.php";
-        ?>
+        <?php include "nav.inc.php";?>
         <div class="page-bg"></div>
             <div class="page-body minw-500">
                 <div class="page-content minw-500">
-                    <div class="side-menu">
-                        <h2>Links</h2>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="accounts_view.php">View accounts</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="transfer_to_own.php">Transfer to own account</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="transfer_to_other.php">Transfer to other account</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="view_transaction.php">View transaction history</a>
-                            </li>
-                        </ul>
-                    </div>
+                <?php include "sideMenu.inc.php";?>
                     <div class="main-content">
                         <h2>Account Balances</h2>
-                        <div class="table-responsive"><?php include "php/balanceHandler.php";?></div>
+                        <?php getBalance($connect);?>
                     </div>
                 </div>
                 <?php include "footer.inc.php";?>

@@ -91,7 +91,7 @@ if (isset($_POST['username'])) {
                             echo "<h4>Click on the button if the page does not redirect.</h4>";
                             echo "<a class='btn btn-success' href='otp.php'>OTP</a>";
                             
-                            header('Refresh: 3; URL=otp.php');
+                            header('Refresh: 3; URL=OTP.php');
                             //echo "<script>window.location.replace('otp.php');</script>";
                         }
                         else {

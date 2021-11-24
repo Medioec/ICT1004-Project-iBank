@@ -1,9 +1,9 @@
 <?php
-    include "php/session.php";
-    include "php/transferFundHandler.php";
-    include "inputCheckHandler.php";
+    include "session.php";
+    include_once "php/transferFundHandler.php";
+    include_once "php/inputCheckHandler.php";
     if ($_SESSION["originTransactionPage"] != $_SERVER["REQUEST_URI"]) {
-        include "./php/transferUnset.php";
+        include "php/transferUnset.php";
     }
 ?>
 <!DOCTYPE html>
@@ -14,23 +14,7 @@
         <div class="page-bg"></div>
             <div class="page-body">
                 <div class="page-content">
-                    <div class="side-menu">
-                        <h2>Links</h2>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="accounts_view.php">View accounts</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="transfer_to_own.php">Transfer to own account</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="transfer_to_other.php">Transfer to other account</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a class="side-menu-link text-secondary" href="view_transaction.php">View transaction history</a>
-                            </li>
-                        </ul>
-                    </div>
+                <?php include "sideMenu.inc.php";?>
                     <main class="main-content">
                         <h2>Transfer to own account</h2>
                         <form class="form-validate" method="post" novalidate>

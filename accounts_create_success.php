@@ -1,4 +1,4 @@
-<?php include "php/session.php";
+<?php include "session.php";
 if (!$_SESSION["sqlSuccess"]) {
     header("Location: accounts_view.php");
 }
