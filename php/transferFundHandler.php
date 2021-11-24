@@ -85,7 +85,7 @@
             return;
         }
 
-        if( ($fetchedAccountBalance - $amountIn) <= 0){
+        if( ($fetchedAccountBalance - $amountIn) < 0){
             $_SESSION["inputInvalid"] = 2;
             
             //header("Location: ".$_SESSION["originTransactionPage"]);
