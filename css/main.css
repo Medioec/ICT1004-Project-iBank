@@ -191,11 +191,7 @@ button.navbar-toggler {
     max-width: 1000px;
     margin-top: 40px;
 }
-/* Use class plsss
-h5 {
-    text-align: center;
-}
-*/
+
 .header_content {
     margin-top: 80px;
     display: flex;
@@ -216,16 +212,24 @@ h5 {
     gap: 30px;
 }
 
-.about-imgs {
-    width: 80%;
-    height: 60%;
+.about_imgs {
+    width: 100%;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
-    display: block;
+    display: inline-block;
 }
 
-.about-header {
+.about_header {
     text-align: center;
+}
+
+.general_header {
+    margin-top: 100px;
+    margin-left: 85px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }
 /*Page body end*/
 /* Forms*/

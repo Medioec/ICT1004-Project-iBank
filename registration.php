@@ -31,7 +31,24 @@
                                 <label for="lname">Full name</label>
                                 <input class="form-control" type="text" id="fullname" name="fullname" placeholder="Enter your Full Name" required>
                             </div>
-                            <hr>
+                            <div class="form-group">
+                                <label for="nric">NRIC / Passport No.</label>
+                                <input class="form-control" type="text" id="nric" name="nric" placeholder="Enter your NRIC / Passport Number" maxlength="9" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">D.O.B</label>
+                                <input class="form-control" onfocus="(this.type='date')" id="dob" name="dob" placeholder="D.O.B (dd/mm/yyyy)" onkeydown="return false" required>
+                                <p style="font-size:10px"><em> (Min. age for registration is 16 year old and above.)</em></p>                           
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label><br>
+                                <select id="gender" name="gender" class="form-control">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="others">Others</option>
+                                </select>
+                            </div>
+                            <hr>                            
                             
                             <h4>Address</h4><br>
                             <div class="form-group">
@@ -110,6 +127,23 @@
               $('#phone').val("+"+countryCode+" "+ $('#phone').val());
            });
         });
+        </script>
+
+        
+        <script>
+        // Min Age to setup account = 16 yo
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear() - 15;
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        } 
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("dob").setAttribute("max", today);
         </script>
         </div>
     </body>
