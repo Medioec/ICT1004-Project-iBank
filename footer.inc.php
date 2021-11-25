@@ -41,6 +41,6 @@
                 </ul>
             </li>
         </ul>
-        <p class="copyright">Copyright &copy; 2020 Double'O4 Bank</p>
+        <p class="copyright">Copyright &copy; 2021 Double'O4 Bank</p>
     </div>
 </footer>
