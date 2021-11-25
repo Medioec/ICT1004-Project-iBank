@@ -16,32 +16,32 @@
                         <h1 style="text-align:center"> <i class="bi bi-piggy-bank"></i> Become a OO4 Member <i class="bi bi-cash-coin"></i></h1><br>
                        
                         <form action="process_registration.php" method="post">
-                            
-                            <h4>Name</h4><br>
+                            <p style="font-size:10px">Please complete the form below. <br> All fields marked with (*) are required</p>
+                            <h4>Personal Details</h4><br>
                             <div class="form-group">
                                 <label for="fname">First name</label>
                                 <input class="form-control" type="text" id="fname" name="fname" placeholder="Enter your First Name">
                             </div>
                             
                             <div class="form-group">
-                                <label for="lname">Last name</label>
+                                <label for="lname">Last name*</label>
                                 <input class="form-control" type="text" id="lname" name ="lname" placeholder="Enter your Last Name" required>
                             </div>
                             <div class="form-group">
-                                <label for="lname">Full name</label>
+                                <label for="lname">Full name*</label>
                                 <input class="form-control" type="text" id="fullname" name="fullname" placeholder="Enter your Full Name" required>
                             </div>
                             <div class="form-group">
-                                <label for="nric">NRIC / Passport No.</label>
+                                <label for="nric">NRIC / Passport No.*</label>
                                 <input class="form-control" type="text" id="nric" name="nric" placeholder="Enter your NRIC / Passport Number" maxlength="9" required>
                             </div>
                             <div class="form-group">
-                                <label for="dob">D.O.B</label>
+                                <label for="dob">D.O.B*</label>
                                 <input class="form-control" onfocus="(this.type='date')" id="dob" name="dob" placeholder="D.O.B (dd/mm/yyyy)" onkeydown="return false" required>
                                 <p style="font-size:10px"><em> (Min. age for registration is 16 year old and above.)</em></p>                           
                             </div>
                             <div class="form-group">
-                                <label for="gender">Gender</label><br>
+                                <label for="gender">Gender*</label><br>
                                 <select id="gender" name="gender" class="form-control">
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -52,7 +52,7 @@
                             
                             <h4>Address</h4><br>
                             <div class="form-group">
-                                <label for="street1">Street 1</label>
+                                <label for="street1">Street 1*</label>
                                 <input class="form-control" type="text" id="street1" name="street1" placeholder="Street 1" required>
                             </div>
                             <div class="form-group">
@@ -60,20 +60,20 @@
                                 <input class="form-control" type="text" id="street2" name="street2" placeholder="Street 2">
                             </div>
                             <div class="form-group">
-                                <label for="postal">Postal</label>
+                                <label for="postal">Postal*</label>
                                 <input class="form-control" type="text" id="postal" name="postal" placeholder="Postal Code" required>
                             </div>
                             <hr>
                             
                             <h4>Contact Info</h4><br>
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">Email*</label>
                                 <input class="form-control" type="email" id="email" name="email" placeholder="Enter your Email address" required>
                             </div>
                             
                             <!-- TO DO Alter DB to allow char(20), accepting country code -->
                             <div class="form-group">
-                                <label for="postal">Phone</label><br>
+                                <label for="postal">Phone*</label><br>
                                 <input class="form-control" type="tel" id="phone" name="phone" size="150" placeholder="Enter your Mobile Number" required>
                             </div>
                             <hr>
@@ -81,17 +81,17 @@
                             <h4>Login Details</h4><br>
 
                             <div class="form-group">
-                                <label for="username">Create a username</label>
+                                <label for="username">Create a username*</label>
                                 <input class="form-control" type="text" id="username" name="username" placeholder="Username (This will be used for login)" maxlength="30" required>
                             </div>
                             
                             <div class="form-group">
-                                <label for="pwd">Set a Password</label> <i class="bi bi-eye-slash" id="togglePwd"></i>
+                                <label for="pwd">Set a Password*</label>  <i class="bi bi-eye-slash" id="togglePwd"></i>
                                 <input class="form-control"  type="password" id="pwd" name="pwd" placeholder="Enter a password for your account" required>
                             </div>
       
                             <div class="form-group">
-                                <label for="cfm_pwd">Confirm Password</label> <i class="bi bi-eye-slash" id="toggleCfmPwd"></i>
+                                <label for="cfm_pwd">Confirm Password*</label>  <i class="bi bi-eye-slash" id="toggleCfmPwd"></i>
                                 <input class="form-control" type="password" id="cfm_pwd" name="cfm_pwd" placeholder="Re-enter your password" required>
                             </div>
 
