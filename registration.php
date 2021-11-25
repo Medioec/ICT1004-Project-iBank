@@ -37,7 +37,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="dob">D.O.B</label>
-                                <input class="form-control" onfocus="(this.type='date')" id="dob" name="dob" placeholder="D.O.B (dd/mm/yyyy)" required>
+                                <input class="form-control" onfocus="(this.type='date')" id="dob" name="dob" placeholder="D.O.B (dd/mm/yyyy)" onkeydown="return false" required>
+                                <p style="font-size:10px"><em> (Min. age for registration is 16 year old and above.)</em></p>                           
                             </div>
                             <div class="form-group">
                                 <label for="gender">Gender</label><br>
