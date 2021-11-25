@@ -72,15 +72,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="pwd">Enter Current Password</label>
+                                <label for="pwd">Enter Current Password</label> <i class="bi bi-eye-slash" id="togglePwd"></i>
                                 <input class="form-control" type="password" id="pwd" required name="pwd">
                             </div>
 
                             <div class="form-group" id="ifYes">
-                                <label for="new_pwd">New Password</label>
+                                <label for="new_pwd">New Password</label> <i class="bi bi-eye-slash" id="toggleNewPwd"></i>
                                 <input class="form-control" type="password" id="new_pwd" name="new_pwd"><br>
                                 
-                                <label for="new_pwd">Confirm New Password</label>
+                                <label for="new_pwd">Confirm New Password</label> <i class="bi bi-eye-slash" id="toggleCfmPwd"></i>
                                 <input class="form-control" type="password" id="cfm_pwd" name="cfm_pwd">
                             </div>
 
@@ -96,10 +96,9 @@
             ?>
             </main>
         
-        <script defer src="js/updateProfile.js"></script>
+        <script defer src="js/profile.js"></script>
         <script src="phonecc/js/intlTelInput.js"></script>
         <script>
-        // Vanilla Javascript
         var input = document.querySelector("#phone");
         window.intlTelInput(input,({
         }));

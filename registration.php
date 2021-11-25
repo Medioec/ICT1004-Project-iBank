@@ -86,12 +86,12 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="pwd">Set a Password</label>
-                                <input class="form-control" type="password" id="pwd" name="pwd" placeholder="Enter a password for your account" required>
+                                <label for="pwd">Set a Password</label> <i class="bi bi-eye-slash" id="togglePwd"></i>
+                                <input class="form-control"  type="password" id="pwd" name="pwd" placeholder="Enter a password for your account" required>
                             </div>
-
+      
                             <div class="form-group">
-                                <label for="pwd">Confirm Password</label>
+                                <label for="cfm_pwd">Confirm Password</label> <i class="bi bi-eye-slash" id="toggleCfmPwd"></i>
                                 <input class="form-control" type="password" id="cfm_pwd" name="cfm_pwd" placeholder="Re-enter your password" required>
                             </div>
 
@@ -113,6 +113,7 @@
             ?>
             </main>
         
+        <script defer src="js/profile.js"></script>
         <script src="phonecc/js/intlTelInput.js"></script>
         <script>
         var input = document.querySelector("#phone");
@@ -145,6 +146,6 @@
         today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("dob").setAttribute("max", today);
         </script>
-        </div>
+
     </body>
 </html>
