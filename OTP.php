@@ -75,7 +75,7 @@ else if (isset($_SESSION['username'])) {
 }
 
 if(($activeResult[0]['active'] == "0") || (!isset($activeResult[0]['active']))) {
-    echo "<script>window.location.href = 'login.php';</script>";
+    header('URL=index.php');
 }
 
 echo "<html oncontextmenu=\"return false\">";                    
@@ -117,8 +117,24 @@ if (isset($_POST['try'])) {
                 catch(PDOException $e) {
                     //echo "Retrieve failed: " . $e->getMessage();
                 }
+                
                 $_SESSION["firstName"] = $result[0]['first_name'];
                 $_SESSION["lastName"] = $result[0]['last_name'];
+                
+                //get customer gender for salutation title
+                $action = 'SELECT `gender` FROM `sensitive_info` WHERE `ic_number` = '
+                        . '(SELECT `ic_number` FROM `sensitive_ref` WHERE `customer_id`= ?);';
+                $stmt = $connect->prepare($action);
+                $stmt->bindParam(1, $_SESSION["customerId"], PDO::PARAM_STR);
+                try {
+                    $stmt->execute();
+                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    //echo "Retrieve failed: " . $e->getMessage();
+                }
+                
+                $_SESSION["gender"] = $result[0]['gender'];
 
                 if ($_SESSION["firstName"]) {
                     $_SESSION["displayName"] = $_SESSION["firstName"];

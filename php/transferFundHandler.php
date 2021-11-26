@@ -1,36 +1,11 @@
 <?php
-    include_once "php/inputCheckHandler.php";
-    include "./php/connect.php";
-
-    $confirmTransfer = 0;
-    if(isset($_POST["confirmTransfer"])) {
-        if ($_POST["confirmTransfer"]) {
-            $confirmTransfer = 1;
-        }
-    }
-    $toVerify = 0;
-    if(isset($_POST["verifyTransfer"])) {
-        if ($_POST["verifyTransfer"]) {
-            $toVerify = 1;
-        }
-    }
-
-    if ($confirmTransfer)
-    {
-        executeTransaction($connect);
-	}
-    else if ($toVerify)
-    {
-        verifyTransaction($connect);
-    }
-
     function verifyTransaction($connect)
     {
         $customerId = $_SESSION["customerId"];
         $accountId = $otherAccountId = $amountIn = $abort = "";
-        $accountId = sanitize_input($_POST["transferFromAccountIn"]);
-        $otherAccountId = sanitize_input($_POST["transferToAccountIn"]);
-        $amountIn = sanitize_input($_POST["transferAmountIn"]);
+        $accountId = sanitize_input($_POST["accountId"]);
+        $otherAccountId = sanitize_input($_POST["otherAccountId"]);
+        $amountIn = sanitize_input($_POST["amountIn"]);
         $abort = checkValidNum($accountId) + checkValidNum($otherAccountId) + checkValidMoney($amountIn);
         $_SESSION["accountIdIn"] = $accountId;
         $_SESSION["otherAccountIdIn"] = $otherAccountId;
@@ -92,20 +67,20 @@
             return;
         }
 
-        $_SESSION["fetchedOtherAccountId"] = $fetchedOtherAccountId;
-        $_SESSION["fetchedAccountId"] = $fetchedAccountId;
+        $_SESSION["otherAccountId"] = $fetchedOtherAccountId;
+        $_SESSION["accountId"] = $fetchedAccountId;
         $_SESSION["amountIn"] = $amountIn;
-        $_SESSION["transferInputVerified"] = 1;
         header("Location: transfer_confirm.php");
 
     }
     function executeTransaction($connect)
     {
-        $fetchedOtherAccountId = $_SESSION["fetchedOtherAccountId"];
-        $fetchedAccountId = $_SESSION["fetchedAccountId"];
+        $fetchedOtherAccountId = $_SESSION["otherAccountId"];
+        $fetchedAccountId = $_SESSION["accountId"];
         $amountIn = $_SESSION["amountIn"];
         $currentTimestamp = date("Y-m-d H:i:s");
         $transferType = "OTRF";
+        $success = 0;
 
         //add new transaction data
         $action = "INSERT INTO `transaction_data`(`credit_id`,`debit_id`,`amount`,`type`,`timestamp`) VALUES (?,?,?,?,?);";
@@ -117,10 +92,15 @@
         $stmt->bindParam(5, $currentTimestamp, PDO::PARAM_STR);
 
         try {
-            $stmt->execute();
+            $success = $stmt->execute();
         }
         catch(PDOException $e) {
             //echo "Retrieve failed: " . $e->getMessage();
+            header("Location: transfer_error.php");
+            return;
+        }
+
+        if ($connect->lastInsertId() == NULL||!$success) {
             header("Location: transfer_error.php");
             return;
         }
@@ -130,23 +110,10 @@
         $stmt = $connect->prepare($action);
         $stmt->bindParam(1, $amountIn, PDO::PARAM_STR);
         $stmt->bindParam(2, $fetchedOtherAccountId, PDO::PARAM_STR);
+        $success = 0;
         
         try {
-            $stmt->execute();
-        }
-        catch(PDOException $e) {
-            //echo "Retrieve failed: " . $e->getMessage();
-            header("Location: transfer_error.php");
-            return;
-        }
-        //update user balance
-        $action = "UPDATE `bank_account` SET `balance` = `balance` - ? WHERE `account_id` = ?;";
-        $stmt = $connect->prepare($action);
-        $stmt->bindParam(1, $amountIn, PDO::PARAM_STR);
-        $stmt->bindParam(2, $fetchedAccountId, PDO::PARAM_STR);
-        
-        try {
-            $stmt->execute();
+            $success = $stmt->execute();
         }
         catch(PDOException $e) {
             //echo "Retrieve failed: " . $e->getMessage();
@@ -154,8 +121,34 @@
             return;
         }
 
+        if (!$success) {
+            header("Location: transfer_error.php");
+            return;
+        }
+
+        //update user balance
+        $action = "UPDATE `bank_account` SET `balance` = `balance` - ? WHERE `account_id` = ?;";
+        $stmt = $connect->prepare($action);
+        $stmt->bindParam(1, $amountIn, PDO::PARAM_STR);
+        $stmt->bindParam(2, $fetchedAccountId, PDO::PARAM_STR);
+        $success = 0;
+        
+        try {
+            $success = $stmt->execute();
+        }
+        catch(PDOException $e) {
+            //echo "Retrieve failed: " . $e->getMessage();
+            header("Location: transfer_error.php");
+            return;
+        }
+
+        if (!$success) {
+            header("Location: transfer_error.php");
+            return;
+        }
+
         $_SESSION["amountIn"] = $amountIn;
-        $_SESSION["otherAccountIdIn"] = $fetchedOtherAccountId;
+        $_SESSION["otherAccountIn"] = $fetchedOtherAccountId;
         $_SESSION["transferSuccess"] = 1;
 
         header("Location: transfer_success.php");

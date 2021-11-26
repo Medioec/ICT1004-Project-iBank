@@ -8,18 +8,8 @@ $(document).ready(function() {
             }
         )
     
-    changepwdCheck();
 } );
 
-// For Update Profile Radio Buttons
-function changepwdCheck() {
-    if (document.getElementById('y_changepwd').checked) {
-        document.getElementById('ifYes').style.display = 'block';
-    }
-    
-    else document.getElementById('ifYes').style.display = 'none';
-
-};
 //Validates forms using bootstrap styling
 function validateForm(e) {
     var inputList = document.querySelectorAll(".form-control,.form-check-input");

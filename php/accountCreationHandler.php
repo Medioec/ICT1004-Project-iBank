@@ -40,6 +40,8 @@ function createAccount($connect) {
             $_SESSION["newAccountId"] = $newAccountId;
             header("Location: accounts_create_success.php");
         }
+    } else {
+        $_SESSION["inputInvalid"] = 1;
     }
 }
 ?>

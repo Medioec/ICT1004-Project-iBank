@@ -1,4 +1,16 @@
-<?php session_start(); $_SESSION["transferInputVerified"] = 0;?>
+<?php include "session.php";
+if (!isset($_SESSION["transferSuccess"])) {
+    header("Location: transfer_to_own.php");
+} else {
+    unset($_SESSION["transferSuccess"]);
+    $amountIn = $_SESSION["amountIn"];
+    $otherAccountId = $_SESSION["otherAccountId"];
+    unset($_SESSION["accountId"]);
+    unset($_SESSION["otherAccountId"]);
+    unset($_SESSION["amountIn"]);
+    unset($_SESSION["transferSuccess"]);
+}
+?>
 <!DOCTYPE html>
 <html>
     <?php include "head.inc.php"; ?>
@@ -10,10 +22,9 @@
                 <?php include "sideMenu.inc.php";?>
                     <div class="main-content">
                         <h2>Transaction Complete</h2>
-                        <p>You have successfully transferred $<?php echo $_SESSION["amountIn"];?> to Account no. <?php echo $_SESSION["otherAccountIdIn"];?>.<p>
+                        <p>You have successfully transferred $<?php echo $amountIn;?> to Account no. <?php echo $otherAccountId;?>.<p>
                         <a type="button" class="btn btn-primary" href="<?php echo $_SESSION["originTransactionPage"];?>">Back</a>
                     </div>
-                    <?php include "./php/transferUnset.php";?>
                 </div>
                 <?php include "footer.inc.php";?>
             </div>

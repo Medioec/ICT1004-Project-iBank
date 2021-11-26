@@ -91,7 +91,7 @@ if (isset($_POST['username'])) {
                             echo "<h4>Click on the button if the page does not redirect.</h4>";
                             echo "<a class='btn btn-success' href='otp.php'>OTP</a>";
                             
-                            header('Refresh: 3; URL=OTP.php');
+                            header('Refresh: 3; URL=otp.php');
                             //echo "<script>window.location.replace('otp.php');</script>";
                         }
                         else {
@@ -148,7 +148,7 @@ else {
     header('Refresh: 3; URL=login.php');
     //echo "<script>window.location.href = 'login.php';</script>";
 }
-$connect->close();
+//$connect->close();
 
 function sanitize_input($data) {
     $data = trim($data);

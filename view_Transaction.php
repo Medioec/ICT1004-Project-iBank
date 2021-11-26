@@ -1,12 +1,11 @@
 <?php 
     include "session.php";
     include "php/inputCheckHandler.php";
-    if ($_SESSION["originTransactionPage"] != $_SERVER["REQUEST_URI"]) {
-        include "php/transferUnset.php";
-    }
     include "php/connect.php";
     include "php/transactionDatatable.php";
     include "php/transactionViewHandler.php";
+    include "php/formValidateHelper.php";
+    include "php/accountSelectHelper.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,14 +19,14 @@
                     <main class="main-content">
                         <h2>View transactions</h2>
                         <form class="form-validate" method="post" novalidate>
-                            <?php include_once "php/viewTransactionValidateHelper.php";?>
+                            <?php genericValidate();?>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="account-select">Account:</label>
                                 </div>
-                                <select class="custom-select" id="account-select" name="accountIn" required="true">
+                                <select class="custom-select" id="account-select" name="accountId" required="true">
                                     <option value="">Choose account...</option>
-                                    <?php include_once "php/viewTransactionAccountSelect.php";?>
+                                    <?php generateAccountSelect($connect, 0);?>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please make a valid selection
@@ -45,9 +44,8 @@
                                     value="<?php echo sanitize_input($_POST["toDateIn"]);?>">
                                 </div>
                             </div>
-                            <input type="hidden" name="submit-button-clicked" value="1"></input>
                             <div class="form-group">
-                                <button class="btn btn-primary submit-button" type="submit">Submit</button>
+                                <button class="btn btn-primary submit-button" type="submit" name="submit-button-clicked" value="1">Submit</button>
                             </div>
                         </form>
                         <div class="table-responsive"><?php

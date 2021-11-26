@@ -1,10 +1,14 @@
 <?php
     include "session.php";
-    include_once "php/transferFundHandler.php";
-    include_once "php/inputCheckHandler.php";
-    if ($_SESSION["originTransactionPage"] != $_SERVER["REQUEST_URI"]) {
-        include "php/transferUnset.php";
+    include "php/inputCheckHandler.php";
+    if (isset($_POST["submitClicked"])) {
+        if ($_POST["submitClicked"] == 1);
+        $_SESSION["submitClicked"] = 1;
+        include "php/transferFundHandler.php";
+        verifyTransaction($connect);
     }
+    include "php/formValidateHelper.php";
+    include "php/accountSelectHelper.php"
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,15 +21,16 @@
                 <?php include "sideMenu.inc.php";?>
                     <main class="main-content">
                         <h2>Transfer to own account</h2>
+
                         <form class="form-validate" method="post" novalidate>
-                            <?php include "php/transferValidateHelper.php"; ?>
+                            <?php genericValidate(); balanceVaidate();?>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="from-account-select">Transfer from:</label>
                                 </div>
-                                <select class="custom-select" id="from-account-select" name="transferFromAccountIn" required="true">
+                                <select class="custom-select" id="from-account-select" name="accountId" required="true">
                                     <option value="">Choose account...</option>
-                                    <?php include "php/accountSelect.php";?>
+                                    <?php generateAccountSelect($connect, 0);?>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please make a valid selection
@@ -36,9 +41,9 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="to-account-select">Transfer to:</label>
                                 </div>
-                                <select class="custom-select" id="to-account-select" name="transferToAccountIn" required="true">
+                                <select class="custom-select" id="to-account-select" name="otherAccountId" required="true">
                                     <option value="">Choose account...</option>
-                                    <?php include "php/accountSelect2.php";?>
+                                    <?php generateAccountSelect($connect, 1);?>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please make a valid selection
@@ -50,18 +55,16 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">$</span>
                                 </div>
-                                <input class="form-control" type="text" id="transfer-amount" name="transferAmountIn"
-                                    max length="45" placeholder="Enter amount" pattern="[0-9]+.?[0-9]*" required="true" title="Enter a valid amount to transfer"
-                                    value="<?php echo $_SESSION['amountIn'];?>">
-                            <div class="invalid-feedback">
-                                Please enter a valid amount
+                                <input class="form-control" type="text" id="transfer-amount" name="amountIn"
+                                    max length="45" placeholder="Enter amount" pattern="[0-9]+.?[0-9]*" required="true" title="Enter a valid amount to transfer, accepts numbers only"
+                                    value="<?php echo sanitize_input($_POST["amountIn"]);?>">
+                                <div class="invalid-feedback">
+                                    Please use only numbers to enter a valid amount
+                                </div>
                             </div>
-                            </div>
-                            <input type="hidden" name="verifyTransfer" value = 1>
                             <div class="form-group">
-                                <button class="btn btn-primary submit-button" type="submit">Submit</button>
+                                <button class="btn btn-primary submit-button" name="submitClicked" value = 1 type="submit">Submit</button>
                             </div>
-                            <?php //include "php/transferUnset.php";?>
                         </form>
                     </main>
                 </div>

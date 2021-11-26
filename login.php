@@ -13,29 +13,35 @@
             <main class="page-body">
                 <div class="page-content">
                     <div class="main-content">
-                        <h1>Member Login</h1>
+                        <h1>Login</h1>
                         <p>   
-                            For New members, please register at the registration page
-                            <a href="register.php">Sign In page</a>. 
+                            For new users, please register a new account  
+                            <a href="register.php">here</a>. 
                         </p>
-                        <form action="loginProcess.php" method="post">
+                        <form action="loginProcess.php" method="post" class="form-validate" novalidate>
                             <div class="form-group">
-                                <label for="email">Email:</label>
+                                <label for="email">Username:</label>
                                 <input class="form-control" type="text" id="email" required name="username" size="30"
                                     placeholder="Enter username">
+                                <div class="invalid-feedback">
+                                    Please fill in your username
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="pwd">Password:</label>
                                 <input class="form-control" type="password" id="password" required name="password"
                                     placeholder="Enter password">
+                                <div class="invalid-feedback">
+                                    Please fill in your password
+                                </div>
                             </div>
                             
                             <div class="form-group">
                                 <div class="g-recaptcha" data-sitekey="6Lcj-EQUAAAAAOR5N9iKG3EUYwJGecrPrCl4rJrc"></div>
                             </div>
                             <div class="form-group">
-                                <button class= "btn btn-primary" type="submit" name="submit">Submit</button>
+                                <button class= "btn btn-primary submit-button" type="submit" name="submit">Submit</button>
                             </div>
                         </form>
                     </div>

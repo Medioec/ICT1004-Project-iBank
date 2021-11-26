@@ -2,7 +2,7 @@
     function getTransaction($connect)
     {
         $accountId = $fromDate = $toDate = "";
-        $accountId = sanitize_input($_POST["accountIn"]);
+        $accountId = sanitize_input($_POST["accountId"]);
         $fromDate = sanitize_input($_POST["fromDateIn"]);
         $toDate = sanitize_input($_POST["toDateIn"]);
 
@@ -53,6 +53,7 @@
         catch(PDOException $e) {
             echo "Retrieve failed: " . $e->getMessage();
         }
+        // function in transactionDatatable.php
         formTransactionTable($result, $accountId);
     }
 ?>

@@ -1,4 +1,6 @@
-<?php include "session.php";
+<?php 
+include "session.php";
+include "php/formValidateHelper.php";
 if ($_POST["submitClicked"]) {
     include "php/inputCheckHandler.php";
     include "php/connect.php";
@@ -19,16 +21,15 @@ if ($_POST["submitClicked"]) {
                         <h2>Create Account</h2>
                         <form method="post" novalidate>
                         <div class="form-group">
-                            <?php include "php/genericFormValidate.php";?>
+                            <?php genericValidate();?>
                             <label for="select-type">Account Type:</label>
                             <select class="custom-select" id="select-type" name="createType" required="true">
                                 <option selected>Select account type</option>
                                 <option value="Checking">Checking Account</option>
                                 <option value="Savings">Savings Account</option>
                             </select>
-                            <input type="hidden" value="1" name="submitClicked">
                             <div class="form-group">
-                                <button class="btn btn-primary submit-button mt-3" type="submit">Create</button>
+                                <button class="btn btn-primary submit-button mt-3" name="submitClicked" value = 1 type="submit">Create account</button>
                             </div>
                         </div>
                         </form>

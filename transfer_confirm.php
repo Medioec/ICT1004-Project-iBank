@@ -1,8 +1,18 @@
 <?php
-    session_start();
-    include "php/transferFundHandler.php";
-    if (!$_SESSION["transferInputVerified"]) {
+    include "session.php";
+    include "php/inputCheckHandler.php";
+    if (basename($_SESSION["originTransactionPage"]) != "transfer_to_own.php" &&
+        basename($_SESSION["originTransactionPage"]) != "transfer_to_other.php" ||
+        !isset($_SESSION["originTransactionPage"])) {
         header("Location: transfer_to_own.php");
+    }
+    if (!isset($_SESSION["submitClicked"])) {
+        header("Location: ".$_SESSION["originTransactionPage"]);
+    } else if (isset($_POST["confirmTransferClicked"])) {
+        unset($_SESSION["submitClicked"]);
+        include "php/connect.php";
+        include "php/transferFundHandler.php";
+        executeTransaction($connect);
     }
 ?>
 <!DOCTYPE html>
@@ -17,7 +27,7 @@
                     <div class="main-content">
                         <h2>Verify Transaction Details</h2>
                         <p>You are about to transfer $<?php echo $_SESSION["amountIn"];?> to:</p> 
-                        <p>Account no: <?php echo $_SESSION["fetchedOtherAccountId"];?></p> 
+                        <p>Account no: <?php echo $_SESSION["otherAccountId"];?></p> 
                         <p>Please confirm if you wish to proceed with the transaction.</p>
                         
                         
@@ -26,7 +36,7 @@
                                 <input type="checkbox" class="form-check-input" id="transferConfirmationCheckbox" required="true">
                                 <label class="form-check-label mb-3" for="transferConfirmationCheckbox">I wish to proceed</label>
                             </div>
-                            <input type="hidden" name="confirmTransfer" value = 1>
+                            <input type="hidden" name="confirmTransferClicked" value = 1>
                             <div class="form-group">
                                 <a type="button" class="btn btn-secondary" href="<?php echo $_SESSION["originTransactionPage"];?>">Back</a>
                                 <button type="submit" class="btn btn-danger submit-button">Transfer $<?php echo $_SESSION["amountIn"];?> 

@@ -98,7 +98,6 @@
         
         <script src="phonecc/js/intlTelInput.js"></script>
         <script>
-        // Vanilla Javascript
         var input = document.querySelector("#phone");
         window.intlTelInput(input,({
         }));

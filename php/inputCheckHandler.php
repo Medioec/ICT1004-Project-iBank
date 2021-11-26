@@ -16,4 +16,9 @@
             return 1;
         }
     }
+    function checkValidAlpha($data) {
+        if(!preg_match("/^[a-zA-z]+[ a-zA-z]*$/", $data)) {
+            return 1;
+        }
+    }
 ?>

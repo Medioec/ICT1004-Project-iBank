@@ -96,6 +96,7 @@
             ?>
             </main>
         
+        <script defer src="js/updateProfile.js"></script>
         <script src="phonecc/js/intlTelInput.js"></script>
         <script>
         // Vanilla Javascript
