@@ -30,31 +30,22 @@
                 <div class="about-content">    
                     <main class="content">
                         <section class="about-section">
-                            <img class="about-imgs" src="images/history.jpg" alt="History">
+                            <img class="about-imgs" src="images/history.jpg" width = "330" height ="300" alt="History">
                             <h2>History</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur 
-                                adipiscing elit. Cras quis nisl varius, posuere 
-                                erat sed, consectetur arcu. Suspendisse viverra 
-                                odio tincidunt felis rutrum, non commodo lorem 
-                                porttitor.</p>
+                            <p>It all began during the fall of 2021 where 5 guys, Eric, Alford, Wee Yee, Ming Wei and Prince came together one night 
+                            after a good ol' hearty meal decided to embark on a journey few men has ever sought to build a magical bank made with magical touches.
+                            These touches are straight from the heart of these brave young men.</p>
                         </section>
                         <section class="about-section">
-                            <img class="about-imgs" src="images/business.jpg" alt="Business">
+                            <img class="about-imgs" src="images/business.jpg" width = "330" height ="300" alt="Business">
                             <h2>Our Business</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur 
-                                adipiscing elit. Cras quis nisl varius, posuere 
-                                erat sed, consectetur arcu. Suspendisse viverra 
-                                odio tincidunt felis rutrum, non commodo lorem 
-                                porttitor.</p>
+                            <p>Our business offers a wide range of variety from insurance to keeping your loved one's safe.</p>
                         </section>
                         <section class="about-section">
-                            <img class="about-imgs" src="images/community.jpg" alt="Community">
+                            <img class="about-imgs" src="images/community.jpg" width = "330" height ="300" alt="Community">
                             <h2>Community Involvement</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur 
-                                adipiscing elit. Cras quis nisl varius, posuere 
-                                erat sed, consectetur arcu. Suspendisse viverra 
-                                odio tincidunt felis rutrum, non commodo lorem 
-                                porttitor.</p>
+                            <p>We have helped those in need and removes interests to those who are need of money and gives them the flexibility to pay back whenever 
+                            they can within a specific time frame in which they decide. The only interest free loan bank.</p>
                         </section>
                     </main>
                 </div>

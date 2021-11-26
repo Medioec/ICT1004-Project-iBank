@@ -20,7 +20,7 @@
                         <form action="process_deactivate.php" method="post">
                             <h4 style="color:red">This action cannot be reverted</h4><br>
                             <div class="form-group">
-                                <label for="pwd">Enter Password to proceed</label>
+                                <label for="pwd">Enter Password to proceed</label> <i class="bi bi-eye-slash" id="togglePwd"></i>
                                 <input class="form-control" type="password" id="pwd" required name="pwd">
                             </div>
 
@@ -44,6 +44,8 @@
                 include "footer.inc.php";
             ?>
             </main>
+        
+        <script defer src="js/profile.js"></script>
         
         </div>
     </body>

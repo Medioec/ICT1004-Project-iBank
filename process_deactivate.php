@@ -10,8 +10,9 @@
         include "nav.inc.php";
         ?>  
         <div class="page-bg"></div>
-        <div class="page-content">
-            <div class="main-content">
+            <main class="page-body">
+                <div class="page-content">
+                    <div class="main-content">
 
                 <?php
                 // IF REQUEST METHOD IS POST, NOT GET
@@ -169,6 +170,7 @@
 
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>
