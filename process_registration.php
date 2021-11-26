@@ -1,4 +1,4 @@
-<?php //include "session.php";  ?>
+<?php include "session.php";  ?>
 <html>
     <head>
         <?php
@@ -210,6 +210,10 @@
                         updateCredential();
                         updateSensitiveInfo();
                         
+                        // Send confirmation email
+                        include_once ('php/sendmail.php');
+                        phpMailerRegistration($_POST["email"], $_POST["lname"]);
+                        
                         echo "<h3>Registration Successful!</h3><br>";
                         echo "<h3>" . $_POST["lname"] . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h3><br>";
                         // TO-DO Implement PHP mail to send success registration email
@@ -391,8 +395,8 @@
                     $success = false;
                 } else {
                     // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 1;
+                    $id = $_SESSION["customerId"];
+                    //$id = 1;
                     $stmt_sensitiveRef = $conn->prepare("INSERT INTO sensitive_ref (customer_id, ic_number) VALUES (?,?)");
                     $stmt_sensitiveRef->bind_param("is", $id, $nric);
                     $stmt_sensitiveRef->execute();
