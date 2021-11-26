@@ -1,4 +1,4 @@
-<?php //include "session.php";?>
+<?php include "session.php";?>
 <html>
     <head>
         <?php
@@ -108,8 +108,8 @@
                 else {
                     $stmt = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_id=?");
                     // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 1;
+                    $id = $_SESSION["customerId"];
+                    //$id = 1;
                     $stmt->bind_param("s", $id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -152,8 +152,8 @@
                     $stmt = $conn->prepare("UPDATE customer_credentials SET active=? WHERE customer_id=?");
 
                      // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 1;
+                    $id = $_SESSION["customerId"];
+                    //$id = 1;
                     $active = 0;
                     $stmt->bind_param("ii", $active, $id);
                     $stmt->execute();
