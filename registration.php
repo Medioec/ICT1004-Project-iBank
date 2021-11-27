@@ -20,16 +20,16 @@
                             <h4>Personal Details</h4><br>
                             <div class="form-group">
                                 <label for="fname">First name</label>
-                                <input class="form-control" type="text" id="fname" name="fname" placeholder="Enter your First Name">
+                                <input class="form-control" type="text" id="fname" name="fname" maxlength="45" placeholder="Enter your First Name">
                             </div>
                             
                             <div class="form-group">
                                 <label for="lname">Last name*</label>
-                                <input class="form-control" type="text" id="lname" name ="lname" placeholder="Enter your Last Name" required>
+                                <input class="form-control" type="text" id="lname" name ="lname" maxlength="45" placeholder="Enter your Last Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="lname">Full name*</label>
-                                <input class="form-control" type="text" id="fullname" name="fullname" placeholder="Enter your Full Name" required>
+                                <input class="form-control" type="text" id="fullname" name="fullname" maxlength="150" placeholder="Enter your Full Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="nric">NRIC / Passport No.*</label>
@@ -53,28 +53,28 @@
                             <h4>Address</h4><br>
                             <div class="form-group">
                                 <label for="street1">Street 1*</label>
-                                <input class="form-control" type="text" id="street1" name="street1" placeholder="Street 1" required>
+                                <input class="form-control" type="text" id="street1" name="street1" maxlength="100" placeholder="Street 1" required>
                             </div>
                             <div class="form-group">
                                 <label for="street2">Street 2</label>
-                                <input class="form-control" type="text" id="street2" name="street2" placeholder="Street 2">
+                                <input class="form-control" type="text" id="street2" name="street2" maxlength="100" placeholder="Street 2">
                             </div>
                             <div class="form-group">
                                 <label for="postal">Postal*</label>
-                                <input class="form-control" type="text" id="postal" name="postal" placeholder="Postal Code" required>
+                                <input class="form-control" type="text" id="postal" name="postal" minlength="6" maxlength="6" placeholder="Postal Code" required>
                             </div>
                             <hr>
                             
                             <h4>Contact Info</h4><br>
                             <div class="form-group">
                                 <label for="email">Email*</label>
-                                <input class="form-control" type="email" id="email" name="email" placeholder="Enter your Email address" required>
+                                <input class="form-control" type="email" id="email" name="email" maxlength="100" placeholder="Enter your Email address" required>
                             </div>
                             
                             <!-- TO DO Alter DB to allow char(20), accepting country code -->
                             <div class="form-group">
                                 <label for="postal">Phone*</label><br>
-                                <input class="form-control" type="tel" id="phone" name="phone" size="150" placeholder="Enter your Mobile Number" required>
+                                <input class="form-control" type="tel" id="phone" name="phone" size="150" maxlength="20" placeholder="Enter your Mobile Number" required>
                             </div>
                             <hr>
                             
@@ -82,7 +82,7 @@
 
                             <div class="form-group">
                                 <label for="username">Create a username*</label>
-                                <input class="form-control" type="text" id="username" name="username" placeholder="Username (This will be used for login)" maxlength="30" required>
+                                <input class="form-control" type="text" id="username" name="username" maxlength="30" placeholder="Username (This will be used for login)" maxlength="30" required>
                             </div>
                             
                             <div class="form-group">

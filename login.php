@@ -21,7 +21,7 @@
                         <form action="loginProcess.php" method="post">
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input class="form-control" type="text" id="email" required name="username" size="30"
+                                <input class="form-control" type="text" id="email" required name="username" size="30" maxlength="30" 
                                     placeholder="Enter username">
                             </div>
 

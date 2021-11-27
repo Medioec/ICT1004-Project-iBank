@@ -180,8 +180,8 @@
                     }
                     // VALIDATING USING REGEX
                     else {
-                        if (strlen($_POST['pwd']) < '8') {
-                            $errorMsg .= "Password Must Contain At Least 8 Characters!<br>";
+                        if (strlen($_POST['pwd']) < '12') {
+                            $errorMsg .= "Password Must Contain At Least 12 Characters!<br>";
                             $success = false;
                         } elseif (!preg_match("#[0-9]+#", $_POST["pwd"])) {
                             $errorMsg .= "Password Must Contain At Least 1 Number!<br>";
