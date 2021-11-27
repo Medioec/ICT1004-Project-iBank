@@ -47,10 +47,11 @@
                             // HASH THE PASSWORD and check if it matches password in DB
                             $pwd_hashed = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
                             checkCurrentPwd();
+                            checkAccountBalance();
                         }
                     }
                     
-
+                    
                     // If Success, Deactive account and destroy session
                     if ($success) {
                         deactivateAccount();
@@ -90,7 +91,8 @@
             </div>
             
             
-            <?php            
+            <?php       
+            
             // Function to cross check current password = password in DB
             function checkCurrentPwd() {
                 global $pwd_hashed, $errorMsg, $success;
@@ -127,6 +129,45 @@
                     else {
                         $errorMsg = "Error, no data found";
                         $success = false;
+                    }
+                    $stmt->close();
+                }
+                $conn->close();
+            }
+            ?>
+                    
+            <?php        
+            
+            // Function to check if balance in all accounts is 0 before deactivation
+            function checkAccountBalance() {
+                global $balance, $errorMsg, $success;
+
+                // Create database connection.
+                $config = parse_ini_file('../../private/db-config.ini');
+                $conn = new mysqli($config['servername'], $config['username'],
+                        $config['password'], $config['dbname']);
+
+                // Check connection
+                if ($conn->connect_error) {
+                    $errorMsg = "Connection failed: " . $conn->connect_error;
+                    $success = false;
+                }
+
+                else {
+                    $stmt = $conn->prepare("SELECT * FROM bank_account B, bank_accounts_ref R where customer_id = ? AND B.account_id = R.account_id");
+                    // HARD CODED - TODO CHANGE TO SESSION
+                    $id = $_SESSION["customerId"];
+                    //$id = 1;
+                    $stmt->bind_param("i", $id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $row = $result->fetch_assoc();
+                    $balance = $row["balance"];
+                    
+                    if ($balance > 0.00) {
+                        $errorMsg = "You have outstanding balance in your accounts, please head down to the bank to process deactivation.";
+                        $success = false;
+                        
                     }
                     $stmt->close();
                 }
