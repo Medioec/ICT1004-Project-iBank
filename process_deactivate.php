@@ -1,4 +1,4 @@
-<?php //include "session.php";?>
+<?php include "session.php";?>
 <html>
     <head>
         <?php
@@ -110,8 +110,8 @@
                 else {
                     $stmt = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_id=?");
                     // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 1;
+                    $id = $_SESSION["customerId"];
+                    //$id = 1;
                     $stmt->bind_param("i", $id);
                     $stmt->execute();
                     $result = $stmt->get_result();

@@ -244,7 +244,7 @@
                     // HARD CODED - TODO CHANGE TO SESSION
                     $id = $_SESSION["customerId"];
                     //$id = 1;
-                    $stmt->bind_param("s", $id);
+                    $stmt->bind_param("i", $id);
                     $stmt->execute();
                     $result = $stmt->get_result();
                     if ($result->num_rows > 0) {
