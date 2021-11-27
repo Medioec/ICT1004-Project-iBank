@@ -154,7 +154,9 @@
                 }
 
                 else {
-                    $stmt = $conn->prepare("SELECT * FROM bank_account B, bank_accounts_ref R where customer_id = ? AND B.account_id = R.account_id");
+                    //$stmt = $conn->prepare("SELECT * FROM bank_account B, bank_accounts_ref R WHERE customer_id = ? AND B.account_id = R.account_id");
+                    $stmt = $conn->prepare("SELECT sum(balance) AS acc_sum FROM bank_account B, bank_accounts_ref R WHERE customer_id = ? AND B.account_id = R.account_id");
+                    
                     // HARD CODED - TODO CHANGE TO SESSION
                     $id = $_SESSION["customerId"];
                     //$id = 1;
@@ -162,7 +164,8 @@
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $row = $result->fetch_assoc();
-                    $balance = $row["balance"];
+                    //$balance = $row["balance"];
+                    $balance = $row["acc_sum"];
                     
                     if ($balance > 0.00) {
                         $errorMsg = "You have outstanding balance in your accounts, please head down to the bank to process deactivation.";
