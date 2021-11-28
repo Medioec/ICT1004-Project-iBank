@@ -1,4 +1,4 @@
-<?php include "session.php";?>
+<?php //include "session.php";?>
 <html>
     <head>
         <?php
@@ -55,11 +55,15 @@
                     // If Success, Deactive account and destroy session
                     if ($success) {
                         deactivateAccount();
-                        session_unset();
-                        session_destroy();
-                        echo "<h3>Your account has be deactivated</h3><br>";
+                        unset($_SESSION["customerId"]);
+                        unset($_SESSION['loggedin']);
+                        //session_unset();
+                        //session_destroy();
+                        echo "<h3>Your account has been deactivated</h3><br>";
                         date_default_timezone_set('Asia/Singapore');
                         echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
+                        echo '<p><h5> Redirecting you to homepage... </h5></p>';
+                        header("refresh: 60; url = ./index.php");
                         echo "<p><button onclick='goHome()' class='btn btn-primary'>Home</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
                     }
