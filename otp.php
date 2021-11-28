@@ -153,7 +153,7 @@ if (isset($_POST['try'])) {
             $otpFailStmt->bindParam(1,$session_user, PDO::PARAM_STR);
             $otpFailStmt->execute();
             
-            header('Refresh: 3;');
+            header('Refresh: 5;');
             //echo "<script>window.location.href = 'login.php';</script>";
 	}
 }
@@ -187,7 +187,7 @@ else if(isset($_POST['retry'])) {
             $failLog->bindParam(1,$session_user, PDO::PARAM_STR);
             $failLog->execute();
 
-            header('Refresh: 3; URL=login.php');
+            header('Refresh: 5; URL=login.php');
             //echo "<script>window.location.href = 'login.php';</script>";
         }
     }
@@ -199,7 +199,7 @@ else if(isset($_POST['retry'])) {
         $failLog->bindParam(1,$session_user, PDO::PARAM_STR);
         $failLog->execute();
 
-        header('Refresh: 3; URL=login.php');
+        header('Refresh: 5; URL=login.php');
         //echo "<script>window.location.href = 'login.php';</script>";
     }
 }

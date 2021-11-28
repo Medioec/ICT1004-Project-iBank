@@ -60,7 +60,7 @@
                         echo "<h3>Your account has be deactivated</h3><br>";
                         date_default_timezone_set('Asia/Singapore');
                         echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
-                        echo "<p><button onclick='goHome()' class='home_btn'>Home</button></p>";
+                        echo "<p><button onclick='goHome()' class='btn btn-primary'>Home</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
                     }
                     // Else, show unsuccessful messages
@@ -68,7 +68,7 @@
                         echo "<h3>Unsuccessful</h3>";
                         echo "<h5>The following errors were detected:</h5>";
                         echo "<p style='color:red'>" . $errorMsg . "</p>";
-                        echo "<p><button onclick='goBack()' class='return_btn'>Back</button></p>";
+                        echo "<p><button onclick='goBack()' class='btn btn-primary'>Back</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
                     }
                 }
