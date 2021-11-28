@@ -89,7 +89,9 @@ function phpMailerRegistration($email, $lname) {
     $mail->isHTML(true);
 
     $mail->Subject = "Double' o4 Bank Member Registration";
-    $mail->Body = "<h2>Registration Sucessful\n". $lname . "</h2> <p>You're now a member of Double04Bank</p>";
+    $mail->Body = "<h2>Hey there, " . $lname . "!</h2> "
+            . "<p>Registration Sucessful</p>"
+            . "<p>You're now a member of Double '04 Bank.</p>";
     $mail->AltBody = "Registration successful";
     
     $success = false;
@@ -139,10 +141,11 @@ function phpMailerPwd($userEmail, $userName, $token, $url) {
     $mail->isHTML(true);
 
     $mail->Subject = "Double' o4 Bank Password Reset";
-    $mail->Body = "<h2>Hey there " . $userName . "!</h2> "
+    $mail->Body = "<h2>Hey there!</h2> "
             . "<p>Please use this link to reset your password.</p>"
+			. "<p> Username: ".$userName . "</p>"
             . "<p>Password Reset Link: " . $url . "?token=" . $token . "</p>";
-    $mail->AltBody = "Hey there " . $userName . "! Please use this link to reset your password. Password Reset Link: " . $url . "?token=" . $token;
+    $mail->AltBody = "Hey there! Please use this link to reset your password. Username: ".$userName . " Password Reset Link: " . $url . "?token=" . $token;
     
     $success = false;
     try {

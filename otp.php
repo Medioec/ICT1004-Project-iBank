@@ -35,18 +35,18 @@ function sanitize_input($data) {
 }
 $otpBody = "<h2>One-Time Password (OTP)</h2>%s"
             . "<p>Please check your Spam folder if the email is not found.</p>"
-            . "<form method=\"post\">" 
-                . "<div class=\"form-group\">"
-                    ."<label for=\"otp\">OTP:</label>"
-                    ."<input class=\"form-control\" type=\"text\" id=\"otp\" min=\"100000\" max=\"999999\" pattern=\"[0-9]{0.6}\" required name=\"otp\" size=\"6\" placeholder=\"OTP\">"
+            . "<form method='post'>" 
+                . "<div class='form-group'>"
+                    ."<label for='otp'>OTP:</label>"
+                    ."<input class='form-control' type='text' id='otp' min='100000' max='999999' pattern='[0-9]{0.6}' required name='otp' size='6' placeholder='OTP'>"
                 ."</div>"
-                ."<div class=\"form-group\">"
-                    ."<button class= \"btn btn-primary\" type=\"submit\" name=\"try\">Submit</button>"
+                ."<div class='form-group'>"
+                    ."<button class= 'btn btn-primary' type='submit' name='try'>Submit</button>"
                 ."</div>"
             ."</form>"
-            ."<form method=\"post\">"
-                ."<div class=\"form-group\">"
-                    ."<button class= \"btn btn-primary\" type=\"submit\" name=\"retry\">Send OTP again</button>"
+            ."<form method='post'>"
+                ."<div class='form-group'>"
+                    ."<button class= 'btn btn-primary' type='submit' name='retry'>Send OTP again</button>"
                 ."</div>"
             ."</form>";
 
@@ -77,7 +77,7 @@ if(($activeResult[0]['active'] == "0") || (!isset($activeResult[0]['active']))) 
     header('URL=index.php');
 }
 
-echo "<html oncontextmenu=\"return false\">";                    
+echo "<html oncontextmenu='return false'>";                    
 if (isset($_POST['try'])) {
 	$patternNumeric = '/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\]+[A-Za-z]/';
 	if (!preg_match($patternNumeric, $_POST['otp'])) {
