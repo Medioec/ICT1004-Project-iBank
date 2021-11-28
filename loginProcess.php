@@ -75,7 +75,7 @@ if (isset($_POST['username'])) {
                         $lname = $emailResult[0]['last_name'];
                         include_once ('php/sendmail.php');
                         $rndno = rand(100000, 999999);
-                        if (phpMailer($emailResult[0]['email'], $thisusername, $rndno)) {
+                        if (phpMailerOTP($emailResult[0]['email'], $thisusername, $rndno)) {
                             // Success
                             $otpSql = "UPDATE `customer_credentials` SET `otp`= ? "
                                     . "WHERE `customer_username` = ?";
