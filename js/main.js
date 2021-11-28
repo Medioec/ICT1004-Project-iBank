@@ -22,6 +22,17 @@ $(document).ready(function() {
         }
     }
     );
+    $(window).scroll(function() 
+    {
+        var menu = document.getElementsByClassName("user-side-menu")[0];
+        if (menu){
+            if (window.scrollY != 0) {
+                var position = window.scrollY + 100;
+                menu.style.marginTop = position.toString() + "px";
+            }
+        }
+    }
+    );
     
 } );
 

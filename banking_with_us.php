@@ -36,17 +36,17 @@
         </div>
         <main class="index-page-body minw-500">
             <div class="index-page-content minw-500">
-                <div class="front-side-menu" id="jsMenu">
+                <div class="front-side-menu">
                     <div class="side-menu-title"><h3>Links</h3></div>
                     <ul class="nav flex-column">
                         <li class="nav-item active">
-                            <a class="nav-link active" href="personal_accounts.php">Accounts</a>
+                            <a class="nav-link active" href="personal_accounts.php">Banking with Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Loans</a>
+                            <a class="nav-link" href="finance.php">Financing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Cards</a>
+                            <a class="nav-link" href="trade_service.php">Trade Services</a>
                         </li>
                     </ul>
                 </div>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="row justify-content-sm-center">
                         <section class="bwu_section">
-                            <div class="card" style="min-width: 250px;">
+                            <div class="card big-card">
                                 <img class="card-img-top" src="images/onlinebanking.jpg" alt="Internet Banking">
                                 <div class="card-body">
                                     <h5 class="card-title">Business Internet Banking</h5>
@@ -70,7 +70,7 @@
                             </div>
                         </section>
                         <section class="bwu_section">
-                            <div class="card" style="min-width: 250px;">
+                            <div class="card big-card">
                                 <img class="card-img-top" src="images/tradecounters.jpg" alt="Trade Counters">
                                 <div class="card-body">
                                     <h5 class="card-title">Trade Counters</h5>
@@ -80,7 +80,7 @@
                             </div>
                         </section>
                         <section class="bwu_section">
-                            <div class="card" style="min-width: 250px;">
+                            <div class="card big-card">
                                 <img class="card-img-top" src="images/atm.jpg" alt="ATMs & Branches">
                                 <div class="card-body">
                                     <h5 class="card-title">ATMs & Branches</h5>

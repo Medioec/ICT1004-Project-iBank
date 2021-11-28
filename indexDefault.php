@@ -45,7 +45,11 @@
             <div class="index-page-content minw-500">
                 <div class="container-fluid">
                     <div class="card-box">
-                    <h2> Our Services: </h2><br><br>
+                        <div class="jumbotron jumbotron-fluid mt-5">
+                            <div class="container">
+                                <h1 class="display-4">Our Services</h1>
+                            </div>
+                        </div>
                         <div class="row card-list">
                             <a class="card index-card" href="personal_accounts.php">
                                 <div class="card-body">
@@ -65,10 +69,10 @@
                                     <p class="card-text">We offer credit card services for our customers. Find out more here.</p>
                                 </div>
                             </a>
-                            <a class="card index-card" href="">
+                            <a class="card index-card" href="banking_with_us.php">
                                 <div class="card-body">
-                                    <h5 class="card-title">Currency Exchange</h5>
-                                    <p class="card-text">We offer attractive rates with low conversion fees for foreign currency exchange.</p>
+                                    <h5 class="card-title">Bank with Us</h5>
+                                    <p class="card-text">Check out the services that we are offering.</p>
                                 </div>
                             </a>
                             <a class="card index-card" href="">
@@ -77,20 +81,19 @@
                                     <p class="card-text">Let us help you with securing the best investment opportunities.</p>
                                 </div>
                             </a>
-                            <a class="card index-card" href="">
+                            <a class="card index-card" href="finance.php">
                                 <div class="card-body">
                                     <h5 class="card-title">Business Financing</h5>
                                     <p class="card-text">Own a business? Read more about our banking services for business owners.</p>
                                 </div>
                             </a>
-                            <a class="card index-card" href="">
+                            <a class="card index-card" href="trade_service.php">
                                 <div class="card-body">
                                     <h5 class="card-title">Trade Services</h5>
                                     <p class="card-text">We deliver comprehensive solutions to companies engaged in international and
                                          domestic trade transactions.</p>
                                 </div>
                             </a>
-                            
                         </div>
                     </div>
                 </div>
