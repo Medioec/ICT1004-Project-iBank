@@ -108,11 +108,12 @@
                     }
 
                     // STREET2 VALIDATION AND SANITIZATION, CONSIDER CHANGING TO POSTAL API (Nullable)
-                    // Additional check on last name field.
-                    $street2 = sanitize_input($_POST["street2"]);
-                    if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
+                    if (!empty($_POST["street2"])){
+                        $street2 = sanitize_input($_POST["street2"]);
+                        if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
                         $errorMsg .= "Invalid Street Name.<br>";
                         $success = false;
+                    }
                     }
 
                     // POSTAL CODE VALIDATION AND SANITIZATION (Required)

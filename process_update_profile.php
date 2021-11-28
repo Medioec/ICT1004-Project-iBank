@@ -71,11 +71,13 @@
                     }
 
                     // STREET2 VALIDATION AND SANITIZATION, CONSIDER CHANGING TO POSTAL API (Nullable)
-                    // Additional check on last name field.
-                    $street2 = sanitize_input($_POST["street2"]);
-                    if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
-                        $errorMsg .= "Invalid Street Name.";
+                    if (!empty($_POST["street2"])){
+                        $street2 = sanitize_input($_POST["street2"]);
+                        if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
+                        $errorMsg .= "Invalid Street Name.<br>";
                         $success = false;
+                        
+                        }
                     }
 
                     // POSTAL CODE VALIDATION AND SANITIZATION (Required)
@@ -292,7 +294,8 @@
                     $stmt->bind_param("ssssssssi", $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $id);
                     $stmt->execute();
                     if ($stmt->affected_rows != 1) {
-                        $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                        $errorMsg = "Error, please contact bank for help.";
+                        //$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                         $success = false;
                     }
                     $stmt->close();
@@ -325,7 +328,8 @@
                     $stmt->execute();
 
                     if ($stmt->affected_rows != 1) {
-                        $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                        $errorMsg = "Error, please contact bank for help.";
+                        //$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                         $success = false;
                     }
                     $stmt->close();
