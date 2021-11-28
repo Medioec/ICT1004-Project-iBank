@@ -53,42 +53,44 @@
                 <div class="container-fluid info-main-content">
                     <div class="jumbotron jumbotron-fluid mt-5">
                         <div class="container">
-                            <h1 class="display-4">Bank with Double'O4</h1>
-                            <p class="lead">Run your business efficiently with our 
-                            24/7 digital banking, islandwide branches, and dedicated SME resources.</p>
+                            <h1 class="display-4">Open an Account with Us</h1>
+                            <p class="lead">Get started now with our basic checking and savings accounts</p>
                         </div>
                     </div>
-                    <div class="row justify-content-sm-center">
-                        <section class="about_section">
-                            <div class="card" style="min-width: 250px;">
-                                <img class="card-img-top" src="images/onlinebanking.jpg" alt="Internet Banking">
-                                <div class="card-body">
-                                    <h5 class="card-title">Business Internet Banking</h5>
-                                    <p class="card-text">The digital banking platform for businesses that's fast, secure, and easy to use.</p>
-                                    <a href="#" class="btn btn-primary">Internet Banking</a>
-                                </div>
+                    <div class="jumbotron jumbotron-fluid mt-5">
+                        <div class="container">
+                            <div class="row">
+                            <h1 class="display-4 col-md-5">No Hidden Fees</h1>
+                            <p class="lead col">No minimum deposit required, no transaction fees, no extra costs - Just as banking should be</p>
                             </div>
-                        </section>
-                        <section class="about_section">
-                            <div class="card" style="min-width: 250px;">
-                                <img class="card-img-top" src="images/tradecounters.jpg" alt="Trade Counters">
-                                <div class="card-body">
-                                    <h5 class="card-title">Trade Counters</h5>
-                                    <p class="card-text">Collect trade documents or submit forms at dedicated counters islandwide.</p>
-                                    <a href="#" class="btn btn-primary">Details</a>
-                                </div>
+                        </div>
+                    </div>
+                    <div class="jumbotron jumbotron-fluid mt-5">
+                        <div class="container">
+                        <div class="row">
+                            <p class="lead col">With our checking account, there are no limits on withdrawals and deposits, and you still earn
+                                interest of 0.3% a year.
+                            </p>
+                            <h1 class="display-4 col-md-5">Checking Account</h1>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="jumbotron jumbotron-fluid mt-5">
+                        <div class="container">
+                            <div class="row">
+                            <h1 class="display-4 col-md-5">Savings Account</h1>
+                            <p class="lead col">Gain 0.5% of your account balance every year if you do not make any withdrawals. 
+                                Interest lowered to 0.1% for the year if withdrawal is made before interest is credited.</p>
                             </div>
-                        </section>
-                        <section class="about_section">
-                            <div class="card" style="min-width: 250px;">
-                                <img class="card-img-top" src="images/atm.jpg" alt="ATMs & Branches">
-                                <div class="card-body">
-                                    <h5 class="card-title">ATMs & Branches</h5>
-                                    <p class="card-text">Visit your nearest Double'O4 branch or any of our self-service machines and ATMs.</p>
-                                    <a href="#" class="btn btn-primary">Find Us</a>
-                                </div>
-                            </div>
-                        </section>
+                        </div>
+                    </div>
+                    <div class="jumbotron jumbotron-fluid mt-5">
+                        <div class="container">
+                        <div class="row">
+                            <p class="lead col">Register now and open a new account within minutes - Get started <a href="registration.php">Here</a></p>
+                            <h1 class="display-4 col-md-5">Quick and Simple</h1>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>

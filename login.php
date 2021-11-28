@@ -20,8 +20,8 @@
                         </p>
                         <form action="loginProcess.php" method="post" class="form-validate" novalidate>
                             <div class="form-group">
-                                <label for="email">Username:</label>
-                                <input class="form-control" type="text" id="email" required name="username" size="30"
+                                <label for="username">Username:</label>
+                                <input class="form-control" type="text" id="username" required name="username" size="30"
                                     placeholder="Enter username">
                                 <div class="invalid-feedback">
                                     Please fill in your username

@@ -3,10 +3,25 @@ $(document).ready(function() {
         "order": [[ 0, "desc" ]]
     });
     $(".form-validate").on("click", ".submit-button", function (e) 
-            {
-                validateForm(e);
+        {
+            validateForm(e);
+        }
+    )
+    //side menu scrollposition code
+    $(window).scroll(function() 
+    {
+        var menu = document.getElementsByClassName("front-side-menu")[0];
+        if (menu){
+            if (window.scrollY > 349) {
+                var position = window.scrollY - 350 + 100;
+                menu.style.marginTop = position.toString() + "px";
+            } else if (window.scrollY < 351) {
+                var position = 100;
+                menu.style.marginTop = position.toString() + "px";
             }
-        )
+        }
+    }
+    );
     
 } );
 
