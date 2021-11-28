@@ -244,8 +244,8 @@
                 else {
                     $stmt = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_id=?");
                     // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 6;
+                    $id = $_SESSION["customerId"];
+                    //$id = 6;
                     $stmt->bind_param("i", $id);
                     $stmt->execute();
                     $result = $stmt->get_result();

@@ -1,4 +1,4 @@
-<?php //include "session.php";?>
+<?php include "session.php";?>
 <html>
     <head>
         <?php
@@ -29,7 +29,7 @@
                     }
                     // VALIDATING USING REGEX
                     else {
-                        if (strlen($_POST['pwd']) < '8') {
+                        if (strlen($_POST['pwd']) < '12') {
                             $errorMsg = "Incorrect Password!<br>";
                             $success = false;
                         } elseif (!preg_match("#[0-9]+#", $_POST["pwd"])) {
@@ -110,8 +110,8 @@
                 else {
                     $stmt = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_id=?");
                     // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 6;
+                    $id = $_SESSION["customerId"];
+                    //$id = 6;
                     $stmt->bind_param("i", $id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -158,8 +158,8 @@
                     $stmt = $conn->prepare("SELECT sum(balance) AS acc_sum FROM bank_account B, bank_accounts_ref R WHERE customer_id = ? AND B.account_id = R.account_id");
                     
                     // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 6;
+                    $id = $_SESSION["customerId"];
+                    //$id = 6;
                     $stmt->bind_param("i", $id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -196,8 +196,8 @@
                     $stmt = $conn->prepare("UPDATE customer_credentials SET active=? WHERE customer_id=?");
 
                      // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 6;
+                    $id = $_SESSION["customerId"];
+                    //$id = 6;
                     $active = 0;
                     $stmt->bind_param("ii", $active, $id);
                     $stmt->execute();

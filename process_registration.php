@@ -211,8 +211,8 @@
                         registerUser();
                         
                         // Send confirmation email
-                        //include_once ('php/sendmail.php');
-                        //phpMailerRegistration($_POST["email"], $_POST["lname"]);
+                        include_once ('php/sendmail.php');
+                        phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
                         echo "<h3>Registration Successful!</h3><br>";
                         echo "<h3>" . $_POST["lname"] . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h3><br>";
@@ -334,7 +334,8 @@
                     $stmtCredential = $conn->prepare("INSERT INTO customer_credentials (customer_username, password_hash, otp, password_token, active) VALUES (?,?,?,?,?)");
 
                     $otp = "12345";
-                    $token = "token";
+                    $rndno = rand(1, 9999999);
+                    $token = md5($rndno);
                     $active = 1;
                     $stmtCredential->bind_param("sssss", $username, $pwd_hashed, $otp, $token, $active);
                     $stmtCredential->execute();
