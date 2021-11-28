@@ -101,7 +101,7 @@ if (isset($_POST['username'])) {
                             $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
                             $failLog->execute();
                             
-                            header('Refresh: 3; URL=login.php');
+                            header('Refresh: 5; URL=login.php');
                             //echo "<script>window.location.href = 'login.php';</script>";
                         }
                     }
@@ -112,7 +112,7 @@ if (isset($_POST['username'])) {
                         $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
                         $failLog->execute();
                         
-                        header('Refresh: 3; URL=login.php');
+                        header('Refresh: 5; URL=login.php');
                         //echo "<script>window.location.href = 'login.php';</script>";
                     }
                 }
@@ -123,7 +123,7 @@ if (isset($_POST['username'])) {
                     $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
                     $failLog->execute();
                     
-                    header('Refresh: 3; URL=login.php');
+                    header('Refresh: 5; URL=login.php');
                     //echo "<script>window.location.href = 'login.php';</script>";
                 }
         }
@@ -134,7 +134,7 @@ if (isset($_POST['username'])) {
             $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
             $failLog->execute();
             
-            header('Refresh: 3; URL=login.php');
+            header('Refresh: 5; URL=login.php');
             //echo "<script>window.location.href = 'login.php';</script>";
         }
     }
@@ -145,7 +145,7 @@ else {
     $failLog = $connect->prepare($failSql);
     $failLog->execute();
     
-    header('Refresh: 3; URL=login.php');
+    header('Refresh: 5; URL=login.php');
     //echo "<script>window.location.href = 'login.php';</script>";
 }
 //$connect->close();
