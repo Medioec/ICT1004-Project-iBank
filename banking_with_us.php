@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-sm-center">
-                        <section class="about_section">
+                        <section class="bwu_section">
                             <div class="card" style="min-width: 250px;">
                                 <img class="card-img-top" src="images/onlinebanking.jpg" alt="Internet Banking">
                                 <div class="card-body">
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                         </section>
-                        <section class="about_section">
+                        <section class="bwu_section">
                             <div class="card" style="min-width: 250px;">
                                 <img class="card-img-top" src="images/tradecounters.jpg" alt="Trade Counters">
                                 <div class="card-body">
@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                         </section>
-                        <section class="about_section">
+                        <section class="bwu_section">
                             <div class="card" style="min-width: 250px;">
                                 <img class="card-img-top" src="images/atm.jpg" alt="ATMs & Branches">
                                 <div class="card-body">

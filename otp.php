@@ -19,7 +19,6 @@ if(isset($_SESSION['otp'])){
         <?php
             include "nav.inc.php";
         ?>
-        <link rel="stylesheet" href="css/main.css">
         <div class="page-bg"></div>
             <main class="page-body">
                 <div class="page-content">
@@ -122,8 +121,7 @@ if (isset($_POST['try'])) {
                 $_SESSION["lastName"] = $result[0]['last_name'];
                 
                 //get customer gender for salutation title
-                $action = 'SELECT `gender` FROM `sensitive_info` WHERE `ic_number` = '
-                        . '(SELECT `ic_number` FROM `sensitive_ref` WHERE `customer_id`= ?);';
+                $action = 'SELECT `gender` FROM `sensitive_info` WHERE `customer_id`= ?;';
                 $stmt = $connect->prepare($action);
                 $stmt->bindParam(1, $_SESSION["customerId"], PDO::PARAM_STR);
                 try {

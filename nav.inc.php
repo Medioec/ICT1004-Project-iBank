@@ -36,8 +36,8 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="businessBankingList">
                             <a class="dropdown-item" href="banking_with_us.php">Banking with us</a>
-                            <a class="dropdown-item" href="">Financing</a>
-                            <a class="dropdown-item" href="">Corporate</a>
+                            <a class="dropdown-item" href="finance.php">Financing</a>
+                            <a class="dropdown-item" href="trade_service.php">Trade Services</a>
                             </div>
                         </li>
                         ';
@@ -95,6 +95,5 @@
                 </ul>
             </div>
         </div>
-        
     </nav>
 </div>

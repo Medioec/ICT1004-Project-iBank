@@ -333,10 +333,37 @@ button.navbar-toggler {
 
 .general_header {
     margin-top: 100px;
-    margin-left: 85px;
     display: flex;
     flex-direction: row;
     width: 100%;
+    justify-content: center;
+}
+
+.about_section {
+    width: 33.33%;
+    float: left;
+}
+
+.bwu_section {
+    display: inline-block;
+}
+
+.general_containers {
+    max-width: 90%;
+    display: inline-block;
+    position: relative;
+}
+
+.finance {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.trade_service {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 .about_section {
     margin: 20px;
@@ -446,3 +473,37 @@ form i {
 }
 
 /* Profile CSS End*/
+/*Grid Blocks Start*/
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 50px;
+  text-align: center;
+  font-size: 25px;
+  cursor: pointer;
+  color: black;
+  border: black 1px solid;
+}
+
+.containerTab {
+  padding: 20px;
+  color: black;
+  display: none;
+  background: lightgray;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Closable button inside the image */
+.closebtn {
+  float: right;
+  color: black;
+  font-size: 35px;
+  cursor: pointer;
+}
+/*Grid Blocks End*/
