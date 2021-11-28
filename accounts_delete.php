@@ -55,8 +55,10 @@ if ($_POST["confirmDeleteClicked"])
     {
         if ($fetchedAccountId != NULL) 
         {
-            $action = "DELETE `bank_accounts_ref`, `bank_account` FROM `bank_accounts_ref` INNER JOIN `bank_account`
-                WHERE `bank_accounts_ref`.`account_id` = `bank_account`.`account_id` AND `bank_account`.`account_id` = ?;";
+            /*($action = "DELETE `bank_accounts_ref`, `bank_account` FROM `bank_accounts_ref` INNER JOIN `bank_account`
+                WHERE `bank_accounts_ref`.`account_id` = `bank_account`.`account_id` AND `bank_account`.`account_id` = ?;";*/
+
+            $action = "DELETE FROM `bank_accounts_ref` WHERE `account_id` = ?;";
 
             $stmt = $connect->prepare($action);
             $stmt->bindParam(1, $fetchedAccountId, PDO::PARAM_INT);
@@ -68,6 +70,21 @@ if ($_POST["confirmDeleteClicked"])
                 $_SESSION["sqlFailed"] = 1;
                 header("Location: request_error.php");
             }
+
+            $action = "DELETE FROM `bank_account` WHERE `account_id` = ?;";
+
+            $stmt = $connect->prepare($action);
+            $stmt->bindParam(1, $fetchedAccountId, PDO::PARAM_INT);
+
+            try {
+                $stmt->execute();
+            }
+            catch(PDOException $e) {
+                $_SESSION["sqlFailed"] = 1;
+                header("Location: request_error.php");
+            }
+
+
             $pagecontent = '
             <h2>Account Deleted</h2>
             <p>You have successfully deleted account no: '.$fetchedAccountId.'</p>
