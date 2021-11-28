@@ -23,10 +23,12 @@
                     $success = true;
 
                     // FIRST NAME VALIDATION AND SANITIZATION (Nullable)
-                    $fname = sanitize_input($_POST["fname"]);
-                    if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
-                        $errorMsg .= "Invalid Name format.";
+                    if (!empty($_POST["fname"])) {
+                        $fname = sanitize_input($_POST["fname"]);
+                        if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
+                        $errorMsg .= "Invalid Name format.<br>";
                         $success = false;
+                    }
                     }
 
                     // LAST NAME VALIDATION AND SANITIZATION (Required)
@@ -242,8 +244,8 @@
                 else {
                     $stmt = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_id=?");
                     // HARD CODED - TODO CHANGE TO SESSION
-                    $id = $_SESSION["customerId"];
-                    //$id = 1;
+                    //$id = $_SESSION["customerId"];
+                    $id = 6;
                     $stmt->bind_param("i", $id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -286,7 +288,7 @@
                     $stmt = $conn->prepare("UPDATE user_data SET first_name=?, last_name=?, full_name=?, street1=?, street2=?, postal=?, email=?, phone=? WHERE customer_id=?");
                     // HARD CODED - TODO CHANGE TO SESSION
                     $id = $_SESSION["customerId"];
-                    //$id = 1;
+                    //$id = 6;
                     $stmt->bind_param("ssssssssi", $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $id);
                     $stmt->execute();
                     if ($stmt->affected_rows != 1) {
@@ -318,7 +320,7 @@
 
                      // HARD CODED - TODO CHANGE TO SESSION
                     $id = $_SESSION["customerId"];
-                    //$id = 1;
+                    //$id = 6;
                     $stmt->bind_param("si", $new_pwd_hashed, $id);
                     $stmt->execute();
 

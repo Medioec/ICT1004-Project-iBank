@@ -1,4 +1,4 @@
-<?php include "session.php";  ?>
+<?php //include "session.php";  ?>
 <html>
     <head>
         <?php
@@ -23,10 +23,12 @@
                     $success = true;
 
                     // FIRST NAME VALIDATION AND SANITIZATION (Nullable)
-                    $fname = sanitize_input($_POST["fname"]);
-                    if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
+                    if (!empty($_POST["fname"])) {
+                        $fname = sanitize_input($_POST["fname"]);
+                        if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
                         $errorMsg .= "Invalid Name format.<br>";
                         $success = false;
+                    }
                     }
 
                     // LAST NAME VALIDATION AND SANITIZATION (Required)
@@ -207,12 +209,10 @@
                     // If Success, Insert information into DB
                     if ($success) {
                         registerUser();
-                        updateCredential();
-                        updateSensitiveInfo();
                         
                         // Send confirmation email
-                        include_once ('php/sendmail.php');
-                        phpMailerRegistration($_POST["email"], $_POST["lname"]);
+                        //include_once ('php/sendmail.php');
+                        //phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
                         echo "<h3>Registration Successful!</h3><br>";
                         echo "<h3>" . $_POST["lname"] . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h3><br>";
@@ -313,13 +313,12 @@
                 $conn->close();
             }
             ?>
-            
             <?php
 
             // Function to register user into DB
             function registerUser() {
-                global $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $errorMsg, $success;
-                // Create database connection.
+                global $username, $pwd_hashed, $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $nric, $gender, $dob, $errorMsg, $success;
+                
                 // TODO - CHANGE TO PDO
                 $config = parse_ini_file('../../private/db-config.ini');
                 $conn = new mysqli($config['servername'], $config['username'],
@@ -328,96 +327,56 @@
                 if ($conn->connect_error) {
                     $errorMsg = "Connection failed: " . $conn->connect_error;
                     $success = false;
-                } else {
-                    // Prepare the statement:
-                    $stmt_userDetail = $conn->prepare("INSERT INTO user_data (first_name, last_name, full_name, street1, street2, postal, email, phone) VALUES (?,?,?,?,?,?,?,?)");
-                    $stmt_userDetail->bind_param("ssssssss", $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone);
-                    $stmt_userDetail->execute();
-
-                    if ($stmt_userDetail->affected_rows != 1) {
-                        $errorMsg = "Execute failed: (" . $stmt_userDetail->errno . ") " . $stmt_userDetail->error;
-                        $success = false;
-                    }
-                    $stmt_userDetail->close();
                 }
-                $conn->close();
-            }
-            ?>
 
-            <?php
+                else {
+                    // Insert into customer_credentials table
+                    $stmtCredential = $conn->prepare("INSERT INTO customer_credentials (customer_username, password_hash, otp, password_token, active) VALUES (?,?,?,?,?)");
 
-            // Function to register user into DB
-            function updateCredential() {
-                global $username, $pwd_hashed, $errorMsg, $success;
-                // Create database connection.
-                // TODO - CHANGE TO PDO
-                $config = parse_ini_file('../../private/db-config.ini');
-                $conn = new mysqli($config['servername'], $config['username'],
-                        $config['password'], $config['dbname']);
-                // Check connection
-                if ($conn->connect_error) {
-                    $errorMsg = "Connection failed: " . $conn->connect_error;
-                    $success = false;
-                } else {
-                    // Prepare the statement:
-                    $stmt_userCredential = $conn->prepare("INSERT INTO customer_credentials (customer_username, password_hash, otp, password_token, active) VALUES (?,?,?,?,?)");
-                    
-                    // TO DO - customer_username, OTP, password_token, active
-                    $dump = 'test_token';
+                    $otp = "12345";
+                    $token = "token";
                     $active = 1;
-                    $stmt_userCredential->bind_param("ssssi", $username, $pwd_hashed, $dump, $dump, $active);
-                    $stmt_userCredential->execute();
+                    $stmtCredential->bind_param("sssss", $username, $pwd_hashed, $otp, $token, $active);
+                    $stmtCredential->execute();
 
-                    if ($stmt_userCredential->affected_rows != 1) {
-                        $errorMsg = "Execute failed: (" . $stmt_userCredential->errno . ") " . $stmt_userCredential->error;
+                    if ($stmtCredential->affected_rows != 1) {
+                        $errorMsg = "Execute failed: (" . $stmtCredential->errno . ") " . $stmtCredential->error;
                         $success = false;
                     }
-                    $stmt_userCredential->close();
-                }
-                $conn->close();
-            }
-            ?>
-            
-
-            <?php
-
-            // Function to register user into DB
-            function updateSensitiveInfo() {
-                global $id, $nric, $gender, $dob, $errorMsg, $success;
-                // Create database connection.
-                // TODO - CHANGE TO PDO
-                $config = parse_ini_file('../../private/db-config.ini');
-                $conn = new mysqli($config['servername'], $config['username'],
-                        $config['password'], $config['dbname']);
-                // Check connection
-                if ($conn->connect_error) {
-                    $errorMsg = "Connection failed: " . $conn->connect_error;
-                    $success = false;
-                } else {
-                    // HARD CODED - TODO CHANGE TO SESSION
-                    $id = $_SESSION["customerId"];
-                    //$id = 1;
-                    $stmt_sensitiveRef = $conn->prepare("INSERT INTO sensitive_ref (customer_id, ic_number) VALUES (?,?)");
-                    $stmt_sensitiveRef->bind_param("is", $id, $nric);
-                    $stmt_sensitiveRef->execute();
-
-                    $stmt_sensitiveInfo = $conn->prepare("INSERT INTO sensitive_info (ic_number, gender, date_of_birth) VALUES (?,?,?)");
-                    $stmt_sensitiveInfo->bind_param("sss", $nric, $gender, $dob);
-                    $stmt_sensitiveInfo->execute();
-
-                    if ($stmt_sensitiveRef->affected_rows != 1) {
-                        $errorMsg = "Execute failed: (" . $stmt_sensitiveRef->errno . ") " . $stmt_sensitiveRef->error;
-                        $success = false;
+                    
+                    // Insert into user_data and sensitive_info table
+                    else {
+                        
+                        // Get the ID of the new registrant
+                        $stmtGetID = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_username=?");
+                        $username = $_POST["username"];
+                        $stmtGetID->bind_param("s", $username);
+                        $stmtGetID->execute();
+                        $result = $stmtGetID->get_result();
+                        
+                        if ($result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+                            $id = $row["customer_id"];
+                            
+                            // Insert into user_data
+                            $stmt_userDetail = $conn->prepare("INSERT INTO user_data (customer_id, first_name, last_name, full_name, street1, street2, postal, email, phone) VALUES (?,?,?,?,?,?,?,?,?)");
+                            $stmt_userDetail->bind_param("issssssss",$id, $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone);
+                            $stmt_userDetail->execute();
+                            // Insert into sensitive_info
+                            $stmt_sensitiveInfo = $conn->prepare("INSERT INTO sensitive_info (customer_id, ic_number, gender, date_of_birth) VALUES (?,?,?,?)");
+                            $stmt_sensitiveInfo->bind_param("ssss",$id, $nric, $gender, $dob);
+                            $stmt_sensitiveInfo->execute();
+                        }
                     }
-                    $stmt_sensitiveRef->close();
-                    $stmt_sensitiveInfo->close();
-                }
-                $conn->close();
-            }
-            ?>
-
-            
-            
+                        $stmtCredential->close();
+                        $stmtGetID->close();
+                        $stmt_userDetail->close();
+                        $stmt_sensitiveInfo->close();
+                        }
+                        $conn->close();
+                        
+                    }
+                    ?>
 
        </div>
     </div>
