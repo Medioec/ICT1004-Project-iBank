@@ -120,16 +120,16 @@
                     <div class="container-fluid">
                     <div class="card-box">
                         <h2> Benefits: </h2><br><br>
-                        <div class="row card-list" id="advancedAccordion">
+                        <div class="row card-list" id="advancedAccordion1">
                             
                             <div class="card-wrapper">
-                                <a class="card index-card" data-toggle="collapse" href="#collapse1" 
-                                role="button" aria-expanded="false" aria-controls="collapse1">
+                                <a class="card index-card" data-toggle="collapse" href="#collapse4" 
+                                role="button" aria-expanded="false" aria-controls="collapse4">
                                     <div class="card-body">
                                         <h5 class="card-title" id="title4">Worldwide Trading Parties</h5>
                                     </div>
                                 </a>
-                                <div id="collapse1" class="collapse hover-collapse" aria-labelledby="title1" data-parent="#advancedAccordion">
+                                <div id="collapse4" class="collapse hover-collapse" aria-labelledby="title4" data-parent="#advancedAccordion1">
                                     <div class="card-body">
                                         <p>Enjoy direct links with worldwide trading parties through the Double'O4 Group’s extensive network 
                                            of regional office and worldwide correspondent relationships, which also assure that the Bank’s trade 
@@ -140,13 +140,13 @@
                             </div>
 
                             <div class="card-wrapper">
-                                <a class="card index-card" data-toggle="collapse" href="#collapse2" 
-                                role="button" aria-expanded="false" aria-controls="collapse2">
+                                <a class="card index-card" data-toggle="collapse" href="#collapse5" 
+                                role="button" aria-expanded="false" aria-controls="collapse5">
                                     <div class="card-body">
                                         <h5 class="card-title" id="title5">Trade Automation System</h5>
                                     </div>
                                 </a>
-                                <div id="collapse2" class="collapse hover-collapse" aria-labelledby="title2" data-parent="#advancedAccordion">
+                                <div id="collapse5" class="collapse hover-collapse" aria-labelledby="title5" data-parent="#advancedAccordion1">
                                     <div class="card-body">
                                         <p>Efficient trade automation system that meets the demands of complex trade agreements with importers 
                                             and exporters.
@@ -156,13 +156,13 @@
                             </div>
 
                             <div class="card-wrapper">
-                                <a class="card index-card" data-toggle="collapse" href="#collapse3" 
-                                role="button" aria-expanded="false" aria-controls="collapse3">
+                                <a class="card index-card" data-toggle="collapse" href="#collapse6" 
+                                role="button" aria-expanded="false" aria-controls="collapse6">
                                     <div class="card-body">
                                         <h5 class="card-title" id="title6">Internet Banking Plus</h5>
                                     </div>
                                 </a>
-                                <div id="collapse3" class="collapse hover-collapse" aria-labelledby="title3" data-parent="#advancedAccordion">
+                                <div id="collapse6" class="collapse hover-collapse" aria-labelledby="title6" data-parent="#advancedAccordion1">
                                     <div class="card-body">
                                         <p>Fully integrated Business Internet Banking Plus that allows timely and seamless electronic submission 
                                             of applications and efficient update of transaction records.
@@ -172,13 +172,13 @@
                             </div>
                             
                             <div class="card-wrapper">
-                                <a class="card index-card" data-toggle="collapse" href="#collapse3" 
-                                role="button" aria-expanded="false" aria-controls="collapse3">
+                                <a class="card index-card" data-toggle="collapse" href="#collapse7" 
+                                role="button" aria-expanded="false" aria-controls="collapse7">
                                     <div class="card-body">
                                         <h5 class="card-title" id="title7">Click & Track</h5>
                                     </div>
                                 </a>
-                                <div id="collapse4" class="collapse hover-collapse" aria-labelledby="title3" data-parent="#advancedAccordion">
+                                <div id="collapse7" class="collapse hover-collapse" aria-labelledby="title7" data-parent="#advancedAccordion1">
                                     <div class="card-body">
                                         <p>Monitor your DHL document shipment status via "Click & Track" in Business Internet Banking Plus.</p>
                                     </div>
@@ -186,13 +186,13 @@
                             </div>
                             
                             <div class="card-wrapper">
-                                <a class="card index-card" data-toggle="collapse" href="#collapse3" 
-                                role="button" aria-expanded="false" aria-controls="collapse3">
+                                <a class="card index-card" data-toggle="collapse" href="#collapse8" 
+                                role="button" aria-expanded="false" aria-controls="collapse8">
                                     <div class="card-body">
                                         <h5 class="card-title" id="title8">Trade Alerts</h5>
                                     </div>
                                 </a>
-                                <div id="collapse5" class="collapse hover-collapse" aria-labelledby="title3" data-parent="#advancedAccordion">
+                                <div id="collapse8" class="collapse hover-collapse" aria-labelledby="title8" data-parent="#advancedAccordion1">
                                     <div class="card-body">
                                         <p>Receive Trade alerts on the status of your import and export transactions.</p>
                                     </div>
