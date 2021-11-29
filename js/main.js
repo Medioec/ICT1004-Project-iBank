@@ -33,7 +33,7 @@ $(document).ready(function() {
         }
     }
     );
-    
+    activateMenu();
 } );
 
 //Validates forms using bootstrap styling
@@ -81,4 +81,27 @@ function openTab(tabName) {
     x[i].style.display = "none";
   }
   document.getElementById(tabName).style.display = "block";
+}
+
+function activateMenu()
+{
+    setTimeout
+    (() => 
+        {
+            var current_page_URL = location.href;
+            $("a.nav-link").each
+            (
+                function ()
+                {
+                    var target_URL = $(this).prop("href");
+                    if (target_URL === current_page_URL)
+                    {
+                        $('nav a').parents('li, ul').removeClass('active');
+                        $(this).addClass('active');
+                        return false;
+                    }
+                }
+            );
+        }, 1
+    );
 }

@@ -12,7 +12,7 @@ $_SESSION["sqlSuccess"] = 0;
         <div class="page-bg"></div>
             <div class="page-body minw-500">
                 <div class="page-content minw-500">
-                    <?php include "sideMenu.inc";?>
+                    <?php include "sideMenu.inc.php";?>
                     <div class="main-content">
                         <h2>Transaction Complete</h2>
                         <p>You have successfully created a new <?php echo $_SESSION["newAccountType"];?> account.</p>
