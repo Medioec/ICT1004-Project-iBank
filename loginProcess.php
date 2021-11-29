@@ -36,6 +36,12 @@ $errorMsg = "<h2>Oops!</h2>"
 
 include_once ('php/connect.php');
 
+$logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+$logType = "LOGIN";
+$logCategory0 = "INFO";
+$logCategory1 = "WARNING";
+$description = "";
+$noUser = "-EMPTY FIELD-";
 
 if (isset($_POST['username'])) {
     $thisusername = sanitize_input($_POST['username']);
@@ -56,11 +62,17 @@ if (isset($_POST['username'])) {
                 $pwStmt->bindParam(1,$thisusername, PDO::PARAM_STR);
                 $pwStmt->execute();
                 $pwResult = $pwStmt->fetchAll(PDO::FETCH_ASSOC);
+
                 if(password_verify($thispassword, $pwResult[0]['password_hash']) && $pwResult[0]['active']=="1") {
                     
-                    $successSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','LOGIN - CUSTOMER (PW-TRUE)',?,CURRENT_TIMESTAMP)";
+                    // $successSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','LOGIN - CUSTOMER (PW-TRUE)',?,CURRENT_TIMESTAMP)";
+                    $successSql = $logSql;
+                    $description = "LOGIN - CUSTOMER (PW-TRUE)";
                     $successLog = $connect->prepare($successSql);
-                    $successLog->bindParam(1,$thisusername, PDO::PARAM_STR);
+                    $successLog->bindParam(1,$logType, PDO::PARAM_STR);
+                    $successLog->bindParam(2,$logCategory0, PDO::PARAM_STR);
+                    $successLog->bindParam(3,$description, PDO::PARAM_STR);
+                    $successLog->bindParam(4,$thisusername, PDO::PARAM_STR);
                     $successLog->execute();
 
                     $emailSql = "SELECT `email`, `last_name` FROM `user_data` "
@@ -96,9 +108,14 @@ if (isset($_POST['username'])) {
                         }
                         else {
                             echo sprintf($errorMsg,"Invalid Email");
-                            $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED LOGIN - CUSTOMER (Invalid email address)',?,CURRENT_TIMESTAMP)";
+                            // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (Invalid email address)',?,CURRENT_TIMESTAMP)";
+                            $failSql = $logSql;
+                            $description = "FAILED LOGIN - CUSTOMER (Invalid email address)";
                             $failLog = $connect->prepare($failSql);
-                            $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
+                            $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+                            $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+                            $failLog->bindParam(3,$description, PDO::PARAM_STR);
+                            $failLog->bindParam(4,$thisusername, PDO::PARAM_STR);
                             $failLog->execute();
                             
                             header('Refresh: 5; URL=login.php');
@@ -107,9 +124,14 @@ if (isset($_POST['username'])) {
                     }
                     else {
                         echo sprintf($errorMsg,"Invalid Email");
-                        $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED LOGIN - CUSTOMER (No email address)',?,CURRENT_TIMESTAMP)";
+                        // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (No email address)',?,CURRENT_TIMESTAMP)";
+                        $failSql = $logSql;
+                        $description = "FAILED LOGIN - CUSTOMER (No email address)";
                         $failLog = $connect->prepare($failSql);
-                        $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
+                        $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+                        $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+                        $failLog->bindParam(3,$description, PDO::PARAM_STR);
+                        $failLog->bindParam(4,$thisusername, PDO::PARAM_STR);
                         $failLog->execute();
                         
                         header('Refresh: 5; URL=login.php');
@@ -118,9 +140,14 @@ if (isset($_POST['username'])) {
                 }
                 else {
                     echo sprintf($errorMsg,"Incorrect Username or Password");
-                    $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED LOGIN - CUSTOMER (Invalid username or password)',?,CURRENT_TIMESTAMP)";
+                    // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (Invalid username or password)',?,CURRENT_TIMESTAMP)";
+                    $failSql = $logSql;
+                    $description = "FAILED LOGIN - CUSTOMER (Invalid username or password)";
                     $failLog = $connect->prepare($failSql);
-                    $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
+                    $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+                    $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+                    $failLog->bindParam(3,$description, PDO::PARAM_STR);
+                    $failLog->bindParam(4,$thisusername, PDO::PARAM_STR);
                     $failLog->execute();
                     
                     header('Refresh: 5; URL=login.php');
@@ -129,9 +156,14 @@ if (isset($_POST['username'])) {
         }
         else {
             echo sprintf($errorMsg,"reCaptcha Error");
-            $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED LOGIN - CUSTOMER (reCaptcha)',?,CURRENT_TIMESTAMP)";
+            // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (reCaptcha)',?,CURRENT_TIMESTAMP)";
+            $failSql = $logSql;
+            $description = "FAILED LOGIN - CUSTOMER (reCaptcha)";
             $failLog = $connect->prepare($failSql);
-            $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
+            $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+            $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+            $failLog->bindParam(3,$description, PDO::PARAM_STR);
+            $failLog->bindParam(4,$thisusername, PDO::PARAM_STR);
             $failLog->execute();
             
             header('Refresh: 5; URL=login.php');
@@ -141,8 +173,14 @@ if (isset($_POST['username'])) {
 }
 else {
     echo sprintf($errorMsg,"Invalid User");
-    $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED LOGIN - CUSTOMER','-EMPTY FIELD-',CURRENT_TIMESTAMP)";
+    // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER','-EMPTY FIELD-',CURRENT_TIMESTAMP)";
+    $failSql = $logSql;
+    $description = "FAILED LOGIN - CUSTOMER";
     $failLog = $connect->prepare($failSql);
+    $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+    $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+    $failLog->bindParam(3,$description, PDO::PARAM_STR);
+    $failLog->bindParam(4,$noUser, PDO::PARAM_STR);
     $failLog->execute();
     
     header('Refresh: 5; URL=login.php');

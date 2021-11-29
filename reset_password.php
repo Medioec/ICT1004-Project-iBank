@@ -84,19 +84,35 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
                     $updatePwdStmt->bindParam(4,$token, PDO::PARAM_STR);
                     $updatePwdStmt->execute();
                     
-                    $successSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','PASSWORD RESET - CUSTOMER (SUCCESS)',?,CURRENT_TIMESTAMP)";
+                    $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+                    $logType = "RESET-PW";
+                    $logCategory0 = "INFO";
+                    $logCategory1 = "WARNING";
+                    $description = "";
+
+                    // $successSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','PASSWORD RESET - CUSTOMER (SUCCESS)',?,CURRENT_TIMESTAMP)";
+                    $successSql = $logSql;
+                    $description = "PASSWORD RESET - CUSTOMER (SUCCESS)";
                     $successLog = $connect->prepare($successSql);
-                    $successLog->bindParam(1,$thisusername, PDO::PARAM_STR);
+                    $successLog->bindParam(1,$logType, PDO::PARAM_STR);
+                    $successLog->bindParam(2,$logCategory0, PDO::PARAM_STR);
+                    $successLog->bindParam(3,$description, PDO::PARAM_STR);
+                    $successLog->bindParam(4,$thisusername, PDO::PARAM_STR);
                     $successLog->execute();
                     
                     $success = true;
                 }
             }
             if (!$success) {
-                $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED PASSWORD RESET - CUSTOMER (INVALID INPUT)',?,CURRENT_TIMESTAMP)";
+                // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED PASSWORD RESET - CUSTOMER (INVALID INPUT)',?,CURRENT_TIMESTAMP)";
+                $failSql = $logSql;
+                $description = "FAILED PASSWORD RESET - CUSTOMER (INVALID INPUT)";
                 $failLog = $connect->prepare($failSql);
-                $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
-                $failLog->execute();
+                $successLog->bindParam(1,$logType, PDO::PARAM_STR);
+                $successLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+                $successLog->bindParam(3,$description, PDO::PARAM_STR);
+                $successLog->bindParam(4,$thisusername, PDO::PARAM_STR);
+                $successLog->execute();
             }
         }
         if ($success) {

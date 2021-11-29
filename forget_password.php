@@ -38,9 +38,17 @@ $forgetPasswordBody = "<h2>Forget Password</h2>"
                         . "<div class=\"form-group\">"
                             . "<button class= \"btn btn-primary\" type=\"submit\" name=\"try\">Send Password Reset Email</button>"
                         . "</div>"
+                        . "<a class= \"btn btn-secondary submit-button\" href=\"login.php\">Go to Login Page</a>"
                     . "</form>";
 
 $message = "";
+
+$logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+$logType = "FORGET-PW";
+$logCategory0 = "INFO";
+$logCategory1 = "WARNING";
+$description = "";
+$noUser = "-EMPTY FIELD-";
 
 if (isset($_POST['try'])) {
     if (isset($_POST['email'])) {
@@ -82,15 +90,25 @@ if (isset($_POST['try'])) {
                     $tokenStmt->bindParam(2,$thisuserid, PDO::PARAM_STR);
                     $tokenStmt->execute();
                     
-                    $successSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','PASSWORD RESET - CUSTOMER (EMAIL SENT)',?,CURRENT_TIMESTAMP)";
+                    // $successSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','PASSWORD RESET - CUSTOMER (EMAIL SENT)',?,CURRENT_TIMESTAMP)";
+                    $successSql = $logSql;
+                    $description = "PASSWORD RESET - CUSTOMER (EMAIL SENT)";
                     $successLog = $connect->prepare($successSql);
-                    $successLog->bindParam(1,$thisusername, PDO::PARAM_STR);
+                    $successLog->bindParam(1,$logType, PDO::PARAM_STR);
+                    $successLog->bindParam(2,$logCategory0, PDO::PARAM_STR);
+                    $successLog->bindParam(3,$description, PDO::PARAM_STR);
+                    $successLog->bindParam(4,$thisusername, PDO::PARAM_STR);
                     $successLog->execute();
                 }
                 else {
-                    $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED PASSWORD RESET - CUSTOMER (Invalid email address)',?,CURRENT_TIMESTAMP)";
+                    // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED PASSWORD RESET - CUSTOMER (Invalid email address)',?,CURRENT_TIMESTAMP)";
+                    $failSql = $logSql;
+                    $description = "FAILED PASSWORD RESET - CUSTOMER (Invalid email address)";
                     $failLog = $connect->prepare($failSql);
-                    $failLog->bindParam(1,$thisusername, PDO::PARAM_STR);
+                    $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+                    $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+                    $failLog->bindParam(3,$description, PDO::PARAM_STR);
+                    $failLog->bindParam(4,$thisusername, PDO::PARAM_STR);
                     $failLog->execute();
                 }
             }
@@ -98,15 +116,27 @@ if (isset($_POST['try'])) {
         }
         else {
             $message = "<div class=\"alert alert-warning\" role=\"alert\">reCaptcha Error</div>";
-            $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED PASSWORD RESET - CUSTOMER (reCaptcha)','-EMPTY FIELD-',CURRENT_TIMESTAMP)";
+            // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED PASSWORD RESET - CUSTOMER (reCaptcha)','-EMPTY FIELD-',CURRENT_TIMESTAMP)";
+            $failSql = $logSql;
+            $description = "FAILED PASSWORD RESET - CUSTOMER (reCaptcha)";
             $failLog = $connect->prepare($failSql);
+            $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+            $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+            $failLog->bindParam(3,$description, PDO::PARAM_STR);
+            $failLog->bindParam(4,$noUser, PDO::PARAM_STR);
             $failLog->execute();
         }
     }
     else {
         $message = "<div class=\"alert alert-warning\" role=\"alert\">Invalid Input</div>";
-        $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED PASSWORD RESET - CUSTOMER (reCaptcha)','-INVALID FIELD-',CURRENT_TIMESTAMP)";
+        // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED PASSWORD RESET - CUSTOMER (reCaptcha)','-INVALID FIELD-',CURRENT_TIMESTAMP)";
+        $failSql = $logSql;
+        $description = "FAILED PASSWORD RESET - CUSTOMER (reCaptcha)";
         $failLog = $connect->prepare($failSql);
+        $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+        $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+        $failLog->bindParam(3,$description, PDO::PARAM_STR);
+        $failLog->bindParam(4,$noUser, PDO::PARAM_STR);
         $failLog->execute();
     }
 }

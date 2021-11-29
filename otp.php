@@ -51,7 +51,8 @@ $otpBody = "<h2>One-Time Password (OTP)</h2>%s"
             ."</form>";
 
 $tryBody = "<h4>Please enter the OTP sent to your registered email address.</h4>";
-$retryBody = "<h4>An email has been resent to your email address.</h4><h4>Please enter the OTP sent to your registered email address.</h4>";
+$retryBody = "<div class=\"alert alert-success\" role=\"alert\">An email has been resent to your email address.</div>"
+            . "<h4>Please enter the OTP sent to your registered email address.</h4>";
 $failBody = "<h4>The OTP is incorrect.</h4><h4>Please enter the OTP sent to your registered email address.</h4>";
 
 // Error message for sprintf with %s as error parameter.
@@ -77,7 +78,14 @@ if(($activeResult[0]['active'] == "0") || (!isset($activeResult[0]['active']))) 
     header('URL=index.php');
 }
 
-echo "<html oncontextmenu='return false'>";                    
+echo "<html oncontextmenu='return false'>";    
+
+$logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+$logType = "OTP";
+$logCategory0 = "INFO";
+$logCategory1 = "WARNING";
+$description = "";
+
 if (isset($_POST['try'])) {
 	$patternNumeric = '/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\]+[A-Za-z]/';
 	if (!preg_match($patternNumeric, $_POST['otp'])) {
@@ -89,9 +97,14 @@ if (isset($_POST['try'])) {
             $otpStmt->execute();
             $otpResult = $otpStmt->fetchAll(PDO::FETCH_ASSOC);
             if($thisotp == $otpResult[0]['otp']) {
-                $otpSuccess = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','LOGIN - CUSTOMER (OTP-TRUE)',?,CURRENT_TIMESTAMP)";
+                // $otpSuccess = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','LOGIN - CUSTOMER (OTP-TRUE)',?,CURRENT_TIMESTAMP)";
+                $otpSuccess = $logSql;
+                $description = "LOGIN - CUSTOMER (OTP-TRUE)";
                 $otpSuccessStmt = $connect->prepare($otpSuccess);
-                $otpSuccessStmt->bindParam(1,$session_user, PDO::PARAM_STR);
+                $otpSuccessStmt->bindParam(1,$logType, PDO::PARAM_STR);
+                $otpSuccessStmt->bindParam(2,$logCategory0, PDO::PARAM_STR);
+                $otpSuccessStmt->bindParam(3,$description, PDO::PARAM_STR);
+                $otpSuccessStmt->bindParam(4,$session_user, PDO::PARAM_STR);
                 $otpSuccessStmt->execute();
                 
                 $_SESSION['otp'] = "1";
@@ -148,10 +161,15 @@ if (isset($_POST['try'])) {
 	else {
             echo "<center>Special Character found in One Time Password!</center>";
             
-            $otpFail = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (Special Character appeared OTP)',?,CURRENT_TIMESTAMP)";
-            $otpFailStmt = $connect->prepare($otpSuccess);
-            $otpFailStmt->bindParam(1,$session_user, PDO::PARAM_STR);
-            $otpFailStmt->execute();
+            // $otpFail = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (Special Character appeared OTP)',?,CURRENT_TIMESTAMP)";
+            $failSql = $logSql;
+            $description = "FAILED LOGIN - CUSTOMER (Special Character appeared OTP)";
+            $failLog = $connect->prepare($failSql);
+            $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+            $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+            $failLog->bindParam(3,$description, PDO::PARAM_STR);
+            $failLog->bindParam(4,$session_user, PDO::PARAM_STR);
+            $failLog->execute();
             
             header('Refresh: 5;');
             //echo "<script>window.location.href = 'login.php';</script>";
@@ -170,7 +188,7 @@ else if(isset($_POST['retry'])) {
         $lname = $emailResult[0]['last_name'];
         include_once ('php/sendmail.php');
         $rndno=rand(100000, 999999);
-        if (phpMailer($emailResult[0]['email'], $session_user, $rndno)) {
+        if (phpMailerOTP($emailResult[0]['email'], $session_user, $rndno)) {
             // Success
             $otpSql = "UPDATE `customer_credentials` SET `otp`= ? "
                     . "WHERE `customer_username` = ?";
@@ -182,9 +200,14 @@ else if(isset($_POST['retry'])) {
         }
         else {
             echo sprintf($errorMsg,"Invalid Email");
-            $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED LOGIN - CUSTOMER (Invalid email address)',?,CURRENT_TIMESTAMP)";
+            // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (Invalid email address)',?,CURRENT_TIMESTAMP)";
+            $failSql = $logSql;
+            $description = "FAILED LOGIN - CUSTOMER (Invalid email address)";
             $failLog = $connect->prepare($failSql);
-            $failLog->bindParam(1,$session_user, PDO::PARAM_STR);
+            $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+            $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+            $failLog->bindParam(3,$description, PDO::PARAM_STR);
+            $failLog->bindParam(4,$session_user, PDO::PARAM_STR);
             $failLog->execute();
 
             header('Refresh: 5; URL=login.php');
@@ -194,9 +217,14 @@ else if(isset($_POST['retry'])) {
     else
     {
         echo sprintf($errorMsg,"Invalid Email");
-        $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED LOGIN - CUSTOMER (No email address)',?,CURRENT_TIMESTAMP)";
+        // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (No email address)',?,CURRENT_TIMESTAMP)";
+        $failSql = $logSql;
+        $description = "FAILED LOGIN - CUSTOMER (No email address)";
         $failLog = $connect->prepare($failSql);
-        $failLog->bindParam(1,$session_user, PDO::PARAM_STR);
+        $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+        $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+        $failLog->bindParam(3,$description, PDO::PARAM_STR);
+        $failLog->bindParam(4,$session_user, PDO::PARAM_STR);
         $failLog->execute();
 
         header('Refresh: 5; URL=login.php');

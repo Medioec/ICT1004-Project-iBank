@@ -16,7 +16,7 @@
                         <h1>Login</h1>
                         <p>   
                             For new users, please register a new account  
-                            <a href="register.php">here</a>. 
+                            <a href="register.php">here</a>.
                         </p>
                         <form action="loginProcess.php" method="post" class="form-validate" novalidate>
                             <div class="form-group">
@@ -44,6 +44,7 @@
                                 <button class= "btn btn-primary submit-button" type="submit" name="submit">Submit</button>
                             </div>
                         </form>
+                        <p><a href="forget_password.php">Forget your password? </a></p>
                     </div>
                 </div>
             <?php
