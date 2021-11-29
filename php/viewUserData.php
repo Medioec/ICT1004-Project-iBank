@@ -30,8 +30,8 @@
         // Prepare the statement:
         $stmt = $conn->prepare("SELECT * FROM user_data WHERE customer_id=?");
         // Hard coded - TODO CHANGE TO SESSION
-        //$id = $_SESSION["customerId"];
-        $id = 6;
+        $id = $_SESSION["customerId"];
+        //$id = 6;
         $stmt->bind_param("s", $id);
         $stmt->execute();
         $result = $stmt->get_result();

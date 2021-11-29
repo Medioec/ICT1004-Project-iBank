@@ -24,17 +24,6 @@
     
     $months = array(1 => 'Jan.', 2 => 'Feb.', 3 => 'Mar.', 4 => 'Apr.', 5 => 'May', 6 => 'Jun.', 7 => 'Jul.', 8 => 'Aug.', 9 => 'Sep.', 10 => 'Oct.', 11 => 'Nov.', 12 => 'Dec.');
     
-    
-    // Get individual balance amount for bank accounts tied to customer id
-    $balanceSql = "SELECT `balance` FROM bank_account "
-            . "WHERE `account_id` IN "
-            . "(SELECT `account_id` FROM bank_accounts_ref "
-            . "WHERE `customer_id` = ?)"; 
-    $balanceStmt = $connect->prepare($balanceSql);
-    $balanceStmt->bindParam(1,$thiscustomerid, PDO::PARAM_STR);
-    $balanceStmt->execute();
-    $balanceResult = $balanceStmt->fetchAll(PDO::FETCH_ASSOC);
-    
     // Get bank account number tied to customer id (Concatenated as "Account *")
     $accountSql = "SELECT CONCAT(\"Account \",`account_id`) AS `account_id` FROM bank_accounts_ref "
             . "WHERE `customer_id` = ?"; 
@@ -43,82 +32,102 @@
     $accountStmt->execute();
     $accountResult = $accountStmt->fetchAll(PDO::FETCH_ASSOC);
     
-    // Convert SQL array to PHP array
-    $accountArray = array_column($accountResult, 'account_id');
-    $balanceArray = array_column($balanceResult, 'balance');
+    if(!empty($accountResult)){
     
-    // Get SQL param "?,?, ... ,?" for number of account number tied to customer
-    $accountINArray = implode(',', array_fill(0, count($accountArray), '?'));
-    
-    // Get credit bank transactions from account number
-    $creditTransactionSql = "SELECT SUM(`amount`) AS `total`, MONTH(`timestamp`) AS `month` "
-            . "FROM `transaction_data` "
-            . "WHERE `credit_id` IN (".$accountINArray.")  AND (`timestamp` > timestamp(DATE_SUB(NOW(), INTERVAL 4 MONTH))) "
-            . "GROUP BY MONTH(`timestamp`) "
-            . "ORDER BY MONTH(`timestamp`) ASC;"; 
-    $creditTransactionStmt = $connect->prepare($creditTransactionSql);
-    $c = 0;
-    foreach ($accountArray as $key=> $acc) {
-        $c++;
-        $creditTransactionStmt->bindParam($c,str_replace("Account","",$acc), PDO::PARAM_INT);
-    }
-    $creditTransactionStmt->execute();
-    $creditTransactionResult = $creditTransactionStmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Get debit bank transactions from account number
-    $debitTransactionSql = "SELECT SUM(`amount`) AS `total`, MONTH(`timestamp`) AS `month` "
-            . "FROM `transaction_data` "
-            . "WHERE `debit_id` IN (".$accountINArray.")  AND (`timestamp` > timestamp(DATE_SUB(NOW(), INTERVAL 4 MONTH))) "
-            . "GROUP BY MONTH(`timestamp`) "
-            . "ORDER BY MONTH(`timestamp`) ASC;"; 
-    $debitTransactionStmt = $connect->prepare($debitTransactionSql);
-    $c = 0;
-    foreach ($accountArray as $key=> $acc) {
-        $c++;
-        $debitTransactionStmt->bindParam($c,str_replace("Account","",$acc), PDO::PARAM_INT);
-    }
-    $debitTransactionStmt->execute();
-    $debitTransactionResult = $debitTransactionStmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Get all the months of the transactions
-    $dMonthArray = array_column($debitTransactionResult, 'month');
-    $cMonthArray = array_column($creditTransactionResult, 'month');
-    $tempArray = array_merge($cMonthArray, $dMonthArray);
-    sort($tempArray );
-    $monthArray = array_values(array_unique($tempArray));
-    
-    $cTotalArray = array();
-    $c = 0;
-    foreach ($monthArray as $month) {
-        if(in_array($month,$creditTransactionResult[$c])) {
-            array_push($cTotalArray,$creditTransactionResult[$c]['total']);
+        // Get individual balance amount for bank accounts tied to customer id
+        $balanceSql = "SELECT `balance` FROM bank_account "
+                . "WHERE `account_id` IN "
+                . "(SELECT `account_id` FROM bank_accounts_ref "
+                . "WHERE `customer_id` = ?)"; 
+        $balanceStmt = $connect->prepare($balanceSql);
+        $balanceStmt->bindParam(1,$thiscustomerid, PDO::PARAM_STR);
+        $balanceStmt->execute();
+        $balanceResult = $balanceStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Convert SQL array to PHP array
+        $accountArray = array_column($accountResult, 'account_id');
+        $balanceArray = array_column($balanceResult, 'balance');
+
+        // Get SQL param "?,?, ... ,?" for number of account number tied to customer
+        $accountINArray = implode(',', array_fill(0, count($accountArray), '?'));
+
+        // Get credit bank transactions from account number
+        $creditTransactionSql = "SELECT SUM(`amount`) AS `total`, MONTH(`timestamp`) AS `month` "
+                . "FROM `transaction_data` "
+                . "WHERE `credit_id` IN (".$accountINArray.")  AND (`timestamp` > timestamp(DATE_SUB(NOW(), INTERVAL 4 MONTH))) "
+                . "GROUP BY MONTH(`timestamp`) "
+                . "ORDER BY MONTH(`timestamp`) ASC;"; 
+        $creditTransactionStmt = $connect->prepare($creditTransactionSql);
+        $c = 0;
+        foreach ($accountArray as $key=> $acc) {
+            $c++;
+            $creditTransactionStmt->bindParam($c,str_replace("Account","",$acc), PDO::PARAM_INT);
         }
-        else {
-            array_push($cTotalArray,0);
-            $c--;
+        $creditTransactionStmt->execute();
+        $creditTransactionResult = $creditTransactionStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Get debit bank transactions from account number
+        $debitTransactionSql = "SELECT SUM(`amount`) AS `total`, MONTH(`timestamp`) AS `month` "
+                . "FROM `transaction_data` "
+                . "WHERE `debit_id` IN (".$accountINArray.")  AND (`timestamp` > timestamp(DATE_SUB(NOW(), INTERVAL 4 MONTH))) "
+                . "GROUP BY MONTH(`timestamp`) "
+                . "ORDER BY MONTH(`timestamp`) ASC;"; 
+        $debitTransactionStmt = $connect->prepare($debitTransactionSql);
+        $c = 0;
+        foreach ($accountArray as $key=> $acc) {
+            $c++;
+            $debitTransactionStmt->bindParam($c,str_replace("Account","",$acc), PDO::PARAM_INT);
         }
-        $c++;
-    }
-    
-    $dTotalArray = array();
-    $c = 0;
-    foreach ($monthArray as $month) {
-        if(in_array($month,$debitTransactionResult[$c])) {
-            array_push($dTotalArray,-1 * abs($debitTransactionResult[$c]['total']));
+        $debitTransactionStmt->execute();
+        $debitTransactionResult = $debitTransactionStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Get all the months of the transactions
+        $dMonthArray = array_column($debitTransactionResult, 'month');
+        $cMonthArray = array_column($creditTransactionResult, 'month');
+        $tempArray = array_merge($cMonthArray, $dMonthArray);
+        sort($tempArray );
+        $monthArray = array_values(array_unique($tempArray));
+
+        $cTotalArray = array();
+        $c = 0;
+        foreach ($monthArray as $month) {
+            if(in_array($month,$creditTransactionResult[$c])) {
+                array_push($cTotalArray,$creditTransactionResult[$c]['total']);
+            }
+            else {
+                array_push($cTotalArray,0);
+                $c--;
+            }
+            $c++;
         }
-        else {
-            array_push($dTotalArray,0);
-            $c--;
+
+        $dTotalArray = array();
+        $c = 0;
+        foreach ($monthArray as $month) {
+            if(in_array($month,$debitTransactionResult[$c])) {
+                array_push($dTotalArray,-1 * abs($debitTransactionResult[$c]['total']));
+            }
+            else {
+                array_push($dTotalArray,0);
+                $c--;
+            }
+            $c++;
         }
-        $c++;
-    }
-    
-    for($x =0; $x < count($monthArray); $x++) {
-        foreach ($months as $monthnumber => $monthname) {
-            if($monthArray[$x] == $monthnumber){
-                $monthArray[$x] = $monthname;
+
+        for($x =0; $x < count($monthArray); $x++) {
+            foreach ($months as $monthnumber => $monthname) {
+                if($monthArray[$x] == $monthnumber){
+                    $monthArray[$x] = $monthname;
+                }
             }
         }
+    }
+    else {
+        $accountArray = array("NIL");
+        $balanceArray = array("0");
+        $monthArray = array("NIL");
+        $cTotalArray = array("0");
+        $dTotalArray = array("0");
     }
 //    print_r($creditTransactionResult);
 //    echo "<br>";
@@ -167,7 +176,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Accounts Balance'
+                        text: 'Account(s) Balance'
                     }
                 }
             }
@@ -229,7 +238,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Total Transactions past 4 months'
+                        text: 'Total Transaction(s) past 4 months'
                     }
                 },
                 responsive: true,

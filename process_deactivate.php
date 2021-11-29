@@ -29,7 +29,7 @@
                     }
                     // VALIDATING USING REGEX
                     else {
-                        if (strlen($_POST['pwd']) < '8') {
+                        if (strlen($_POST['pwd']) < '12') {
                             $errorMsg = "Incorrect Password!<br>";
                             $success = false;
                         } elseif (!preg_match("#[0-9]+#", $_POST["pwd"])) {
@@ -55,12 +55,16 @@
                     // If Success, Deactive account and destroy session
                     if ($success) {
                         deactivateAccount();
-                        session_unset();
-                        session_destroy();
-                        echo "<h3>Your account has be deactivated</h3><br>";
+                        unset($_SESSION["customerId"]);
+                        unset($_SESSION['loggedin']);
+                        //session_unset();
+                        //session_destroy();
+                        echo "<h3>Your account has been deactivated</h3><br>";
                         date_default_timezone_set('Asia/Singapore');
                         echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
-                        echo "<p><button onclick='goHome()' class='home_btn'>Home</button></p>";
+                        echo '<p><h5> Redirecting you to homepage... </h5></p>';
+                        header("refresh: 60; url = ./index.php");
+                        echo "<p><button onclick='goHome()' class='btn btn-primary'>Home</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
                     }
                     // Else, show unsuccessful messages
@@ -68,7 +72,7 @@
                         echo "<h3>Unsuccessful</h3>";
                         echo "<h5>The following errors were detected:</h5>";
                         echo "<p style='color:red'>" . $errorMsg . "</p>";
-                        echo "<p><button onclick='goBack()' class='return_btn'>Back</button></p>";
+                        echo "<p><button onclick='goBack()' class='btn btn-primary'>Back</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
                     }
                 }
@@ -110,8 +114,8 @@
                 else {
                     $stmt = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_id=?");
                     // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 6;
+                    $id = $_SESSION["customerId"];
+                    //$id = 6;
                     $stmt->bind_param("i", $id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -158,8 +162,8 @@
                     $stmt = $conn->prepare("SELECT sum(balance) AS acc_sum FROM bank_account B, bank_accounts_ref R WHERE customer_id = ? AND B.account_id = R.account_id");
                     
                     // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 6;
+                    $id = $_SESSION["customerId"];
+                    //$id = 6;
                     $stmt->bind_param("i", $id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -196,8 +200,8 @@
                     $stmt = $conn->prepare("UPDATE customer_credentials SET active=? WHERE customer_id=?");
 
                      // HARD CODED - TODO CHANGE TO SESSION
-                    //$id = $_SESSION["customerId"];
-                    $id = 6;
+                    $id = $_SESSION["customerId"];
+                    //$id = 6;
                     $active = 0;
                     $stmt->bind_param("ii", $active, $id);
                     $stmt->execute();
