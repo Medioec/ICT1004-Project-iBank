@@ -27,7 +27,7 @@ ob_start();
                     // FIRST NAME VALIDATION AND SANITIZATION (Nullable)
                     if (!empty($_POST["fname"])) {
                         $fname = sanitize_input($_POST["fname"]);
-                        $fname = htmlentities($_POST["fname"]);
+                        //$fname = htmlentities($_POST["fname"]);
                         if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
                         $errorMsg .= "Invalid Name format.<br>";
                         $success = false;
@@ -41,7 +41,8 @@ ob_start();
                     } else {
                         // Additional check on last name field.
                         $lname = sanitize_input($_POST["lname"]);
-                        $lname = htmlentities($_POST["lname"]);
+                        //$lname = htmlentities($_POST["lname"]);
+                        
                         if (!filter_var($lname, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Name format.<br>";
                             $success = false;
@@ -55,7 +56,7 @@ ob_start();
                     } else {
                         // Additional check on last name field.
                         $fullname = sanitize_input($_POST["fullname"]);
-                        $fullname = htmlentities($_POST["fullname"]);
+                        //$fullname = htmlentities($_POST["fullname"]);
                         if (!filter_var($fullname, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Name format.<br>";
                             $success = false;
@@ -106,7 +107,7 @@ ob_start();
                     } else {
                         // Additional check on last name field.
                         $street1 = sanitize_input($_POST["street1"]);
-                        $street1 = htmlentities($_POST["street1"]);
+                        //$street1 = htmlentities($_POST["street1"]);
                         if (!filter_var($street1, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Street Name.<br>";
                             $success = false;
@@ -116,7 +117,7 @@ ob_start();
                     // STREET2 VALIDATION AND SANITIZATION, CONSIDER CHANGING TO POSTAL API (Nullable)
                     if (!empty($_POST["street2"])){
                         $street2 = sanitize_input($_POST["street2"]);
-                        $street2 = htmlentities($_POST["street2"]);
+                        //$street2 = htmlentities($_POST["street2"]);
                         if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
                         $errorMsg .= "Invalid Street Name.<br>";
                         $success = false;
@@ -223,15 +224,14 @@ ob_start();
                         phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
                         echo "<h2>Registration Successful!</h2><br>";
-                        echo "<h4>" . $_POST["lname"] . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h4><br>";
-                        // TO-DO Implement PHP mail to send success registration email
-                        echo "<div class='alert alert-success' role='alert'> A confirmation email has been sent to ". $_POST["email"]. "</div>";
+                        echo "<h4>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h4><br>";
+                        echo "<div class='alert alert-success' role='alert'> A confirmation email has been sent to ". sanitize_input($_POST["email"]). "</div>";
                         //date_default_timezone_set('Asia/Singapore');
                         //echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
                         echo "<p>Redirecting back to Login page. Click on the button if the page does not redirect.</p>";
                         echo "<button onclick='goHome()' class='btn btn-success'>Login</button>";
                         echo "<br><br><br><br><br><br><br><br>";
-                        header('Refresh: 3; URL=login.php');
+                        header('Refresh: 10; URL=login.php');
                     }
                     // Else, show unsuccessful messages
                     else {

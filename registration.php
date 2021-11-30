@@ -28,7 +28,7 @@
                                 <input class="form-control" type="text" id="lname" name ="lname" maxlength="45" placeholder="Enter your Last Name" required>
                             </div>
                             <div class="form-group">
-                                <label for="lname">Full name*</label>
+                                <label for="fullname">Full name*</label>
                                 <input class="form-control" type="text" id="fullname" name="fullname" maxlength="150" placeholder="Enter your Full Name" required>
                             </div>
                             <div class="form-group">
