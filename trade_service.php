@@ -195,7 +195,7 @@ include "head.inc.php";
                             </div>
                         </div>
                     </div>
-                    <p><b>Eligibility: All businesses incorporated in Singapore are eligible to apply for Double'O4 Trade Services.</b></p>
+                    <p class="text-center"><b>Eligibility: All businesses incorporated in Singapore are eligible to apply for Double'O4 Trade Services.</b></p>
                 </div>
             </div>
         </div>
