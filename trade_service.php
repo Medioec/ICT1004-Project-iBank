@@ -16,14 +16,14 @@
                 <div class="front-side-menu" id="jsMenu">
                     <div class="side-menu-title"><h3>Links</h3></div>
                     <ul class="nav flex-column">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="banking_with_us.php">Banking with Us</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="finance.php">Financing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="trade_service.php">Trade Services</a>
+                            <a class="nav-link" href="trade_service.php">Trade Services</a>
                         </li>
                     </ul>
                 </div>

@@ -3,12 +3,16 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
+
+
 /* 
     Created on : 11 Nov 2021, 9:32:55 am
     Author     : Eric
 */
 
+
 /* Navbar */
+
 .nav-container {
     display: flex;
     flex-direction: row;
@@ -17,104 +21,138 @@ and open the template in the editor.
     flex-grow: 1;
     max-width: 900px
 }
+
 .company-logo img {
     width: 60px;
     height: 60px;
 }
+
 div.nav-wrapper {
-    position:fixed;
+    position: fixed;
     top: 0;
     z-index: 10;
     width: 100%;
 }
+
 .navbar {
     margin: auto;
     width: 100%;
     top: 0;
     justify-content: space-between;
-    background-color:darkorchid;
+    background-color: darkorchid;
 }
+
 div.navLinkContainer {
     display: flex;
     flex-direction: column;
 }
+
 @media (max-width: 768px) {
     div.navLinkContainer {
         flex-direction: column;
     }
+    .nav-item .dropdown-menu {
+        min-width: fit-content;
+    }
 }
+
 div.navbar-collapse {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 50px;
     padding: 0;
 }
+
 @media (min-width: 768px) {
     div.navbar-collapse {
         justify-content: center;
     }
 }
+
 .navbar a.dropdown-item {
     padding: 0.25rem 0.5rem;
 }
-.navbar a.nav-link {
+
+.navbar .nav-link {
     color: rgb(251, 209, 255)!important;
 }
+
 .navbar ul.navbar-col-2 {
     margin-right: 0;
 }
+
 ul.navbar-col-1 {
-    min-width: 10rem;
+    min-width: 8rem;
 }
+
 button.navbar-toggler {
     margin-right: 0;
 }
+
 .nav-max {
     max-width: 960px;
 }
+
+.dropdown-toggle {
+    white-space: normal;
+}
+
+#accountList p {
+    display: inline;
+}
+
+
 /* End navbar */
+
+
 /* Side menu*/
+
 .menu-item li {
     padding: 15px;
     margin: 20px;
     min-width: 120px;
 }
-.front-side-menu{
+
+.front-side-menu {
     margin-top: 100px;
     min-width: 170px;
 }
+
 .front-side-menu .nav .nav-link {
     color: black;
     border-style: none none solid none;
     border-width: 1px;
     border-color: lightgray;
-
 }
+
 .front-side-menu .nav a.active {
     background-color: darkorchid;
     color: rgb(251, 209, 255);
     padding-left: 30px;
 }
-.user-side-menu{
+
+.user-side-menu {
     margin-top: 100px;
     min-width: 170px;
 }
+
 .user-side-menu .nav .nav-link {
     color: black;
     border-style: none none solid none;
     border-width: 1px;
     border-color: lightgray;
-
 }
+
 .user-side-menu .nav a.active {
     background-color: darkorchid;
     color: rgb(251, 209, 255);
     padding-left: 30px;
 }
+
 .side-menu-title {
     padding-left: 16px;
 }
+
 .side-menu {
     padding-top: 20px;
     width: fit-content;
@@ -123,19 +161,23 @@ button.navbar-toggler {
     border-radius: 5px;
     background-color: rgb(181, 90, 209);
 }
+
 .side-menu h2 {
     margin-left: 20px;
-    color:rgb(251, 209, 255)
+    color: rgb(251, 209, 255)
 }
+
 .list-group-item {
     width: 170px;
 }
+
 .list-group {
     margin: 16px 10px 10px 10px;
     width: fit-content;
     border: 2px solid #926d9f;
     border-radius: 6px;
 }
+
 @media (max-width: 768px) {
     .side-menu {
         display: none;
@@ -148,9 +190,11 @@ button.navbar-toggler {
     }
 }
 
+
 /*Page body*/
+
 .page-bg {
-    background-color:white;
+    background-color: white;
     position: fixed;
     left: 0;
     top: 0;
@@ -160,18 +204,21 @@ button.navbar-toggler {
     justify-content: center;
     z-index: -9;
 }
+
 @media (min-width: 1200px) {
     .page-bg {
-        background-color:white;
+        background-color: white;
         background-size: cover;
     }
 }
+
 .banner-container {
     width: 100%;
     margin-top: 100px;
     z-index: 1;
     position: relative;
 }
+
 .banner-container img {
     width: 100%;
     height: 360px;
@@ -179,6 +226,7 @@ button.navbar-toggler {
     z-index: 1;
     position: relative;
 }
+
 .page-body {
     display: flex;
     margin: auto;
@@ -187,6 +235,7 @@ button.navbar-toggler {
     flex-direction: column;
     background-color: white;
 }
+
 @media (min-width: 1200px) {
     .page-body {
         /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
@@ -194,8 +243,9 @@ button.navbar-toggler {
         width: 80vw;
     }
 }
+
 .page-content {
-    margin:auto;
+    margin: auto;
     margin-top: 80px;
     display: flex;
     flex-direction: row;
@@ -206,6 +256,7 @@ button.navbar-toggler {
     margin-left: 10px;
     margin-right: 10px;
 }
+
 @media (min-width: 1200px) {
     .page-content {
         justify-content: center;
@@ -213,6 +264,11 @@ button.navbar-toggler {
         margin-right: 50px;
     }
 }
+
+h1.display-4 {
+    overflow-wrap: break-word;
+}
+
 .index-page-body {
     display: flex;
     margin: auto;
@@ -221,14 +277,16 @@ button.navbar-toggler {
     flex-direction: column;
     z-index: 2;
 }
+
 @media (min-width: 1200px) {
     .index-page-body {
         justify-content: center;
         width: 80vw;
     }
 }
+
 .index-title-box {
-    margin:auto;
+    margin: auto;
     margin-top: 0;
     margin-bottom: 100px;
     background-color: white;
@@ -239,14 +297,16 @@ button.navbar-toggler {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 }
+
 @media (min-width: 1200px) {
     .index-title-box {
         margin-left: 50px;
         margin-right: 50px;
     }
 }
+
 .index-page-content {
-    margin:auto;
+    margin: auto;
     margin-top: 0;
     display: flex;
     flex-direction: row;
@@ -259,6 +319,7 @@ button.navbar-toggler {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 }
+
 @media (min-width: 1200px) {
     .index-page-content {
         justify-content: center;
@@ -266,36 +327,45 @@ button.navbar-toggler {
         margin-right: 50px;
     }
 }
+
 .index-message {
     margin-top: 50px;
     margin-bottom: 50px;
     text-align: center;
 }
+
 .index-card {
     height: 240px;
     width: 240px;
     margin: 20px;
 }
-.index-card h5, p {
+
+.index-card h5,
+p {
     color: black;
 }
+
 .card-box {
-    margin:30px;
+    margin: 30px;
 }
+
 @media (max-width: 768px) {
     .card-box {
         margin-left: 0;
         margin-right: 0;
     }
 }
+
 .card-list {
     justify-content: center;
 }
+
 .big-card {
     min-width: 250px;
     width: 250px;
     min-height: 400px;
 }
+
 .hover-collapse {
     position: absolute;
     top: 184px;
@@ -304,16 +374,19 @@ button.navbar-toggler {
     border-radius: 10px;
     z-index: 5;
 }
+
 .card-wrapper {
     position: relative;
 }
+
 .card-body {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
 .text-on-pic {
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .main-content {
@@ -325,20 +398,21 @@ button.navbar-toggler {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: white;
     width: 100%;
-
 }
-.input-group-text{
+
+.input-group-text {
     width: 130px;
     min-width: 90px;
 }
+
 @media (max-width: 768px) {
     .main-content {
         width: 100%;
         padding-left: 20px;
         padding-right: 20px;
-
     }
 }
+
 @media (max-width: 500px) {
     .minw-500 {
         min-width: 200px;
@@ -352,6 +426,7 @@ button.navbar-toggler {
     max-width: 1000px;
     margin-top: 40px;
 }
+
 .header_content {
     margin-top: 80px;
     display: flex;
@@ -396,6 +471,7 @@ button.navbar-toggler {
     width: 33.33%;
     float: left;
 }
+
 .general_containers {
     max-width: 90%;
     display: inline-block;
@@ -413,15 +489,24 @@ button.navbar-toggler {
     width: 100%;
     height: auto;
 }
+
 .bwu_section {
     margin: 20px;
 }
+
+
 /*Page body end*/
+
+
 /* Forms*/
+
 div.date-entry {
     min-width: 200px;
 }
+
+
 /*Footer start*/
+
 footer {
     border-top: solid;
     font-style: italic;
@@ -447,8 +532,12 @@ ul.footer-list {
     text-align: center;
 }
 
+
 /*Footer end*/
+
+
 /*Account Balnce*/
+
 button.account-card {
     display: flex;
     flex-direction: row;
@@ -458,44 +547,56 @@ button.account-card {
     width: 100%;
     border-style: none;
     border-radius: 5px;
-    background: linear-gradient(rgb(151, 9, 163),rgb(214, 93, 225));
+    background: linear-gradient(rgb(151, 9, 163), rgb(214, 93, 225));
 }
+
 div.accounts-wrapper {
     display: flex;
     flex-direction: column;
 }
+
 .account-card p {
     margin-bottom: 0;
 }
+
+
 /*Account Balance end*/
 
+
 /*Page carousel*/
+
 .carousel-container {
     width: 100%;
     margin-top: 100px;
     z-index: 1;
     position: relative;
 }
+
 .page_carousel {
     width: 100%;
     margin-top: 100px;
 }
 
-.carousel-inner > .carousel-item > img {
-    height:360px;
+.carousel-inner>.carousel-item>img {
+    height: 360px;
     object-fit: cover;
     object-position: 50% 0%;
-
 }
 
+
 /* Profile CSS */
+
+
 /* Passsword Eye */
+
 form i {
     cursor: pointer;
 }
 
+
 /*Go back 1 page button*/
-.return_btn{
+
+.return_btn {
     background-color: red;
     border: none;
     color: white;
@@ -506,9 +607,11 @@ form i {
     font-size: 12px;
     border-radius: 8px;
 }
+
+
 /*Return to index page button*/
-.home_btn
-{
+
+.home_btn {
     background-color: blue;
     border: none;
     color: white;
@@ -520,38 +623,48 @@ form i {
     border-radius: 8px;
 }
 
+
 /* Profile CSS End*/
+
+
 /*Grid Blocks Start*/
+
 .column {
-  float: left;
-  width: 33.33%;
-  padding: 50px;
-  text-align: center;
-  font-size: 25px;
-  cursor: pointer;
-  color: black;
-  border: black 1px solid;
+    float: left;
+    width: 33.33%;
+    padding: 50px;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
+    color: black;
+    border: black 1px solid;
 }
 
 .containerTab {
-  padding: 20px;
-  color: black;
-  display: none;
-  background: lightgray;
+    padding: 20px;
+    color: black;
+    display: none;
+    background: lightgray;
 }
+
 
 /* Clear floats after the columns */
+
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
+
 /* Closable button inside the image */
+
 .closebtn {
-  float: right;
-  color: black;
-  font-size: 35px;
-  cursor: pointer;
+    float: right;
+    color: black;
+    font-size: 35px;
+    cursor: pointer;
 }
+
+
 /*Grid Blocks End*/

@@ -80,8 +80,8 @@
                     } else {
                         echo '
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="accountList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Welcome, '.$_SESSION["displayName"].'
+                            <a class="nav-link dropdown-toggle" href="#" id="accountList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="overflow-wrap: break-word;">
+                                <p class="nav-link">Welcome, '.$_SESSION["displayName"].'</p>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="accountList">
                             <a class="dropdown-item" href="view_profile.php">View Profile</a>
