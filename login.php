@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
     <head>
         <?php
         include "head.inc.php";
@@ -16,7 +16,7 @@
                         <h1>Login</h1>
                         <p>   
                             For new users, please register a new account  
-                            <a href="register.php">here</a>.
+                            <a href="registration.php">here</a>. 
                         </p>
                         <form action="loginProcess.php" method="post" class="form-validate" novalidate>
                             <div class="form-group">

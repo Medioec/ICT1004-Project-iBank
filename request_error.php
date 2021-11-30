@@ -5,7 +5,7 @@ if (!$_SESSION["sqlFailed"]) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <?php
         include "head.inc.php";
     ?>

@@ -5,7 +5,7 @@ if (!$_SESSION["sqlSuccess"]) {
 $_SESSION["sqlSuccess"] = 0;
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <?php include "head.inc.php"; ?>
     <body>
         <?php include "nav.inc.php"; ?>

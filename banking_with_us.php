@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <?php include "head.inc.php";?>
     <body>
         <?php include "nav.inc.php";?>
@@ -40,7 +40,7 @@
                     <div class="side-menu-title"><h3>Links</h3></div>
                     <ul class="nav flex-column">
                         <li class="nav-item active">
-                            <a class="nav-link active" href="personal_accounts.php">Banking with Us</a>
+                            <a class="nav-link active" href="banking_with_us.php">Banking with Us</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="finance.php">Financing</a>
@@ -51,7 +51,7 @@
                     </ul>
                 </div>
                 <div class="container-fluid info-main-content">
-                    <div class="jumbotron jumbotron-fluid mt-5">
+                    <div class="jumbotron jumbotitle jumbotron-fluid mt-5">
                         <div class="container">
                             <h1 class="display-4">Bank with Double'O4</h1>
                             <p class="lead">Run your business efficiently with our 

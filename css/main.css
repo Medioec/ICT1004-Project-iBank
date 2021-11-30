@@ -74,7 +74,7 @@ div.navbar-collapse {
 }
 
 .navbar .nav-link {
-    color: rgb(251, 209, 255)!important;
+    color: white;
 }
 
 .navbar ul.navbar-col-2 {
@@ -127,7 +127,7 @@ button.navbar-toggler {
 
 .front-side-menu .nav a.active {
     background-color: darkorchid;
-    color: rgb(251, 209, 255);
+    color: white;
     padding-left: 30px;
 }
 
@@ -334,6 +334,18 @@ h1.display-4 {
     text-align: center;
 }
 
+.jumbotitle {
+    background-color: darkorchid;
+}
+
+.jumbotitle h1 {
+    color: white;
+}
+
+.jumbotitle p {
+    color: white;
+}
+
 .index-card {
     height: 240px;
     width: 240px;
@@ -386,7 +398,7 @@ p {
 }
 
 .text-on-pic {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .main-content {
