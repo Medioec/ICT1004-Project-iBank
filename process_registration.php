@@ -27,6 +27,7 @@ ob_start();
                     // FIRST NAME VALIDATION AND SANITIZATION (Nullable)
                     if (!empty($_POST["fname"])) {
                         $fname = sanitize_input($_POST["fname"]);
+                        $fname = htmlentities($_POST["fname"]);
                         if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
                         $errorMsg .= "Invalid Name format.<br>";
                         $success = false;
@@ -40,6 +41,7 @@ ob_start();
                     } else {
                         // Additional check on last name field.
                         $lname = sanitize_input($_POST["lname"]);
+                        $lname = htmlentities($_POST["lname"]);
                         if (!filter_var($lname, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Name format.<br>";
                             $success = false;
@@ -53,6 +55,7 @@ ob_start();
                     } else {
                         // Additional check on last name field.
                         $fullname = sanitize_input($_POST["fullname"]);
+                        $fullname = htmlentities($_POST["fullname"]);
                         if (!filter_var($fullname, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Name format.<br>";
                             $success = false;
@@ -103,6 +106,7 @@ ob_start();
                     } else {
                         // Additional check on last name field.
                         $street1 = sanitize_input($_POST["street1"]);
+                        $street1 = htmlentities($_POST["street1"]);
                         if (!filter_var($street1, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Street Name.<br>";
                             $success = false;
