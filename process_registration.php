@@ -116,6 +116,7 @@ ob_start();
                     // STREET2 VALIDATION AND SANITIZATION, CONSIDER CHANGING TO POSTAL API (Nullable)
                     if (!empty($_POST["street2"])){
                         $street2 = sanitize_input($_POST["street2"]);
+                        $street2 = htmlentities($_POST["street2"]);
                         if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
                         $errorMsg .= "Invalid Street Name.<br>";
                         $success = false;
