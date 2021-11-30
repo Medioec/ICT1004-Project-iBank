@@ -110,7 +110,7 @@ if ($_POST["confirmDeleteClicked"])
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <?php include "head.inc.php"; ?>
     <body>
         <?php include "nav.inc.php"; ?>

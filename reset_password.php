@@ -3,7 +3,7 @@ ob_start();
 ?>
 
 <!-- Default HTML structure -->
-<html>
+<html lang="en">
     <?php
         include "head.inc.php";
     ?>
