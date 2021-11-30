@@ -3,7 +3,7 @@ session_start();
 ob_start();
 ?>
 
-<html>
+<html lang="en">
     <head>
         <title>Login Results</title>
         <?php

@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<html>
+<html lang="en">
     <head>
         <?php
         include "head.inc.php";
