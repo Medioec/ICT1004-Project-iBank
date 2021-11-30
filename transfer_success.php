@@ -9,6 +9,7 @@ if (!isset($_SESSION["transferSuccess"])) {
     unset($_SESSION["otherAccountId"]);
     unset($_SESSION["amountIn"]);
     unset($_SESSION["transferSuccess"]);
+    unset($_SESSION["verified"]);
 }
 ?>
 <!DOCTYPE html>

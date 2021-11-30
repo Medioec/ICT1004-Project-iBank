@@ -70,6 +70,7 @@
         $_SESSION["otherAccountId"] = $fetchedOtherAccountId;
         $_SESSION["accountId"] = $fetchedAccountId;
         $_SESSION["amountIn"] = $amountIn;
+        $_SESSION["verified"] = 1;
         header("Location: transfer_confirm.php");
 
     }

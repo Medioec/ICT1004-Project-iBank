@@ -1,9 +1,10 @@
 <?php
     include "session.php";
     include "php/inputCheckHandler.php";
-    if (basename($_SESSION["originTransactionPage"]) != "transfer_to_own.php" &&
-        basename($_SESSION["originTransactionPage"]) != "transfer_to_other.php" ||
-        !isset($_SESSION["originTransactionPage"])) {
+    if (!isset($_SESSION["originTransactionPage"]) || !isset($_SESSION["verified"]) ||
+        ( basename($_SESSION["originTransactionPage"]) != "transfer_to_own.php" &&
+        basename($_SESSION["originTransactionPage"]) != "transfer_to_other.php" )
+        ) {
         header("Location: transfer_to_own.php");
     }
     if (!isset($_SESSION["submitClicked"])) {
