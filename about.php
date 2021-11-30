@@ -37,20 +37,6 @@
         </div>
         <main class="index-page-body minw-500">
             <div class="index-page-content minw-500">
-                <div class="front-side-menu" id="jsMenu">
-                    <div class="side-menu-title"><h3>Links</h3></div>
-                    <ul class="nav flex-column">
-                        <li class="nav-item active">
-                            <a class="nav-link active" href="personal_accounts.php">Accounts</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Loans</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Cards</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="container-fluid info-main-content">
                     <div class="jumbotron jumbotron-fluid mt-5">
                         <div class="container">
