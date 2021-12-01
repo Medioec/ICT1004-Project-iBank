@@ -1,6 +1,5 @@
 <?php
     session_start();
-    ob_start();
     if (!isset($_POST["confirm-logout"])) {
         echo '
         <h2>Confirm Logout</h2>

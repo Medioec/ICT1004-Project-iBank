@@ -91,6 +91,24 @@
                                     domestic trade transactions.</p>
                             </div>
                         </a>
+                        <a class="card index-card" href="faq.php">
+                            <div class="card-body">
+                                <p class="card-title h5">Frequently Asked Questions</p>
+                                <p class="card-text">View some commonly asked questions here.</p>
+                            </div>
+                        </a>
+                        <a class="card index-card" href="privacy.php">
+                            <div class="card-body">
+                                <p class="card-title h5">Privacy Policy</p>
+                                <p class="card-text">View our privacy policy.</p>
+                            </div>
+                        </a>
+                        <a class="card index-card" href="t_and_c.php">
+                            <div class="card-body">
+                                <p class="card-title h5">Terms and Conditions</p>
+                                <p class="card-text">View our terms and conditions.</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

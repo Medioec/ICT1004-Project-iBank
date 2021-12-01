@@ -1,6 +1,5 @@
 <?php
     session_start();
-    ob_start();
     if (!isset($_POST["confirm-logout"])) {
         echo '
         <h1>Confirm Logout</h1>
@@ -23,5 +22,4 @@
         session_destroy();
         header('Refresh: 3; URL=index.php');
     }
-
 ?>
