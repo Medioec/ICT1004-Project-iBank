@@ -3,7 +3,7 @@
         <div class="footer row">
             <div class="columns col-sm">
                 <div class="footer-list-wrap">
-                    <p class="h4">Useful Links<p>
+                    <p class="h4">Useful Links</p>
                     <ul class='footer-list'>
                         <li>
                             <a href="personal_accounts.php" title="Personal Banking">Personal Banking</a>
@@ -19,7 +19,7 @@
             </div>
             <div class="columns col-sm">
                 <div class="footer-list-wrap">
-                    <p class="h4">Getting Started<p>
+                    <p class="h4">Getting Started</p>
                     <ul class="footer-list">
                         <li>
                             <a href="about.php" title="Introduction">Introduction</a>
@@ -35,7 +35,7 @@
             </div>
             <div class="columns col-sm">
                 <div class="footer-list-wrap">
-                    <p class="h4">Contact Us<p>
+                    <p class="h4">Contact Us</p>
                     <ul class="footer-list">
                         <li>
                             <span>double04bank@gmail.com</span>

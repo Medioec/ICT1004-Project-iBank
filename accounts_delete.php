@@ -42,7 +42,7 @@ if ($_POST["confirmDeleteClicked"]) {
     }
     if ($result[0]["balance"]) {
         $pagecontent = '
-        <h2>Deletion failed</h2>
+        <h1>Deletion failed</h1>
         <p>There are still funds in your account, please transfer the remaining sum out of the account before deletion.</p>
         <a type="button" class="btn btn-secondary" href="' . $_SESSION["originTransactionPage"] . '">Back</a>         
         ';

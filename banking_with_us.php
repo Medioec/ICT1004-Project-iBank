@@ -68,7 +68,7 @@
                         <div class="card big-card">
                             <img class="card-img-top" src="images/onlinebanking.jpg" alt="Internet Banking">
                             <div class="card-body">
-                                <p class="card-title h5">Business Internet Banking</h5>
+                                <p class="card-title h5">Business Internet Banking</p>
                                 <p class="card-text">The digital banking platform for businesses that's fast, secure, and easy to use.</p>
                                 <a href="#" class="btn btn-primary">Internet Banking</a>
                             </div>
@@ -78,7 +78,7 @@
                         <div class="card big-card">
                             <img class="card-img-top" src="images/tradecounters.jpg" alt="Trade Counters">
                             <div class="card-body">
-                                <p class="card-title h5">Trade Counters</h5>
+                                <p class="card-title h5">Trade Counters</p>
                                 <p class="card-text">Collect trade documents or submit forms at dedicated counters islandwide.</p>
                                 <a href="#" class="btn btn-primary">Details</a>
                             </div>
@@ -88,7 +88,7 @@
                         <div class="card big-card">
                             <img class="card-img-top" src="images/atm.jpg" alt="ATMs & Branches">
                             <div class="card-body">
-                                <p class="card-title h5">ATMs & Branches</h5>
+                                <p class="card-title h5">ATMs & Branches</p>
                                 <p class="card-text">Visit your nearest Double'O4 branch or any of our self-service machines and ATMs.</p>
                                 <a href="#" class="btn btn-primary">Find Us</a>
                             </div>

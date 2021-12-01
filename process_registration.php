@@ -218,11 +218,11 @@
                         include_once ('php/sendmail.php');
                         phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
-                        echo "<h2>Registration Successful!</h2><br>";
-                        echo "<p class='h4'>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i><p><br>";
+                        echo "<h1>Registration Successful!</h1><br>";
+                        echo "<p class='h4'>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></p><br>";
                         echo "<div class='alert alert-success' role='alert'> A confirmation email has been sent to ". sanitize_input($_POST["email"]). "</div>";
                         //date_default_timezone_set('Asia/Singapore');
-                        //echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
+                        //echo "<p class='h5'>" . date("Y/m/d") . " " . date("h:i:sa") . "</p><br>";
                         echo "<p>Redirecting back to Login page. Click on the button if the page does not redirect.</p>";
                         echo "<button onclick='goHome()' class='btn btn-success'>Login</button>";
                         echo "<br><br><br><br><br><br><br><br>";
@@ -230,8 +230,8 @@
                     }
                     // Else, show unsuccessful messages
                     else {
-                        echo "<h2><i class='bi bi-exclamation-square'></i> Registration Unsuccessful</h2>";
-                        echo "<p class='h4'>The following errors were detected:<p>";
+                        echo "<h1><i class='bi bi-exclamation-square'></i> Registration Unsuccessful</h1>";
+                        echo "<p class='h4'>The following errors were detected:</p>";
                         echo "<p style='color:red'>". $errorMsg . "</p>";
                         echo "<p><button onclick='goBack()' class='btn btn-primary'>Return to update details</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";

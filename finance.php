@@ -92,7 +92,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title1">Commercial & Industrial Property Loan</h5>
+                                        <p class="card-title h5" id="title1">Commercial & Industrial Property Loan</p>
                                     </div>
                                 </a>
                                 <div id="collapse1" class="collapse hover-collapse" aria-labelledby="title1" data-parent="#advancedAccordion">
@@ -107,7 +107,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title2">Machinery / Equipment Financing</h5>
+                                        <p class="card-title h5" id="title2">Machinery / Equipment Financing</p>
                                     </div>
                                 </a>
                                 <div id="collapse2" class="collapse hover-collapse" aria-labelledby="title2" data-parent="#advancedAccordion">
@@ -121,7 +121,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title3">SME HP Facility / Equipment & Factory Loan</h5>
+                                        <p class="card-title h5" id="title3">SME HP Facility / Equipment & Factory Loan</p>
                                     </div>
                                 </a>
                                 <div id="collapse3" class="collapse hover-collapse" aria-labelledby="title3" data-parent="#advancedAccordion">
@@ -137,7 +137,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse4" role="button" aria-expanded="false" aria-controls="collapse4">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title4">Asset Based Financing Under IF Scheme</h5>
+                                        <p class="card-title h5" id="title4">Asset Based Financing Under IF Scheme</p>
                                     </div>
                                 </a>
                                 <div id="collapse4" class="collapse hover-collapse" aria-labelledby="title4" data-parent="#advancedAccordion">
@@ -155,7 +155,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse5" role="button" aria-expanded="false" aria-controls="collapse5">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title5">Aircraft Financing</h5>
+                                        <p class="card-title h5" id="title5">Aircraft Financing</p>
                                     </div>
                                 </a>
                                 <div id="collapse5" class="collapse hover-collapse" aria-labelledby="title5" data-parent="#advancedAccordion">
@@ -170,7 +170,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse6" role="button" aria-expanded="false" aria-controls="collapse6">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title6">Commercial Vehicle Financing</h5>
+                                        <p class="card-title h5" id="title6">Commercial Vehicle Financing</p>
                                     </div>
                                 </a>
                                 <div id="collapse6" class="collapse hover-collapse" aria-labelledby="title6" data-parent="#advancedAccordion">
