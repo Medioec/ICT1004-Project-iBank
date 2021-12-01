@@ -17,7 +17,7 @@ a {
     color: darkorchid;
 }
 
-a:hover {
+/*a:hover {
     color: rgb(107, 39, 128);
 }
 
@@ -27,14 +27,14 @@ a:active {
 
 a:visited {
     color: rgb(107, 39, 128);
-}
+}*/
 
 .btn-primary {
     background-color: darkorchid !important;
     border-color: darkorchid !important;
 }
 
-.btn-primary:hover {
+/*.btn-primary:hover {
     background-color: rgb(107, 39, 128) !important;
     border-color: rgb(107, 39, 128) !important;
 }
@@ -47,7 +47,7 @@ a:visited {
 .btn-primary:visited {
     background-color: rgb(107, 39, 128) !important;
     border-color: rgb(107, 39, 128) !important;
-}
+}*/
 
 
 /* Navbar */
