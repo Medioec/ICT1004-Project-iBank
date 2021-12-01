@@ -12,8 +12,8 @@
                             <a href="banking_with_us.php" title="Business Banking">Business Banking</a>
                         </li>
                         <li>
-                            <a href="t_and_c.php" title="Terms & Condition">Terms and Conditions</a>
-                        </li>
+                            <a href="faq.php" title="Frequently Asked Questions">Frequently Asked Questions</a>
+                        </li> 
                     </ul>
                 </div>
             </div>
@@ -25,7 +25,10 @@
                             <a href="about.php" title="Introduction">Introduction</a>
                         </li>
                         <li>
-                            <a href="faq.php" title="Frequently Asked Questions">Frequently Asked Questions</a>
+                            <a href="privacy.php" title="Privacy Policy">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="t_and_c.php" title="Terms & Condition">Terms and Conditions</a>
                         </li>
                     </ul>
                 </div>
