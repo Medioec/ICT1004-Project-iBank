@@ -19,7 +19,7 @@
                 <h4>Getting Started</h4>
                 <ul class="footer-list">
                     <li>
-                        <a href="" title="Introduction">Introduction</a>
+                        <a href="about.php" title="Introduction">Introduction</a>
                     </li>
                     <li>
                         <a href="" title="Frequently Asked Questions">Frequently Asked Questions</a>
