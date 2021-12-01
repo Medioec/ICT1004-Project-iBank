@@ -26,7 +26,7 @@ include "head.inc.php";
                         <a class="nav-link" href="finance.php">Financing</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="trade_service.php">Trade Services</a>
+                        <a class="nav-link active" href="trade_service.php">Trade Services</a>
                     </li>
                 </ul>
             </div>
