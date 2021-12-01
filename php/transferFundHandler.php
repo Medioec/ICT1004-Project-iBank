@@ -7,15 +7,22 @@
         $otherAccountId = sanitize_input($_POST["otherAccountId"]);
         $amountIn = sanitize_input($_POST["amountIn"]);
         $abort = checkValidNum($accountId) + checkValidNum($otherAccountId) + checkValidMoney($amountIn);
-        $_SESSION["accountIdIn"] = $accountId;
-        $_SESSION["otherAccountIdIn"] = $otherAccountId;
-        $_SESSION["amountIn"] = $amountIn;
         if($abort)
         {
             $_SESSION["inputInvalid"] = 1;
             
             //header("Location: ".$_SESSION["originTransactionPage"]);
             return;
+        }
+
+        if ($amountIn == 0) {
+            $_SESSION["inputInvalid"] = 1;
+            $_SESSION["errormsg"] = "Please input a valid amount to transfer.";
+        }
+
+        if ($otherAccountId == $accountId) {
+            $_SESSION["inputInvalid"] = 1;
+            $_SESSION["errormsg"] = "Please select a different account to transfer to.";
         }
 
         $action = "SELECT `account_id`,`balance` FROM `bank_account` WHERE (`account_id` = 
@@ -26,11 +33,18 @@
         $stmt->bindParam(2, $customerId, PDO::PARAM_STR);
 
         try {
-            $stmt->execute();
+            $success = $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         catch(PDOException $e) {
             //echo "Retrieve failed: " . $e->getMessage();
+            $success = 0;
+        }
+
+        if(!$success) {
+            $_SESSION["sqlFailed"] = 1;
+            header("Location: transfer_error.php");
+            return;
         }
 
         $fetchedAccountId = $result[0]['account_id'];
@@ -42,11 +56,17 @@
         $stmt->bindParam(1, $otherAccountId, PDO::PARAM_STR);
 
         try {
-            $stmt->execute();
+            $success = $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         catch(PDOException $e) {
-            echo "Retrieve failed: " . $e->getMessage();
+            $success = 0;
+        }
+
+        if(!$success) {
+            $_SESSION["sqlFailed"] = 1;
+            header("Location: transfer_error.php");
+            return;
         }
 
         $fetchedOtherAccountId = $result[0]['account_id'];
@@ -97,8 +117,7 @@
         }
         catch(PDOException $e) {
             //echo "Retrieve failed: " . $e->getMessage();
-            header("Location: transfer_error.php");
-            return;
+            $success = 0;
         }
 
         if ($connect->lastInsertId() == NULL||!$success) {
@@ -118,8 +137,7 @@
         }
         catch(PDOException $e) {
             //echo "Retrieve failed: " . $e->getMessage();
-            header("Location: transfer_error.php");
-            return;
+            $success = 0;
         }
 
         if (!$success) {
@@ -139,8 +157,7 @@
         }
         catch(PDOException $e) {
             //echo "Retrieve failed: " . $e->getMessage();
-            header("Location: transfer_error.php");
-            return;
+            $success = 0;
         }
 
         if (!$success) {

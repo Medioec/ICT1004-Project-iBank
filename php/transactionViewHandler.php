@@ -29,7 +29,7 @@
         }
         
         if(!$toDate){$toDate = date("Y-m-d H:i:s");}
-        if(!$fromDate){$fromDate = date("Y-m-d H:i:s");}
+        if(!$fromDate){$fromDate = date("Y-m-d", strtotime("-1 month"));}
         $abort = checkValidNum($accountId) + checkValidNum($fromDate) + checkValidNum($toDate);
         if($abort){
             $_SESSION["inputInvalid"] = 1;

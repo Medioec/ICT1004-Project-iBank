@@ -13,7 +13,8 @@ function generateAccountSelect($connect, $displayTarget) {
             $accountToSelect = NULL;
         }
     }
-    $action = 'SELECT `account_id` FROM `bank_accounts_ref` WHERE `customer_id` = ? ORDER BY `account_id` ASC;';
+    $action = 'SELECT `bank_accounts_ref`.`account_id`, `bank_account`.`balance` FROM `bank_accounts_ref`, `bank_account` WHERE `customer_id` = ? AND 
+        `bank_accounts_ref`.`account_id` = `bank_account`.`account_id` ORDER BY `bank_accounts_ref`.`account_id` ASC;';
     $stmt = $connect->prepare($action);
     $stmt->bindParam(1, $_SESSION["customerId"], PDO::PARAM_STR);
 
@@ -27,12 +28,13 @@ function generateAccountSelect($connect, $displayTarget) {
 
     foreach ($result as $row) {
         $accountId = $row["account_id"];
+        $balance = $row["balance"];
         $selected = "";
         if ($accountId == $accountToSelect) {
             $selected = "selected";
         }
         echo "
-        <option ".$selected." value='".$accountId."'>".$accountId."</option>
+        <option ".$selected." value='".$accountId."'>".$accountId." -Balance: $".$balance."</option>
         ";
     }
 }

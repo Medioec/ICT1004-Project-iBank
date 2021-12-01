@@ -5,8 +5,13 @@
     //Displays error message if $_POST["inputInvalid"] is set
     function genericValidate() {
         if($_SESSION["inputInvalid"] == 1) {
+            if(isset($_SESSION["errormsg"])) {
+                $errormsg = $_SESSION["errormsg"];
+            } else {
+                $errormsg = "Invalid input. Please check the input fields for errors.";
+            }
         echo "
-            <p class='error-msg text-danger'>Invalid input. Please check the input fields for errors.</p>
+            <p class='error-msg text-danger'>".$errormsg."</p>
         ";
         $_SESSION["inputInvalid"] = 0;
         }
