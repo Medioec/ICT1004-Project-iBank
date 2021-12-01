@@ -144,7 +144,9 @@
                             $errorMsg .= "Invalid email format.<br>";
                             $success = false;
                         } else {
-                            checkEmailExist();
+                            //checkEmailExist();
+                            include_once ("php/connect.php");
+                            checkEmailExist2($connect);
                         }
                     }
 
@@ -175,7 +177,9 @@
                             $success = false;
                         }
                         else{
-                            checkUsernameExist();
+                            //checkUsernameExist();
+                            include_once ("php/connect.php");
+                            checkUsernameExist2($connect);
                         }
                     }
 
@@ -212,8 +216,9 @@
 
                     // If Success, Insert information into DB
                     if ($success) {
-                        registerUser();
-                        
+                        //registerUser();
+                        include_once ("php/connect.php");
+                        registerUser2($connect);
                         // Send confirmation email
                         include_once ('php/sendmail.php');
                         phpMailerRegistration($_POST["email"], $_POST["lname"]);
@@ -258,7 +263,7 @@
 
 
             <?php
-            // Function to check if email has been used
+            // mysqli Function to check if email has been used
             function checkEmailExist() {
                 global $email, $errorMsg, $success;
 
@@ -287,11 +292,40 @@
             }
             ?>
             
+            <?php
+
+            // PDO Function to check if email has been used
+            function checkEmailExist2($connect) {
+                global $email, $errorMsg, $success;
+                
+                $query = "SELECT * FROM user_data WHERE email=?";
+                $stmt = $connect->prepare($query);
+                $email = $_POST["email"];
+                $stmt->bindParam(1, $email, PDO::PARAM_STR);
+                
+                try {
+                    $stmt->execute();
+                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                } 
+                catch (PDOException $e) {
+                    //$errorMsg = "User data not found";
+                    //echo $errorMsg;
+  
+                }
+                
+                if(count($result) > 0){
+                    $errorMsg .= "This email has been registered.<br>";
+                    $success = false;
+                }
+            }
+            ?>
+            
             
             
             <?php
 
-            // Function to check if username has been used
+            // mysqli Function to check if username has been used
             function checkUsernameExist() {
                 global $username, $errorMsg, $success;
 
@@ -319,9 +353,40 @@
                 $conn->close();
             }
             ?>
+                    
             <?php
 
-            // Function to register user into DB
+            // PDO Function to check if username has been used
+            function checkUsernameExist2($connect) {
+                global $username, $errorMsg, $success;
+                
+                $query = "SELECT * FROM customer_credentials WHERE customer_username=?";
+                $stmt = $connect->prepare($query);
+                $username = $_POST["username"];
+                $stmt->bindParam(1, $username, PDO::PARAM_STR);
+                
+                try {
+                    $stmt->execute();
+                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                } 
+                catch (PDOException $e) {
+                    //$errorMsg = "User data not found";
+                    //echo $errorMsg;
+  
+                }
+                
+                if(count($result) > 0){
+                    $errorMsg .= "Username has been taken, Please select another username.<br>";
+                    $success = false;
+                }
+            }
+            ?>
+                    
+                    
+            <?php
+
+            // mysqli Function to register user into DB
             function registerUser() {
                 global $username, $pwd_hashed, $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $nric, $gender, $dob, $errorMsg, $success;
                 
@@ -371,6 +436,7 @@
                     // Insert into user_data and sensitive_info table
                     else {
                         $errorMsg = "Database Error";
+                        $success = false;
                         }
                     }
                         $stmtCredential->close();
@@ -382,6 +448,92 @@
                         
                     }
                     ?>
+                        
+            <?php
+
+            // PDO Function to register user into DB
+            function registerUser2($connect) {
+                
+                global $username, $pwd_hashed, $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $nric, $gender, $dob, $errorMsg, $success;
+                
+                // Insert into customer_credentials
+                $query1 = "INSERT INTO customer_credentials (customer_username, password_hash, otp, password_token, active) VALUES (?,?,?,?,?)";
+                $stmtCredential = $connect->prepare($query1);
+                
+                $otp = "12345";
+                $rndno = rand(1, 9999999);
+                $token = md5($rndno);
+                $active = 1;
+                
+                $stmtCredential->bindParam(1, $username, PDO::PARAM_STR);
+                $stmtCredential->bindParam(2, $pwd_hashed, PDO::PARAM_STR);
+                $stmtCredential->bindParam(3, $otp, PDO::PARAM_STR);
+                $stmtCredential->bindParam(4, $token, PDO::PARAM_STR);
+                $stmtCredential->bindParam(5, $active, PDO::PARAM_STR);
+                
+                try {
+                    $stmtCredential->execute();
+                    $count = $stmtCredential->rowCount();
+                    
+                }
+                catch (PDOException $e) {
+                    //$errorMsg = "";
+                    //echo $errorMsg;
+  
+                }
+                
+                // If query1 returns 1 row
+                if($count > 0){
+                    $query2 = "SELECT * FROM customer_credentials WHERE customer_username=?";
+                    $stmtGetID = $connect->prepare($query2);
+                    $username = $_POST["username"];
+                    $stmtGetID->bindParam(1, $username, PDO::PARAM_STR);
+                    $stmtGetID->execute();
+                    $result = $stmtGetID->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    // If username found in customer_credentials, customer_id = username
+                    if(count($result) > 0){
+  
+                        foreach ($result as $row){
+                            $id = $row["customer_id"];
+                        }
+                        
+                        // Insert into user_data
+                        $query3 = "INSERT INTO user_data (customer_id, first_name, last_name, full_name, street1, street2, postal, email, phone) VALUES (?,?,?,?,?,?,?,?,?)";
+                        $stmt_userDetail = $connect->prepare($query3);
+                        $stmt_userDetail->bindParam(1, $id, PDO::PARAM_INT);
+                        $stmt_userDetail->bindParam(2, $fname, PDO::PARAM_STR);
+                        $stmt_userDetail->bindParam(3, $lname, PDO::PARAM_STR);
+                        $stmt_userDetail->bindParam(4, $fullname, PDO::PARAM_STR);
+                        $stmt_userDetail->bindParam(5, $street1, PDO::PARAM_STR);
+                        $stmt_userDetail->bindParam(6, $street2, PDO::PARAM_STR);
+                        $stmt_userDetail->bindParam(7, $postal, PDO::PARAM_STR);
+                        $stmt_userDetail->bindParam(8, $email, PDO::PARAM_STR);
+                        $stmt_userDetail->bindParam(9, $phone, PDO::PARAM_STR);
+                        $stmt_userDetail->execute();
+                        
+                        // Insert into sensitive_info
+                        $query4 = "INSERT INTO sensitive_info (customer_id, ic_number, gender, date_of_birth) VALUES (?,?,?,?)";
+                        $stmt_sensitiveInfo = $connect->prepare($query4);
+                        $stmt_sensitiveInfo->bindParam(1, $id, PDO::PARAM_INT);
+                        $stmt_sensitiveInfo->bindParam(2, $nric, PDO::PARAM_STR);
+                        $stmt_sensitiveInfo->bindParam(3, $gender, PDO::PARAM_STR);
+                        $stmt_sensitiveInfo->bindParam(4, $dob, PDO::PARAM_STR);
+                        $stmt_sensitiveInfo->execute();  
+                    }
+                    else{
+                        $errorMsg = "Database Error";
+                        $success = false;
+                    }
+
+                }
+                else{
+                    $errorMsg = "Invalid Entry";
+                    $success = false;
+                }
+            }
+            
+            ?>
 
        </div>
     </div>
