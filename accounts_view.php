@@ -11,19 +11,22 @@ if (isset($_POST["accountId"])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <?php include "head.inc.php";?>
-    <body>
-        <?php include "nav.inc.php";?>
-        <div class="page-bg"></div>
-            <div class="page-body minw-500">
-                <div class="page-content minw-500">
-                <?php include "sideMenu.inc.php";?>
-                    <div class="main-content">
-                        <h2>Account Balances</h2>
-                        <?php $_SESSION["originTransactionPage"] = $_SERVER['REQUEST_URI']; getBalance($connect);?>
-                    </div>
-                </div>
-                <?php include "footer.inc.php";?>
+<?php include "head.inc.php"; ?>
+
+<body>
+    <?php include "nav.inc.php"; ?>
+    <div class="page-bg"></div>
+    <div class="page-body minw-500">
+        <div class="page-content minw-500">
+            <?php include "sideMenu.inc.php"; ?>
+            <div class="main-content">
+                <h2>Account Balances</h2>
+                <?php $_SESSION["originTransactionPage"] = $_SERVER['REQUEST_URI'];
+                getBalance($connect); ?>
             </div>
-    </body>
+        </div>
+    </div>
+    <?php include "footer.inc.php"; ?>
+</body>
+
 </html>

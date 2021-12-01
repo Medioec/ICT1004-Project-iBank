@@ -26,8 +26,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="personalBankingList">
                             <a class="dropdown-item" href="personal_accounts.php">Accounts</a>
-                            <a class="dropdown-item" href="">Loans</a>
-                            <a class="dropdown-item" href="">Cards</a>
+                            <a class="dropdown-item" href="personal_loans.php">Loans</a>
+                            <a class="dropdown-item" href="personal_cards.php">Cards</a>
                         </div>
                         </li>
                         <li class="nav-item dropdown">
