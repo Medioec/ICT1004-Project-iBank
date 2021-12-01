@@ -7,8 +7,6 @@
 
     $query = "SELECT * FROM user_data WHERE customer_id=?";
     $stmt = $connect->prepare($query);
-    // Hard coded - TODO CHANGE TO SESSION
-    //$id = 2;
     $id = $_SESSION["customerId"];
     $stmt->bindParam(1, $id, PDO::PARAM_INT);
 
@@ -30,6 +28,7 @@
         $street2 = htmlentities($row["street2"]);
         $postal = htmlentities($row["postal"]);
         $email = htmlentities($row["email"]);
+        $current_email = htmlentities($row["email"]);
         $phone = htmlentities($row["phone"]);
     }
 ?>

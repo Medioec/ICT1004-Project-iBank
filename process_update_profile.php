@@ -1,4 +1,4 @@
-<?php include "session.php"; ?>
+<?php //include "session.php"; ?>
 <html lang="en">
     <head>
         <?php
@@ -16,6 +16,7 @@
 
                 <?php
                 include_once ('php/connect.php');
+                include "php/viewUserData.php";
                 
                 // Logging Variables
                 $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
@@ -116,6 +117,11 @@
                         if (!preg_match($emailregex, $email)) {
                             $errorMsg .= "Invalid email format.<br>";
                             $success = false;
+                        }
+                        else{
+                            if($_POST["email"] != $current_email){
+                                checkEmailExist($connect);
+                            }
                         }
                         // VALIDATING USING PHP BUILT-IN FUNCTION
                         #if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -241,6 +247,26 @@
                 }
                 ?>
             </div>
+                    
+                    <?php
+
+                    // Function to check if email has been used
+                    function checkEmailExist($connect) {
+                        global $email, $errorMsg, $success;
+
+                        $email = sanitize_input($_POST["email"]);
+                        $emailSql = "SELECT * FROM user_data WHERE email=?";
+                        $emailStmt = $connect->prepare($emailSql);
+                        $emailStmt->bindParam(1, $email, PDO::PARAM_STR);
+                        $emailStmt->execute();
+                        $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        if (!empty($emailResult)) {
+                            $errorMsg .= "Unable to change email. This email has been registered.<br>";
+                            $success = false;
+                        }
+                    }
+                    ?>
             
             
             <?php            
@@ -248,7 +274,8 @@
             function checkCurrentPwd($connect) {
                 global $curr_pwd_hashed, $errorMsg, $success;
                 
-                $id = $_SESSION["customerId"];
+                //$id = $_SESSION["customerId"];
+                $id = 6;
                 // Prepare the statement:
                 $getPwdSql = "SELECT `password_hash` FROM customer_credentials WHERE customer_id=?"; 
                 $getPwdStmt = $connect->prepare($getPwdSql);
@@ -277,7 +304,8 @@
             function updateUserDetails($connect) {
                 global $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $errorMsg, $success;
                 
-                $id = $_SESSION["customerId"];
+                //$id = $_SESSION["customerId"];
+                $id = 6;
                 // Prepare the statement:
                 $updateInfoSql = "UPDATE user_data SET "
                         . "first_name=?, last_name=?, full_name=?, "
@@ -307,7 +335,8 @@
             function updatePassword($connect) {
                 global $new_pwd_hashed, $errorMsg, $success;
                 
-                $id = $_SESSION["customerId"];
+                //$id = $_SESSION["customerId"];
+                $id = 6;
                 // Prepare the statement:
                 $changePwdSql = "UPDATE customer_credentials SET password_hash=? WHERE customer_id=?"; 
                 $changePwdStmt = $connect->prepare($changePwdSql);
