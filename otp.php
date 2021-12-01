@@ -67,12 +67,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
     echo "<script>window.location.href = 'index.php';</script>";
 }
 else if (isset($_SESSION['username'])) {
-	$session_user = $_SESSION['username'];
-        $activeSql = "SELECT `active` FROM `customer_credentials` WHERE `customer_username` = ?";
-	$activeStmt = $connect->prepare($activeSql);
-        $activeStmt->bindParam(1,$session_user, PDO::PARAM_STR);
-        $activeStmt->execute();
-        $activeResult = $activeStmt->fetchAll(PDO::FETCH_ASSOC);
+    $session_user = $_SESSION['username'];
+    $activeSql = "SELECT `active` FROM `customer_credentials` WHERE `customer_username` = ?";
+    $activeStmt = $connect->prepare($activeSql);
+    $activeStmt->bindParam(1,$session_user, PDO::PARAM_STR);
+    $activeStmt->execute();
+    $activeResult = $activeStmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 if(($activeResult[0]['active'] == "0") || (!isset($activeResult[0]['active']))) {
@@ -81,6 +81,7 @@ if(($activeResult[0]['active'] == "0") || (!isset($activeResult[0]['active']))) 
 
 echo "<html oncontextmenu='return false'>";    
 
+// Logging Variables
 $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
 $logType = "OTP";
 $logCategory0 = "INFO";

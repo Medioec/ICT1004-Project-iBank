@@ -12,9 +12,14 @@
             </div>
             <div class="collapse navbar-collapse col-md" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mt-lg-0 navbar-col-1">
+				<?php
+				if (!isset($_SESSION["staffId"])) {
+					echo '
                     <li class="nav-item">
-                        <a class="nav-link" href="staff_login.php">Home</a>
-                    </li>
+                        <a class="nav-link bi bi-person-circle" href="../login.php"> Customer Login</a>
+                    </li>';
+				}
+				?>
                 </ul>
                 <ul class="navbar-nav mt-lg-0 navbar-col-2">
                     <?php
@@ -26,7 +31,7 @@
                         ';
                     } else {echo'
                         <li class="nav-item">
-                            <a class="nav-link bi bi-box-arrow-in-right" href="staff_login.php"> Sign-in</a>
+                            <a class="nav-link bi bi-box-arrow-in-right" href="staff_login.php"> Staff Sign-in</a>
                         </li>
                         ';
                     }

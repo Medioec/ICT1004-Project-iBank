@@ -1,4 +1,7 @@
-<?php include "session.php";?>
+<?php 
+ob_start();
+include "session.php";
+?>
 <html lang="en">
     <head>
         <?php
@@ -15,6 +18,16 @@
                     <div class="main-content">
 
                 <?php
+                include_once ('php/connect.php');
+                
+                // Logging Variables
+                $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+                $logType = "LOGIN";
+                $logCategory0 = "INFO";
+                $logCategory1 = "WARNING";
+                $description = "";
+                $noUser = "-EMPTY FIELD-";
+                
                 // IF REQUEST METHOD IS POST, NOT GET
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -46,15 +59,15 @@
                         else {
                             // HASH THE PASSWORD and check if it matches password in DB
                             $pwd_hashed = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
-                            checkCurrentPwd();
-                            checkAccountBalance();
+                            checkCurrentPwd($connect);
+                            checkAccountBalance($connect);
                         }
                     }
                     
                     
                     // If Success, Deactive account and destroy session
                     if ($success) {
-                        deactivateAccount();
+                        deactivateAccount($connect);
                         unset($_SESSION["customerId"]);
                         unset($_SESSION['loggedin']);
                         //session_unset();
@@ -98,121 +111,69 @@
             <?php       
             
             // Function to cross check current password = password in DB
-            function checkCurrentPwd() {
+            function checkCurrentPwd($connect) {
                 global $pwd_hashed, $errorMsg, $success;
-
-                // Create database connection.
-                $config = parse_ini_file('../../private/db-config.ini');
-                $conn = new mysqli($config['servername'], $config['username'],
-                        $config['password'], $config['dbname']);
-
-                // Check connection
-                if ($conn->connect_error) {
-                    $errorMsg = "Connection failed: " . $conn->connect_error;
-                    $success = false;
-                } 
-                else {
-                    $stmt = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_id=?");
-                    // HARD CODED - TODO CHANGE TO SESSION
-                    $id = $_SESSION["customerId"];
-                    //$id = 6;
-                    $stmt->bind_param("i", $id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        $pwd_hashed = $row["password_hash"];
-
-                        // Check if current password user has entered == DB password
-                        if (!password_verify($_POST["pwd"], $pwd_hashed)) {
-                            $errorMsg = "Incorrect Password... Please enter current password to proceed";
-                            $success = false;
-                        }
-
-                    } 
-                    else {
-                        $errorMsg = "Error, no data found";
+                
+                $id = $_SESSION["customerId"];
+                // Prepare the statement:
+                $getPwdSql = "SELECT `password_hash` FROM customer_credentials WHERE customer_id=?"; 
+                $getPwdStmt = $connect->prepare($getPwdSql);
+                $getPwdStmt->bindParam(1,$id, PDO::PARAM_INT);
+                $getPwdStmt->execute();
+                $getPwdResult = $getPwdStmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                if($getPwdStmt->rowCount() == 1) {
+                    $pwd_hashed = $getPwdResult[0]["password_hash"];
+                    
+                    // Check if current password user has entered == DB password
+                    if (!password_verify($_POST["pwd"], $pwd_hashed)) {
+                        $errorMsg = "Incorrect Password... Please enter current password to proceed";
                         $success = false;
                     }
-                    $stmt->close();
                 }
-                $conn->close();
+                else {
+                    $errorMsg = "Error, no data found";
+                    $success = false;
+                }
             }
-            ?>
-                    
-            <?php        
             
             // Function to check if balance in all accounts is 0 before deactivation
-            function checkAccountBalance() {
+            function checkAccountBalance($connect) {
                 global $balance, $errorMsg, $success;
-
-                // Create database connection.
-                $config = parse_ini_file('../../private/db-config.ini');
-                $conn = new mysqli($config['servername'], $config['username'],
-                        $config['password'], $config['dbname']);
-
-                // Check connection
-                if ($conn->connect_error) {
-                    $errorMsg = "Connection failed: " . $conn->connect_error;
+                
+                $id = $_SESSION["customerId"];
+                // Prepare the statement:
+                $getBalSql = "SELECT sum(balance) AS acc_sum FROM bank_account B, bank_accounts_ref R WHERE customer_id = ? AND B.account_id = R.account_id"; 
+                $getBalStmt = $connect->prepare($getBalSql);
+                $getBalStmt->bindParam(1,$id, PDO::PARAM_INT);
+                $getBalStmt->execute();
+                $getBalResult = $getBalStmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                $balance = $getBalResult[0]["acc_sum"];
+                if ($balance > 0.00) {
+                    $errorMsg = "You have outstanding balance in your accounts, please head down to the bank to process deactivation.";
                     $success = false;
                 }
-
-                else {
-                    //$stmt = $conn->prepare("SELECT * FROM bank_account B, bank_accounts_ref R WHERE customer_id = ? AND B.account_id = R.account_id");
-                    $stmt = $conn->prepare("SELECT sum(balance) AS acc_sum FROM bank_account B, bank_accounts_ref R WHERE customer_id = ? AND B.account_id = R.account_id");
-                    
-                    // HARD CODED - TODO CHANGE TO SESSION
-                    $id = $_SESSION["customerId"];
-                    //$id = 6;
-                    $stmt->bind_param("i", $id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $row = $result->fetch_assoc();
-                    //$balance = $row["balance"];
-                    $balance = $row["acc_sum"];
-                    
-                    if ($balance > 0.00) {
-                        $errorMsg = "You have outstanding balance in your accounts, please head down to the bank to process deactivation.";
-                        $success = false;
-                        
-                    }
-                    $stmt->close();
-                }
-                $conn->close();
             }
-            ?>
-
-            <?php
+            
             // Function to deactivate account
-            function deactivateAccount() {
+            function deactivateAccount($connect) {
                 global $active, $errorMsg, $success;
-                // Create database connection.
-                // TODO - CHANGE TO PDO
-                $config = parse_ini_file('../../private/db-config.ini');
-                $conn = new mysqli($config['servername'], $config['username'],
-                        $config['password'], $config['dbname']);
-                // Check connection
-                if ($conn->connect_error) {
-                    $errorMsg = "Connection failed: " . $conn->connect_error;
+                
+                $id = $_SESSION["customerId"];
+                $active = 0;
+                // Prepare the statement:
+                $deactivateAccSql = "UPDATE customer_credentials SET active=? WHERE customer_id=?"; 
+                $deactivateAccStmt = $connect->prepare($deactivateAccSql);
+                $deactivateAccStmt->bindParam(1,$active, PDO::PARAM_INT);
+                $deactivateAccStmt->bindParam(2,$id, PDO::PARAM_INT);
+                $deactivateAccStmt->execute();
+                $deactivateAccResult = $deactivateAccStmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                if ($deactivateAccStmt->rowCount() != 1) {
+                    $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                     $success = false;
-                } else {
-                    // Prepare the statement:
-                    $stmt = $conn->prepare("UPDATE customer_credentials SET active=? WHERE customer_id=?");
-
-                     // HARD CODED - TODO CHANGE TO SESSION
-                    $id = $_SESSION["customerId"];
-                    //$id = 6;
-                    $active = 0;
-                    $stmt->bind_param("ii", $active, $id);
-                    $stmt->execute();
-
-                    if ($stmt->affected_rows != 1) {
-                        $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-                        $success = false;
-                    }
-                    $stmt->close();
                 }
-                $conn->close();
             }
             ?>
 

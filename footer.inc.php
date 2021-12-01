@@ -46,6 +46,13 @@
                         <li>
                             <a href="" title="Our Branches and ATMs">Our Branches & ATMs</a>
                         </li>
+                        <?php
+                        if (!isset($_SESSION["customerId"])) {
+                            echo'<li>
+                                    <a href="staff/staff_login.php" title="Staff Login">Staff Login</a>
+                                </li>';
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>

@@ -15,7 +15,7 @@ include "staff_session.php";
             <main class="page-body">
                 <div class="page-content">
                     <div class="main-content">
-                        <h2>View System Logs as: <?php echo $_SESSION["displayName"]; ?></h2>
+                        <h2>View System Logs as: <?php echo $_SESSION["position"]."(".$_SESSION["displayName"].")"; ?></h2>
 <!-- Default HTML structure -->
 <table id="logTable" class="table table-striped table-bordered" style="width:100%">
         <thead>

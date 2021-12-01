@@ -84,6 +84,7 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
                     $updatePwdStmt->bindParam(4,$token, PDO::PARAM_STR);
                     $updatePwdStmt->execute();
                     
+                    // Logging Variables
                     $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
                     $logType = "RESET-PW";
                     $logCategory0 = "INFO";

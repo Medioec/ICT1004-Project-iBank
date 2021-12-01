@@ -43,6 +43,7 @@ $forgetPasswordBody = "<h2>Forget Password</h2>"
 
 $message = "";
 
+// Logging Variables
 $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
 $logType = "FORGET-PW";
 $logCategory0 = "INFO";

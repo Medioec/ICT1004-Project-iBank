@@ -36,6 +36,7 @@ $errorMsg = "<h2>Oops!</h2>"
 
 include_once ('php/connect.php');
 
+// Logging Variables
 $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
 $logType = "LOGIN";
 $logCategory0 = "INFO";

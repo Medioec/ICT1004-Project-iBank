@@ -1,4 +1,4 @@
-<?php include "session.php";?>
+<?php include "session.php"; ?>
 <html lang="en">
     <head>
         <?php
@@ -15,6 +15,18 @@
                     <div class="main-content">
 
                 <?php
+                include_once ('php/connect.php');
+                
+                // Logging Variables
+                $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+                $logType = "LOGIN";
+                $logCategory0 = "INFO";
+                $logCategory1 = "WARNING";
+                $description = "";
+                $noUser = "-EMPTY FIELD-";
+                
+                $changePw = false;
+                
                 // IF REQUEST METHOD IS POST, NOT GET
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -28,7 +40,7 @@
                         if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
                         $errorMsg .= "Invalid Name format.<br>";
                         $success = false;
-                    }
+                        }
                     }
 
                     // LAST NAME VALIDATION AND SANITIZATION (Required)
@@ -111,7 +123,7 @@
                         #$success = false;
                         #}
                     }
-
+                    
                     // PHONE NO. VALIDATION AND SANITIZATION (Required)
                     if (empty($_POST["phone"])) {
                         $errorMsg .= "Phone Number is required.<br>";
@@ -149,7 +161,7 @@
                         else {
                             // HASH THE PASSWORD and check if it matches password in DB
                             $pwd_hashed = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
-                            checkCurrentPwd();
+                            checkCurrentPwd($connect);
                         }
                     }
                     
@@ -185,6 +197,7 @@
                             else {
                                 // HASH THE NEW PASSWORD $$new_pwd_hashed to be updated into DB
                                 $new_pwd_hashed = password_hash($_POST["new_pwd"], PASSWORD_DEFAULT);
+                                $changePw = true;
                             }
                         }
                     }
@@ -192,8 +205,10 @@
 
                     // If Success, Update information into DB
                     if ($success) {
-                        updateUserDetails();
-                        updatePassword();
+                        updateUserDetails($connect);
+                        if ($changePw) {
+                            updatePassword($connect);
+                        }
                         echo "<h3>Your profile details have been updated</h3><br>";
                         date_default_timezone_set('Asia/Singapore');
                         echo "<p class='h5'>" . date("Y/m/d") . " " . date("h:i:sa") . "</p><br>";
@@ -230,111 +245,80 @@
             
             <?php            
             // Function to cross check current password = password in DB
-            function checkCurrentPwd() {
+            function checkCurrentPwd($connect) {
                 global $curr_pwd_hashed, $errorMsg, $success;
-
-                // Create database connection.
-                $config = parse_ini_file('../../private/db-config.ini');
-                $conn = new mysqli($config['servername'], $config['username'],
-                        $config['password'], $config['dbname']);
-
-                // Check connection
-                if ($conn->connect_error) {
-                    $errorMsg = "Connection failed: " . $conn->connect_error;
-                    $success = false;
-                } 
-                else {
-                    $stmt = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_id=?");
-                    // HARD CODED - TODO CHANGE TO SESSION
-                    $id = $_SESSION["customerId"];
-                    //$id = 6;
-                    $stmt->bind_param("i", $id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        $curr_pwd_hashed = $row["password_hash"];
-
-                        // Check if current password user has entered == DB password
-                        if (!password_verify($_POST["pwd"], $curr_pwd_hashed)) {
-                            $errorMsg .= "Incorrect Password... Please verify with your current password<br>";
-                            $success = false;
-                        }
-
-                    } 
-                    else {
-                        $errorMsg = "Error, no data found";
+                
+                $id = $_SESSION["customerId"];
+                // Prepare the statement:
+                $getPwdSql = "SELECT `password_hash` FROM customer_credentials WHERE customer_id=?"; 
+                $getPwdStmt = $connect->prepare($getPwdSql);
+                $getPwdStmt->bindParam(1,$id, PDO::PARAM_INT);
+                $getPwdStmt->execute();
+                $getPwdResult = $getPwdStmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                if($getPwdStmt->rowCount() == 1) {
+                    $curr_pwd_hashed = $getPwdResult[0]["password_hash"];
+                    
+                    // Check if current password user has entered == DB password
+                    if (!password_verify($_POST["pwd"], $curr_pwd_hashed)) {
+                        $errorMsg .= "Incorrect Password... Please verify with your current password<br>";
                         $success = false;
                     }
-                    $stmt->close();
                 }
-                $conn->close();
+                else {
+                    $errorMsg = "Error, no data found";
+                    $success = false;
+                }
             }
             ?>
 
             <?php
             // Function to update user details into DB
-            function updateUserDetails() {
+            function updateUserDetails($connect) {
                 global $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $errorMsg, $success;
-                // Create database connection.
-                // TODO - CHANGE TO PDO
-                $config = parse_ini_file('../../private/db-config.ini');
-                $conn = new mysqli($config['servername'], $config['username'],
-                        $config['password'], $config['dbname']);
-                // Check connection
-                if ($conn->connect_error) {
-                    $errorMsg = "Connection failed: " . $conn->connect_error;
+                
+                $id = $_SESSION["customerId"];
+                // Prepare the statement:
+                $updateInfoSql = "UPDATE user_data SET "
+                        . "first_name=?, last_name=?, full_name=?, "
+                        . "street1=?, street2=?, postal=?, "
+                        . "email=?, phone=? WHERE customer_id=?"; 
+                $updateInfoStmt = $connect->prepare($updateInfoSql);
+                $updateInfoStmt->bindParam(1,$fname, PDO::PARAM_STR);
+                $updateInfoStmt->bindParam(2,$lname, PDO::PARAM_STR);
+                $updateInfoStmt->bindParam(3,$fullname, PDO::PARAM_STR);
+                $updateInfoStmt->bindParam(4,$street1, PDO::PARAM_STR);
+                $updateInfoStmt->bindParam(5,$street2, PDO::PARAM_STR);
+                $updateInfoStmt->bindParam(6,$postal, PDO::PARAM_STR);
+                $updateInfoStmt->bindParam(7,$email, PDO::PARAM_STR);
+                $updateInfoStmt->bindParam(8,$phone, PDO::PARAM_STR);
+                $updateInfoStmt->bindParam(9,$id, PDO::PARAM_STR);
+                $updateInfoStmt->execute();
+                
+                if ($updateInfoStmt->rowCount() != 1) {
+                    $errorMsg = "Error, please contact bank for help.";
                     $success = false;
-                } else {
-                    // Prepare the statement:
-                    $stmt = $conn->prepare("UPDATE user_data SET first_name=?, last_name=?, full_name=?, street1=?, street2=?, postal=?, email=?, phone=? WHERE customer_id=?");
-                    // HARD CODED - TODO CHANGE TO SESSION
-                    $id = $_SESSION["customerId"];
-                    //$id = 6;
-                    $stmt->bind_param("ssssssssi", $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $id);
-                    $stmt->execute();
-                    if ($stmt->affected_rows != 1) {
-                        $errorMsg = "Error, please contact bank for help.";
-                        //$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-                        $success = false;
-                    }
-                    $stmt->close();
                 }
-                $conn->close();
             }
             ?>
 
             <?php
             // Function to update user password into DB
-            function updatePassword() {
+            function updatePassword($connect) {
                 global $new_pwd_hashed, $errorMsg, $success;
-                // Create database connection.
-                // TODO - CHANGE TO PDO
-                $config = parse_ini_file('../../private/db-config.ini');
-                $conn = new mysqli($config['servername'], $config['username'],
-                        $config['password'], $config['dbname']);
-                // Check connection
-                if ($conn->connect_error) {
-                    $errorMsg = "Connection failed: " . $conn->connect_error;
+                
+                $id = $_SESSION["customerId"];
+                // Prepare the statement:
+                $changePwdSql = "UPDATE customer_credentials SET password_hash=? WHERE customer_id=?"; 
+                $changePwdStmt = $connect->prepare($changePwdSql);
+                $changePwdStmt->bindParam(1,$new_pwd_hashed, PDO::PARAM_STR);
+                $changePwdStmt->bindParam(2,$id, PDO::PARAM_INT);
+                $changePwdStmt->execute();
+                
+                if ($changePwdStmt->rowCount() != 1) {
+                    $errorMsg = "Error, please contact bank for help.";
                     $success = false;
-                } else {
-                    // Prepare the statement:
-                    $stmt = $conn->prepare("UPDATE customer_credentials SET password_hash=? WHERE customer_id=?");
-
-                     // HARD CODED - TODO CHANGE TO SESSION
-                    $id = $_SESSION["customerId"];
-                    //$id = 6;
-                    $stmt->bind_param("si", $new_pwd_hashed, $id);
-                    $stmt->execute();
-
-                    if ($stmt->affected_rows != 1) {
-                        $errorMsg = "Error, please contact bank for help.";
-                        //$errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-                        $success = false;
-                    }
-                    $stmt->close();
                 }
-                $conn->close();
             }
             ?>
 

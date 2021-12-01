@@ -5,6 +5,7 @@
 // Function to create DataTable with Ajax PHP file as JSON data source.
 $(document).ready(function() {
     var table = $('#logTable').DataTable( {
+		"order": [[ 0, "desc" ]],
         "processing": true,
         "ajax":{
             // PHP File.

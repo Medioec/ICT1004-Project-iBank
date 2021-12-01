@@ -31,6 +31,7 @@ function sanitize_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
+    $data = htmlentities($data);
     return $data;
 }
 $otpBody = "<h2>One-Time Password (OTP)</h2>%s"
@@ -91,7 +92,7 @@ if (isset($_POST['try'])) {
 	if (!preg_match($patternNumeric, $_POST['otp'])) {
             
             $thisotp = sanitize_input($_POST['otp']);
-            $otpSql = "SELECT `otp`,`staff_id`,`full_name` FROM `staff_credentials` WHERE `staff_username` = ?";
+            $otpSql = "SELECT `otp`,`staff_id`,`full_name`,`position` FROM `staff_credentials` WHERE `staff_username` = ?";
             $otpStmt = $connect->prepare($otpSql);
             $otpStmt->bindParam(1,$session_user, PDO::PARAM_STR);
             $otpStmt->execute();
@@ -110,12 +111,12 @@ if (isset($_POST['try'])) {
                 $_SESSION['staff_otp'] = "1";
                 $_SESSION['staff_loggedin'] = "1";
                 $_SESSION['staffId'] = $otpResult[0]['staff_id'];
+                $_SESSION["position"] = sanitize_input($otpResult[0]['position']);
+                $_SESSION["displayName"] = sanitize_input($otpResult[0]['full_name']);
                 
                 echo "<h2>Redirecting to Homepage</h2>";
                 echo "<p class='h4'>Click on the button if the page does not redirect.</p>";
                 echo "<a class='btn btn-success' href='staff_home.php'>Homepage</a>";
-                
-                $_SESSION["displayName"] = $otpResult[0]['full_name'];
                 
                 header('Refresh: 3; URL=staff_home.php');
                 //echo "<script>window.location.href = 'staff_home.php';</script>";
