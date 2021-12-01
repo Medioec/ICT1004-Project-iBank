@@ -2,16 +2,15 @@
 include "session.php";
 include "php/inputCheckHandler.php";
 if (
-    !isset($_SESSION["originTransactionPage"]) || !isset($_SESSION["verified"]) ||
+    !isset($_SESSION["originTransactionPage"]) ||
     (basename($_SESSION["originTransactionPage"]) != "transfer_to_own.php" &&
         basename($_SESSION["originTransactionPage"]) != "transfer_to_other.php")
 ) {
     header("Location: transfer_to_own.php");
 }
-if (!isset($_SESSION["submitClicked"])) {
+if (!isset($_SESSION["verified"])) {
     header("Location: " . $_SESSION["originTransactionPage"]);
 } else if (isset($_POST["confirmTransferClicked"])) {
-    unset($_SESSION["submitClicked"]);
     include "php/connect.php";
     include "php/transferFundHandler.php";
     executeTransaction($connect);

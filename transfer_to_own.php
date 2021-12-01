@@ -2,8 +2,6 @@
 include "session.php";
 include "php/inputCheckHandler.php";
 if (isset($_POST["submitClicked"])) {
-    if ($_POST["submitClicked"] == 1);
-    $_SESSION["submitClicked"] = 1;
     include "php/transferFundHandler.php";
     verifyTransaction($connect);
 }
@@ -26,10 +24,8 @@ include "php/accountSelectHelper.php"
                 <form class="form-validate" method="post" novalidate>
                     <?php genericValidate();
                     balanceVaidate(); ?>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="from-account-select">Transfer from:</label>
-                        </div>
+                    <div class="form-group mb-3">
+                        <label for="from-account-select">Transfer from:</label>
                         <select class="custom-select" id="from-account-select" name="accountId" required="true">
                             <option value="">Choose account...</option>
                             <?php generateAccountSelect($connect, 0); ?>
@@ -39,10 +35,8 @@ include "php/accountSelectHelper.php"
                         </div>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="to-account-select">Transfer to:</label>
-                        </div>
+                    <div class="form-group mb-3">
+                        <label for="to-account-select">Transfer to:</label>
                         <select class="custom-select" id="to-account-select" name="otherAccountId" required="true">
                             <option value="">Choose account...</option>
                             <?php generateAccountSelect($connect, 1); ?>
