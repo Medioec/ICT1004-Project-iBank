@@ -1,4 +1,4 @@
-<?php //include "session.php";?>
+<?php include "session.php";?>
 <html lang="en">
     <head>
         <?php
@@ -63,7 +63,7 @@
                         date_default_timezone_set('Asia/Singapore');
                         echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
                         echo '<p><h5> Redirecting you to homepage... </h5></p>';
-                        header("refresh: 60; url = ./index.php");
+                        header('Refresh: 10; URL=index.php');
                         echo "<p><button onclick='goHome()' class='btn btn-primary'>Home</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
                     }
