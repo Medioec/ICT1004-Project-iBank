@@ -196,14 +196,14 @@
                         updatePassword();
                         echo "<h3>Your profile details have been updated</h3><br>";
                         date_default_timezone_set('Asia/Singapore');
-                        echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
+                        echo "<p class='h5'>" . date("Y/m/d") . " " . date("h:i:sa") . "</p><br>";
                         echo "<p><button onclick='goHome()' class='btn btn-primary'>Home</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
                     }
                     // Else, show unsuccessful messages
                     else {
                         echo "<h3>Unsuccessful Update</h3>";
-                        echo "<h5><i class='bi bi-exclamation-square'></i> The following errors were detected:</h5>";
+                        echo "<p class='h5'><i class='bi bi-exclamation-square'></i> The following errors were detected:</p>";
                         echo "<p style='color:red'>" . $errorMsg . "</p>";
                         echo "<p><button onclick='goBack()' class='btn btn-primary'>Return to Update Details</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";

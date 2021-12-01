@@ -41,7 +41,7 @@ if (0) {
                     </div>
                     <div class="card-body row">
                         <div class="col mr-auto">
-                            <p class="card-title h5">Balance</h5>
+                            <p class="card-title h5">Balance</p>
                             <p class="card-text">$'.$row["balance"].'</p>
                         </div>
                         <div class=col-auto>

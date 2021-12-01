@@ -50,7 +50,7 @@
                 <div class="row justify-content-sm-center">
                     <div class="col-sm-10 ml-3 mr-3">
                         <p class="h4">How can I perform a stop payment of a cheque?
-                        <p>
+                        </p>
                         <ol>
                             <li>Via Personal Internet Banking. ($5 per cheque/cheuq range)</li>
                             <li>Call Contact Centre at 1800 123 3242 or +65 1234 5678 (If you are calling from overseas)($20 per cheque/cheque range)</li>
@@ -60,14 +60,14 @@
 
                     <div class="col-sm-10 ml-3 mr-3">
                         <p class="h4">When will I receive my credit advice for incoming TT?
-                        <p>
+                        </p>
                         <p>After the TT is successfully processed, you will be able to receive the hard copy credit advice within 2 – 3 working days.
                             For clients with Double'O4 Internet Banking Plus (DO4Plus) access, the electronic credit advice can be retrieved after the TT is successfully processed.</p>
                     </div>
 
                     <div class="col-sm-10 ml-3 mr-3">
                         <p class="h4">Why e-Statement?
-                        <p>
+                        </p>
                         <p>E-Statement is an electronic version of your paper statement in Adobe PDF format that can be retrieved through Double'O4 Online Banking. Your e-Statements
                             will be stored securely as soft copy up to 3 years from time of subscription so it is easy to retrieve at any time.</p>
 
@@ -77,13 +77,13 @@
 
                     <div class="col-sm-10 ml-3 mr-3">
                         <p class="h4">What is an email e-Statement?
-                        <p>
+                        </p>
                         <p>Email e-Statement is a soft copy of your account statement or credit card statement that is delivered to your latest registered email address with us.</p>
                     </div>
 
                     <div class="col-sm-10 ml-3 mr-3">
                         <p class="h4">How long is the processing time after opt-in to e-Statement?
-                        <p>
+                        </p>
                         <p>Your e-Statement is available in the immediate statement cycle if you make the selection before the statement print date. However, due to our batch
                             processing, the statement may take up to 1 to 2 working days to be available for your viewing. We also recommend subscribing to our e-Alert notification
                             through SMS and/or email so that you will be notified when your monthly statement is ready for viewing.</p>
@@ -91,13 +91,13 @@
 
                     <div class="col-sm-10 ml-3 mr-3">
                         <p class="h4">What is the cost of using e-Statement?
-                        <p>
+                        </p>
                         <p>This is a free service available to all customers.</p>
                     </div>
 
                     <div class="col-sm-10 ml-3 mr-3">
                         <p class="h4">How do I revert to paper statement?
-                        <p>
+                        </p>
                         <ol>
                             <li>Login to Online Banking with your access code and PIN</li>
                             <li>Select "Your Accounts" under the menu</li>

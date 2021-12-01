@@ -33,7 +33,7 @@ $reCaptcha = new ReCaptcha($secret);
 
 // Error message for sprintf with %s as error parameter.
 $errorMsg = "<h2>Oops!</h2>"
-        . "<p class='h4'>An error were detected: %s<p>"
+        . "<p class='h4'>An error were detected: %s</p>"
         . "<p>Please contact an administrator for help.</p>"
         . "<p>Redirecting back to Login page. Click on the button if the page does not redirect.</p>"
         . "<a class='btn btn-danger' href='staff_login.php'>Return to Login</a>";
@@ -101,7 +101,7 @@ if (isset($_POST['username'])) {
                             $_SESSION['staff_loggedin'] = "0";
                             
                             echo "<h2>Redirecting to OTP</h2>";
-                            echo "<p class='h4'>Click on the button if the page does not redirect.<p>";
+                            echo "<p class='h4'>Click on the button if the page does not redirect.</p>";
                             echo "<a class='btn btn-success' href='staff_otp.php'>OTP</a>";
                             
                             header('Refresh: 3; URL=staff_otp.php');

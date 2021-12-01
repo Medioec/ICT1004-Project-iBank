@@ -95,7 +95,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title1">Import Services</h5>
+                                        <p class="card-title h5" id="title1">Import Services</p>
                                     </div>
                                 </a>
                                 <div id="collapse1" class="collapse hover-collapse" aria-labelledby="title1" data-parent="#advancedAccordion">
@@ -111,7 +111,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title2">Export Services</h5>
+                                        <p class="card-title h5" id="title2">Export Services</p>
                                     </div>
                                 </a>
                                 <div id="collapse2" class="collapse hover-collapse" aria-labelledby="title2" data-parent="#advancedAccordion">
@@ -129,7 +129,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title3">Guarantees</h5>
+                                        <p class="card-title h5" id="title3">Guarantees</p>
                                     </div>
                                 </a>
                                 <div id="collapse3" class="collapse hover-collapse" aria-labelledby="title3" data-parent="#advancedAccordion">
@@ -154,7 +154,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse4" role="button" aria-expanded="false" aria-controls="collapse4">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title4">Worldwide Trading Parties</h5>
+                                        <p class="card-title h5" id="title4">Worldwide Trading Parties</p>
                                     </div>
                                 </a>
                                 <div id="collapse4" class="collapse hover-collapse" aria-labelledby="title4" data-parent="#advancedAccordion1">
@@ -170,7 +170,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse5" role="button" aria-expanded="false" aria-controls="collapse5">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title5">Trade Automation System</h5>
+                                        <p class="card-title h5" id="title5">Trade Automation System</p>
                                     </div>
                                 </a>
                                 <div id="collapse5" class="collapse hover-collapse" aria-labelledby="title5" data-parent="#advancedAccordion1">
@@ -185,7 +185,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse6" role="button" aria-expanded="false" aria-controls="collapse6">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title6">Internet Banking Plus</h5>
+                                        <p class="card-title h5" id="title6">Internet Banking Plus</p>
                                     </div>
                                 </a>
                                 <div id="collapse6" class="collapse hover-collapse" aria-labelledby="title6" data-parent="#advancedAccordion1">
@@ -200,7 +200,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse7" role="button" aria-expanded="false" aria-controls="collapse7">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title7">Click & Track</h5>
+                                        <p class="card-title h5" id="title7">Click & Track</p>
                                     </div>
                                 </a>
                                 <div id="collapse7" class="collapse hover-collapse" aria-labelledby="title7" data-parent="#advancedAccordion1">
@@ -213,7 +213,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse8" role="button" aria-expanded="false" aria-controls="collapse8">
                                     <div class="card-body">
-                                        <p class="card-title h5" id="title8">Trade Alerts</h5>
+                                        <p class="card-title h5" id="title8">Trade Alerts</p>
                                     </div>
                                 </a>
                                 <div id="collapse8" class="collapse hover-collapse" aria-labelledby="title8" data-parent="#advancedAccordion1">

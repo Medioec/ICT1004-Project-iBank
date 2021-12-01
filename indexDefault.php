@@ -74,19 +74,19 @@
                         </a>
                         <a class="card index-card" href="banking_with_us.php">
                             <div class="card-body">
-                                <p class="card-title h5">Bank with Us</h5>
+                                <p class="card-title h5">Bank with Us</p>
                                 <p class="card-text">Check out the services that we are offering.</p>
                             </div>
                         </a>
                         <a class="card index-card" href="finance.php">
                             <div class="card-body">
-                                <p class="card-title h5">Business Financing</h5>
+                                <p class="card-title h5">Business Financing</p>
                                 <p class="card-text">Own a business? Read more about our banking services for business owners.</p>
                             </div>
                         </a>
                         <a class="card index-card" href="trade_service.php">
                             <div class="card-body">
-                                <p class="card-title h5">Trade Services</h5>
+                                <p class="card-title h5">Trade Services</p>
                                 <p class="card-text">We deliver comprehensive solutions to companies engaged in international and
                                     domestic trade transactions.</p>
                             </div>
