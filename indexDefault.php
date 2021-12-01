@@ -46,7 +46,7 @@
         <div class="index-page-content minw-500">
             <div class="container-fluid">
                 <div class="card-box">
-                    <div class="jumbotron jumbotron-fluid mt-5">
+                    <div class="jumbotron jumbotitle jumbotron-fluid mt-5">
                         <div class="container">
                             <h1 class="display-4">Our Services</h1>
                         </div>

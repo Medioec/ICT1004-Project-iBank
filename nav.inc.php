@@ -1,5 +1,5 @@
 <div class="nav-wrapper">
-    <nav class="navbar navbar-expand-lg minw-500">
+    <nav class="navbar navbar-dark navbar-expand-lg minw-500">
         <div class="container-fluid nav-max">
             <div class="company-logo col">
                 <img src="images/Logo1.png" alt="SITE LOGO"
