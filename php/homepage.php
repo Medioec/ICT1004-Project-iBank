@@ -1,15 +1,19 @@
 <header>    
-    <h1>Welcome back! 
-        <?php 
-            if($_SESSION['gender']=="Female"){
-                echo "Ms. ";
-            }
-            else {
-                echo "Mr. ";
-            }
-            echo $_SESSION['displayName'];
-        ?>
-    </h1>            
+    <div class="jumbotron jumbotron-fluid mt-5">
+        <div class="container">
+            <h1>Welcome back! 
+            <?php 
+                if($_SESSION['gender']=="Female"){
+                    echo "Ms. ";
+                }
+                else {
+                    echo "Mr. ";
+                }
+                echo $_SESSION['displayName'];
+            ?>
+            </h1>
+        </div>
+    </div>    
 </header>
 <main class="row">
     <div class="col-12 col-sm-6">

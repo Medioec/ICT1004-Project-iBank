@@ -133,7 +133,7 @@ button.navbar-toggler {
 
 .user-side-menu {
     margin-top: 100px;
-    min-width: 170px;
+    min-width: fit-content;
 }
 
 .user-side-menu .nav .nav-link {
@@ -194,13 +194,17 @@ button.navbar-toggler {
 
 /*Page body*/
 
+.page {
+    height: 100vh;
+}
+
 .page-bg {
     background-color: white;
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     z-index: -9;
@@ -233,6 +237,7 @@ button.navbar-toggler {
     margin: auto;
     margin-top: 0;
     width: 100%;
+    min-height: calc(100vh - 240px);
     flex-direction: column;
     background-color: white;
 }
@@ -240,7 +245,6 @@ button.navbar-toggler {
 @media (min-width: 1200px) {
     .page-body {
         /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
-        justify-content: center;
         width: 80vw;
     }
 }
@@ -266,8 +270,10 @@ button.navbar-toggler {
     }
 }
 
-h1.display-4 {
-    overflow-wrap: break-word;
+@media (max-width: 576px) {
+    h1.display-4 {
+        overflow-wrap: break-word;
+    }
 }
 
 .index-page-body {
@@ -353,6 +359,11 @@ h1.display-4 {
     margin: 20px;
 }
 
+a.index-card:hover {
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
 .index-card h5,
 p {
     color: black;
@@ -411,6 +422,7 @@ p {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: white;
     width: 100%;
+    height: fit-content;
 }
 
 .input-group-text {
@@ -521,9 +533,17 @@ div.date-entry {
 /*Footer start*/
 
 footer {
-    border-top: solid;
     font-style: italic;
     font-size: 12px;
+    min-height: 240px;
+    background-color: whitesmoke;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.columns {
+    display: flex;
+    justify-content: center;
 }
 
 ul.columns {
@@ -543,6 +563,30 @@ ul.footer-list {
 
 .copyright {
     text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.footer {
+    justify-content: center;
+}
+
+.footer-list-wrap {
+    min-width: auto;
+    margin-top: 30px;
+}
+
+@media (max-width: 576px) {
+    .columns {
+        width: 80%;
+    }
+    .footer-list-wrap {
+        min-width: 200px;
+    }
+}
+
+.footer-list a {
+    color: darkorchid;
 }
 
 
