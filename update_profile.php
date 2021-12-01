@@ -18,7 +18,7 @@
                        
                         <form action="process_update_profile.php" method="post">
                             
-                            <h4>Basic Info</h4>
+                            <p class="h4">Basic Info<p>
                             <div class="form-group">
                                 <label for="fname">First name</label>
                                 <input class="form-control" type="text" id="fname" name="fname" value="<?php echo $fname ?>" >
@@ -49,7 +49,7 @@
                                 <input class="form-control" type="text" id="postal" required name="postal"  value="<?php echo $postal ?>">
                             </div>
                             
-                            <h4>Contact Info</h4>
+                            <p class="h4">Contact Info<p>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input class="form-control" type="email" id="email" required name="email"  value="<?php echo $email ?>" >
@@ -61,7 +61,7 @@
                                 <input class="form-control" type="tel" id="phone" required name="phone" size="150" value="<?php echo $phone ?>" >
                             </div>
                             
-                            <h4>Password</h4>
+                            <p class="h4">Password<p>
                             
                             <div class="form-group">
                                 <label>Change Password?</label><br>

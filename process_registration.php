@@ -219,7 +219,7 @@
                         phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
                         echo "<h2>Registration Successful!</h2><br>";
-                        echo "<h4>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h4><br>";
+                        echo "<p class='h4'>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i><p><br>";
                         echo "<div class='alert alert-success' role='alert'> A confirmation email has been sent to ". sanitize_input($_POST["email"]). "</div>";
                         //date_default_timezone_set('Asia/Singapore');
                         //echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
@@ -231,7 +231,7 @@
                     // Else, show unsuccessful messages
                     else {
                         echo "<h2><i class='bi bi-exclamation-square'></i> Registration Unsuccessful</h2>";
-                        echo "<h4>The following errors were detected:</h4>";
+                        echo "<p class='h4'>The following errors were detected:<p>";
                         echo "<p style='color:red'>". $errorMsg . "</p>";
                         echo "<p><button onclick='goBack()' class='btn btn-primary'>Return to update details</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";

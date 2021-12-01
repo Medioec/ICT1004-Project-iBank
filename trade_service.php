@@ -9,36 +9,38 @@ include "head.inc.php";
     include "nav.inc.php";
     ?>
     <div class='page-bg'></div>
-    <div class="carousel-container">
-        <div class="page_carousel">
-            <div id="carousel" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel" data-slide-to="1"></li>
-                    <li data-target="#carousel" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="images/abstract.jpg" alt="Abstract slide">
+    <header>
+        <div class="carousel-container">
+            <div class="page_carousel">
+                <div id="carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel" data-slide-to="1"></li>
+                        <li data-target="#carousel" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="images/abstract.jpg" alt="Abstract slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="images/building.jpg" alt="Building slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="images/clients.jpg" alt="client slide">
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="images/building.jpg" alt="Building slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="images/clients.jpg" alt="client slide">
-                    </div>
+                    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
         </div>
-    </div>
+    </header>
     <main class="index-page-body minw-500">
         <div class="index-page-content minw-500">
             <div class="front-side-menu" id="jsMenu">
@@ -93,7 +95,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
                                     <div class="card-body">
-                                        <h5 class="card-title" id="title1">Import Services</h5>
+                                        <p class="card-title h5" id="title1">Import Services</h5>
                                     </div>
                                 </a>
                                 <div id="collapse1" class="collapse hover-collapse" aria-labelledby="title1" data-parent="#advancedAccordion">
@@ -109,7 +111,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
                                     <div class="card-body">
-                                        <h5 class="card-title" id="title2">Export Services</h5>
+                                        <p class="card-title h5" id="title2">Export Services</h5>
                                     </div>
                                 </a>
                                 <div id="collapse2" class="collapse hover-collapse" aria-labelledby="title2" data-parent="#advancedAccordion">
@@ -127,7 +129,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
                                     <div class="card-body">
-                                        <h5 class="card-title" id="title3">Guarantees</h5>
+                                        <p class="card-title h5" id="title3">Guarantees</h5>
                                     </div>
                                 </a>
                                 <div id="collapse3" class="collapse hover-collapse" aria-labelledby="title3" data-parent="#advancedAccordion">
@@ -152,7 +154,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse4" role="button" aria-expanded="false" aria-controls="collapse4">
                                     <div class="card-body">
-                                        <h5 class="card-title" id="title4">Worldwide Trading Parties</h5>
+                                        <p class="card-title h5" id="title4">Worldwide Trading Parties</h5>
                                     </div>
                                 </a>
                                 <div id="collapse4" class="collapse hover-collapse" aria-labelledby="title4" data-parent="#advancedAccordion1">
@@ -168,7 +170,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse5" role="button" aria-expanded="false" aria-controls="collapse5">
                                     <div class="card-body">
-                                        <h5 class="card-title" id="title5">Trade Automation System</h5>
+                                        <p class="card-title h5" id="title5">Trade Automation System</h5>
                                     </div>
                                 </a>
                                 <div id="collapse5" class="collapse hover-collapse" aria-labelledby="title5" data-parent="#advancedAccordion1">
@@ -183,7 +185,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse6" role="button" aria-expanded="false" aria-controls="collapse6">
                                     <div class="card-body">
-                                        <h5 class="card-title" id="title6">Internet Banking Plus</h5>
+                                        <p class="card-title h5" id="title6">Internet Banking Plus</h5>
                                     </div>
                                 </a>
                                 <div id="collapse6" class="collapse hover-collapse" aria-labelledby="title6" data-parent="#advancedAccordion1">
@@ -198,7 +200,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse7" role="button" aria-expanded="false" aria-controls="collapse7">
                                     <div class="card-body">
-                                        <h5 class="card-title" id="title7">Click & Track</h5>
+                                        <p class="card-title h5" id="title7">Click & Track</h5>
                                     </div>
                                 </a>
                                 <div id="collapse7" class="collapse hover-collapse" aria-labelledby="title7" data-parent="#advancedAccordion1">
@@ -211,7 +213,7 @@ include "head.inc.php";
                             <div class="card-wrapper">
                                 <a class="card index-card" data-toggle="collapse" href="#collapse8" role="button" aria-expanded="false" aria-controls="collapse8">
                                     <div class="card-body">
-                                        <h5 class="card-title" id="title8">Trade Alerts</h5>
+                                        <p class="card-title h5" id="title8">Trade Alerts</h5>
                                     </div>
                                 </a>
                                 <div id="collapse8" class="collapse hover-collapse" aria-labelledby="title8" data-parent="#advancedAccordion1">

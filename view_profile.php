@@ -19,7 +19,7 @@
                         <h1>Hello, <?php $_SESSION['displayName'] ?></h1>
 
                         <form>
-                            <h4>Basic Info</h4>
+                            <p class="h4">Basic Info<p>
                             <div class="form-group" id="nullable1">
                                 <label for="fname">First name</label>
                                 <input class="form-control" type="text" id="fname" required name="fname" value="<?php echo $fname ?>" disabled>
@@ -50,7 +50,7 @@
                                 <input class="form-control" type="text" id="postal" required name="postal" value="<?php echo $postal ?>" disabled>
                             </div>
                             
-                            <h4>Contact Info</h4>
+                            <p class="h4">Contact Info<p>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input class="form-control" type="email" id="email" required name="email" value="<?php echo $email ?>" disabled>

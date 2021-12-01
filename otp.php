@@ -51,14 +51,14 @@ $otpBody = "<h2>One-Time Password (OTP)</h2>%s"
                 ."</div>"
             ."</form>";
 
-$tryBody = "<h4>Please enter the OTP sent to your registered email address.</h4>";
+$tryBody = "<p class='h4'>Please enter the OTP sent to your registered email address.<p>";
 $retryBody = "<div class=\"alert alert-success\" role=\"alert\">An email has been resent to your email address.</div>"
-            . "<h4>Please enter the OTP sent to your registered email address.</h4>";
-$failBody = "<h4>The OTP is incorrect.</h4><h4>Please enter the OTP sent to your registered email address.</h4>";
+            . "<p class='h4'>Please enter the OTP sent to your registered email address.<p>";
+$failBody = "<p class='h4'>The OTP is incorrect.<p><p class='h4'>Please enter the OTP sent to your registered email address.<p>";
 
 // Error message for sprintf with %s as error parameter.
 $errorMsg = "<h2>Oops!</h2>"
-        . "<h4>An error were detected: %s</h4>"
+        . "<p class='h4'>An error were detected: %s<p>"
         . "<p>Please contact an administrator for help.</p>"
         . "<p>Redirecting back to Login page. Click on the button if the page does not redirect.</p>"
         . "<a class='btn btn-danger' href='login.php'>Return to Login</a>";
@@ -113,7 +113,7 @@ if (isset($_POST['try'])) {
                 $_SESSION['customerId'] = $otpResult[0]['customer_id'];
                 
                 echo "<h2>Redirecting to Homepage</h2>";
-                echo "<h4>Click on the button if the page does not redirect.</h4>";
+                echo "<p class='h4'>Click on the button if the page does not redirect.<p>";
                 echo "<a class='btn btn-success' href='index.php'>Homepage</a>";
                 
                 header('Refresh: 3; URL=index.php');

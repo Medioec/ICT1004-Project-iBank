@@ -24,11 +24,11 @@ if (!isset($_SESSION["submitClicked"])) {
 <body>
     <?php include "nav.inc.php"; ?>
     <div class="page-bg"></div>
-    <div class="page-body">
+    <main class="page-body">
         <div class="page-content">
             <?php include "sideMenu.inc.php"; ?>
             <div class="main-content">
-                <h2>Verify Transaction Details</h2>
+                <h1>Verify Transaction Details</h1>
                 <p>You are about to transfer $<?php echo $_SESSION["amountIn"]; ?> to:</p>
                 <p>Account no: <?php echo $_SESSION["otherAccountId"]; ?></p>
                 <p>Please confirm if you wish to proceed with the transaction.</p>
@@ -48,7 +48,7 @@ if (!isset($_SESSION["submitClicked"])) {
                 </form>
             </div>
         </div>
-    </div>
+    </main>
     <?php include "footer.inc.php"; ?>
 </body>
 

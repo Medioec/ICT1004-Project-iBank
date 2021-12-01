@@ -15,11 +15,11 @@ if ($_POST["submitClicked"]) {
 <body>
     <?php include "nav.inc.php"; ?>
     <div class="page-bg"></div>
-    <div class="page-body minw-500">
+    <main class="page-body minw-500">
         <div class="page-content minw-500">
             <?php include "sideMenu.inc.php"; ?>
             <div class="main-content">
-                <h2>Create Account</h2>
+                <h1>Create Account</h1>
                 <form method="post" novalidate>
                     <div class="form-group">
                         <?php genericValidate(); ?>
@@ -36,7 +36,7 @@ if ($_POST["submitClicked"]) {
                 </form>
             </div>
         </div>
-    </div>
+    </main>
     <?php include "footer.inc.php"; ?>
 </body>
 
