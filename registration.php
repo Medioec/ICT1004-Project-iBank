@@ -117,7 +117,7 @@
         <script src="phonecc/js/intlTelInput.js"></script>
         <script>
         var input = document.querySelector("#phone");
-        window.intlTelInput(input,({
+        window.intlTelInput(input,({initialCountry:"sg"
         }));
  
         $(document).ready(function() {

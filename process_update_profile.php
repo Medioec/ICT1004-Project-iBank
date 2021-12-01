@@ -49,7 +49,7 @@
                         $errorMsg .= "Full Name is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on full name field.
                         $fullname = sanitize_input($_POST["fullname"]);
                         if (!filter_var($fullname, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Name format.";
@@ -62,7 +62,7 @@
                         $errorMsg .= "Street1 is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on street1 field.
                         $street1 = sanitize_input($_POST["street1"]);
                         if (!filter_var($street1, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Street Name.";
@@ -85,7 +85,7 @@
                         $errorMsg .= "Postal Code is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on postal field.
                         $postal = sanitize_input($_POST["postal"]);
                         if (!filter_var($postal, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Postal Code.";
@@ -117,7 +117,7 @@
                         $errorMsg .= "Phone Number is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on phone field.
                         $phone = sanitize_input($_POST["phone"]);
                         if (!filter_var($phone, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Phone Number.";
@@ -132,7 +132,7 @@
                     }
                     // VALIDATING USING REGEX
                     else {
-                        if (strlen($_POST['pwd']) < '8') {
+                        if (strlen($_POST['pwd']) < '12') {
                             $errorMsg = "Incorrect Password!<br>";
                             $success = false;
                         } elseif (!preg_match("#[0-9]+#", $_POST["pwd"])) {
