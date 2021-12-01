@@ -91,11 +91,9 @@
                         </form>
                     </div>
                 </div>
-            <?php
-                include "footer.inc.php";
-            ?>
             </main>
-        
+            <?php include "footer.inc.php";?>
+
         <script defer src="js/profile.js"></script>
         <script src="phonecc/js/intlTelInput.js"></script>
         <script>

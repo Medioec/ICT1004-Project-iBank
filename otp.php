@@ -240,9 +240,7 @@ else {
 
                     </div>
                 </div>
-            <?php
-               include "footer.inc.php";
-            ?>
             </main>
+            <?php include "footer.inc.php";?>
     </body>
 </html>-->

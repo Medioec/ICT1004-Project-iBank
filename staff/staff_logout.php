@@ -14,8 +14,8 @@ include "staff_session.php";
                 <?php include "staff_logout_handler.php"; ?>
             </div>
         </div>
-        <?php include "staff_footer.inc.php"; ?>
     </main>
+    <?php include "staff_footer.inc.php"; ?>
 </body>
 
 </html>

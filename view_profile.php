@@ -70,11 +70,8 @@
                         </form>
                     </div>
                 </div>
-                
-            <?php
-                include "footer.inc.php";
-            ?>
             </main>
+            <?php include "footer.inc.php";?>
         
         <!-- Check if nullable fields are empty -->
         <script>
