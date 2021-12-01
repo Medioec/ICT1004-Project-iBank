@@ -73,7 +73,7 @@
                             
                             <!-- TO DO Alter DB to allow char(20), accepting country code -->
                             <div class="form-group">
-                                <label for="postal">Phone*</label><br>
+                                <label for="phone">Phone*</label><br>
                                 <input class="form-control" type="tel" id="phone" name="phone" size="150" maxlength="20" placeholder="Enter your Mobile Number" required>
                             </div>
                             <hr>
