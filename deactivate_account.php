@@ -1,4 +1,4 @@
-<?php //include "session.php";?>
+<?php include "session.php";?>
 <html lang="en">
     <head>
     <?php
@@ -18,7 +18,7 @@
                         <h1><i style="color:red" class="bi bi-exclamation-circle"></i> You are Deleting your account <i style="color:red" class="bi bi-exclamation-circle"></i></h1>
                         
                         <form action="process_deactivate.php" method="post">
-                            <h4 style="color:red">This action cannot be reverted</h4><br>
+                            <h4 style="color:red">This action cannot be reverted<p><br>
                             <div class="form-group">
                                 <label for="pwd">Enter Password to proceed</label> <i class="bi bi-eye-slash" id="togglePwd"></i>
                                 <input class="form-control" type="password" id="pwd" required name="pwd">

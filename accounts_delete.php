@@ -79,7 +79,7 @@ if ($_POST["confirmDeleteClicked"]) {
 
 
             $pagecontent = '
-            <h2>Account Deleted</h2>
+            <h1>Account Deleted</h1>
             <p>You have successfully deleted account no: ' . $fetchedAccountId . '</p>
             <a type="button" class="btn btn-secondary" href="' . $_SESSION["originTransactionPage"] . '">Back</a>      
             ';
@@ -88,7 +88,7 @@ if ($_POST["confirmDeleteClicked"]) {
 } else if ($_SESSION["deleteAccountClicked"]) {
 
     $pagecontent = '
-        <h2>Delete Confirmation</h2>
+        <h1>Delete Confirmation</h1>
         <p>Are you sure you want to delete account ' . $_SESSION["selectedAccount"] . '?</p>
         <form method="post">
             <div class="form-group">
@@ -109,14 +109,14 @@ if ($_POST["confirmDeleteClicked"]) {
 <body>
     <?php include "nav.inc.php"; ?>
     <div class="page-bg"></div>
-    <div class="page-body minw-500">
+    <main class="page-body minw-500">
         <div class="page-content minw-500">
             <?php include "sideMenu.inc.php"; ?>
             <div class="main-content">
                 <?php echo $pagecontent; ?>
             </div>
         </div>
-    </div>
+    </main>
     <?php include "footer.inc.php"; ?>
 </body>
 

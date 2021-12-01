@@ -50,7 +50,7 @@
                         $errorMsg .= "Full Name is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on full name field.
                         $fullname = sanitize_input($_POST["fullname"]);
                         if (!filter_var($fullname, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Name format.<br>";
@@ -63,7 +63,7 @@
                         $errorMsg .= "NRIC / Passport No. is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on nric field.
                         $nric = sanitize_input($_POST["nric"]);
                         
                         if(!preg_match('/^[A-Za-z]{1}[0-9]{7}[A-Za-z]{1}$/', $nric)){
@@ -72,12 +72,12 @@
                         }  
                     }
                     
-                    // NRIC VALIDATION AND SANITIZATION (Required)
+                    // DOB VALIDATION AND SANITIZATION (Required)
                     if (empty($_POST["dob"])) {
                         $errorMsg .= "Date of Birth is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on dob field.
                         $dob = sanitize_input($_POST["dob"]);
                         
                         if(!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $dob)){
@@ -86,12 +86,12 @@
                         }  
                     }
                     
-                    // NRIC VALIDATION AND SANITIZATION (Required)
+                    // GENDER VALIDATION AND SANITIZATION (Required)
                     if (empty($_POST["gender"])) {
                         $errorMsg .= "Gender is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on gender field.
                         $gender = sanitize_input($_POST["gender"]);
                     }  
 
@@ -100,7 +100,7 @@
                         $errorMsg .= "Street1 is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on street1 field.
                         $street1 = sanitize_input($_POST["street1"]);
                         //$street1 = htmlentities($_POST["street1"]);
                         if (!filter_var($street1, FILTER_SANITIZE_STRING)) {
@@ -124,7 +124,7 @@
                         $errorMsg .= "Postal Code is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on postal field.
                         $postal = sanitize_input($_POST["postal"]);
                         if (!filter_var($postal, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Postal Code.<br>";
@@ -153,7 +153,7 @@
                         $errorMsg .= "Phone Number is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on phone field.
                         $phone = sanitize_input($_POST["phone"]);
                         if (!filter_var($phone, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Phone Number.<br>";
@@ -167,7 +167,7 @@
                         $errorMsg .= "Username is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on last name field.
+                        // Additional check on username field.
                         $username = sanitize_input($_POST["username"]);
                         
                         if(!preg_match('/^[A-Za-z][A-Za-z0-9]{5,31}$/', $username)){
@@ -215,11 +215,11 @@
                         registerUser();
                         
                         // Send confirmation email
-                        //include_once ('php/sendmail.php');
-                        //phpMailerRegistration($_POST["email"], $_POST["lname"]);
+                        include_once ('php/sendmail.php');
+                        phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
                         echo "<h2>Registration Successful!</h2><br>";
-                        echo "<h4>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h4><br>";
+                        echo "<p class='h4'>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i><p><br>";
                         echo "<div class='alert alert-success' role='alert'> A confirmation email has been sent to ". sanitize_input($_POST["email"]). "</div>";
                         //date_default_timezone_set('Asia/Singapore');
                         //echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
@@ -231,7 +231,7 @@
                     // Else, show unsuccessful messages
                     else {
                         echo "<h2><i class='bi bi-exclamation-square'></i> Registration Unsuccessful</h2>";
-                        echo "<h4>The following errors were detected:</h4>";
+                        echo "<p class='h4'>The following errors were detected:<p>";
                         echo "<p style='color:red'>". $errorMsg . "</p>";
                         echo "<p><button onclick='goBack()' class='btn btn-primary'>Return to update details</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";

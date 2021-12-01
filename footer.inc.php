@@ -3,7 +3,7 @@
         <div class="footer row">
             <div class="columns col-sm">
                 <div class="footer-list-wrap">
-                    <h4>Useful Links</h4>
+                    <p class="h4">Useful Links<p>
                     <ul class='footer-list'>
                         <li>
                             <a href="personal_accounts.php" title="Personal Banking">Personal Banking</a>
@@ -12,27 +12,27 @@
                             <a href="banking_with_us.php" title="Business Banking">Business Banking</a>
                         </li>
                         <li>
-                            <a href="" title="Terms & Condition">Terms and Conditions</a>
+                            <a href="t_and_c.php" title="Terms & Condition">Terms and Conditions</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="columns col-sm">
                 <div class="footer-list-wrap">
-                    <h4>Getting Started</h4>
+                    <p class="h4">Getting Started<p>
                     <ul class="footer-list">
                         <li>
                             <a href="about.php" title="Introduction">Introduction</a>
                         </li>
                         <li>
-                            <a href="" title="Frequently Asked Questions">Frequently Asked Questions</a>
+                            <a href="faq.php" title="Frequently Asked Questions">Frequently Asked Questions</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="columns col-sm">
                 <div class="footer-list-wrap">
-                    <h4>Contact Us</h4>
+                    <p class="h4">Contact Us<p>
                     <ul class="footer-list">
                         <li>
                             <span>double04bank@gmail.com</span>

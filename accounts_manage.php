@@ -65,26 +65,26 @@ try {
 <body>
     <?php include "nav.inc.php"; ?>
     <div class="page-bg"></div>
-    <div class="page-body minw-500">
+    <main class="page-body minw-500">
         <div class="page-content minw-500">
             <?php include "sideMenu.inc.php"; ?>
             <div class="column-content">
                 <div class="main-content">
-                    <h2>Account Detail</h2>
-                    <h3>Your transactions over the past month:</h3>
+                    <h1>Account Detail</h1>
+                    <h2>Your transactions over the past month:</h2>
                     <?php
                     formTransactionTable($result, $accountId);
                     ?>
                 </div>
                 <div class="main-content">
-                    <h2>Delete Account</h2>
+                    <h1>Delete Account</h1>
                     <form method="post">
                         <button type="submit" class="btn btn-danger submit-button mt-3" name="deleteAccountClicked" value=1>Delete Account</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <?php include "footer.inc.php"; ?>
 </body>
 

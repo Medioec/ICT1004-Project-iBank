@@ -17,7 +17,7 @@
                        
                         <form action="process_registration.php" method="post">
                             <p style="font-size:10px">Please complete the form below. <br> All fields marked with (*) are required</p>
-                            <h4>Personal Details</h4><br>
+                            <p class="h4">Personal Details<p><br>
                             <div class="form-group">
                                 <label for="fname">First name</label>
                                 <input class="form-control" type="text" id="fname" name="fname" maxlength="45" placeholder="Enter your First Name">
@@ -50,7 +50,7 @@
                             </div>
                             <hr>                            
                             
-                            <h4>Address</h4><br>
+                            <p class="h4">Address<p><br>
                             <div class="form-group">
                                 <label for="street1">Street 1*</label>
                                 <input class="form-control" type="text" id="street1" name="street1" maxlength="100" placeholder="Street 1" required>
@@ -65,7 +65,7 @@
                             </div>
                             <hr>
                             
-                            <h4>Contact Info</h4><br>
+                            <p class="h4">Contact Info<p><br>
                             <div class="form-group">
                                 <label for="email">Email*</label>
                                 <input class="form-control" type="email" id="email" name="email" maxlength="100" placeholder="Enter your Email address" required>
@@ -78,7 +78,7 @@
                             </div>
                             <hr>
                             
-                            <h4>Login Details</h4><br>
+                            <p class="h4">Login Details<p><br>
 
                             <div class="form-group">
                                 <label for="username">Create a username*</label>
@@ -117,7 +117,7 @@
         <script src="phonecc/js/intlTelInput.js"></script>
         <script>
         var input = document.querySelector("#phone");
-        window.intlTelInput(input,({
+        window.intlTelInput(input,({initialCountry:"sg"
         }));
  
         $(document).ready(function() {

@@ -14,11 +14,11 @@ include "php/accountSelectHelper.php";
 <body>
     <?php include "nav.inc.php"; ?>
     <div class="page-bg"></div>
-    <div class="page-body minw-500">
+    <main class="page-body minw-500">
         <div class="page-content minw-500">
             <?php include "sideMenu.inc.php"; ?>
-            <main class="main-content">
-                <h2>View transactions</h2>
+            <div class="main-content">
+                <h1>View transactions</h1>
                 <form class="form-validate" method="post" novalidate>
                     <?php genericValidate(); ?>
                     <div class="input-group mb-3">
@@ -54,9 +54,9 @@ include "php/accountSelectHelper.php";
                     }
                     ?>
                 </div>
-            </main>
+            </div>
         </div>
-    </div>
+    </main>
     <?php include "footer.inc.php"; ?>
 </body>
 

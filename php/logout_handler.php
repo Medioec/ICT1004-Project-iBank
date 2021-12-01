@@ -3,7 +3,7 @@
     ob_start();
     if (!isset($_POST["confirm-logout"])) {
         echo '
-        <h2>Confirm Logout</h2>
+        <h1>Confirm Logout</h1>
         <p>Are you sure you want to log out?<p>
         <form method="post">
             <div class="form-group">
@@ -13,7 +13,7 @@
         ';
     } else {
         echo '
-        <h2>You have successfully logged out.</h2>
+        <h1>You have successfully logged out.</h1>
         <p>Redirecting back to Homepage. Click on the button if the page does not redirect.</p>
         <div class="form-group">
             <a class="btn btn-primary mt-3" href="index.php">Back to homepage</a>

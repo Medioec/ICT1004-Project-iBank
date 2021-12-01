@@ -22,7 +22,7 @@
                         echo'
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="personalBankingList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Personal Banking
+                        Personal
                         </a>
                         <div class="dropdown-menu" aria-labelledby="personalBankingList">
                             <a class="dropdown-item" href="personal_accounts.php">Accounts</a>
@@ -32,7 +32,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="businessBankingList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Business Banking
+                            Business
                             </a>
                             <div class="dropdown-menu" aria-labelledby="businessBankingList">
                             <a class="dropdown-item" href="banking_with_us.php">Banking with us</a>

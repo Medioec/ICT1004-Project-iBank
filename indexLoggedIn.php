@@ -17,7 +17,7 @@ include "head.inc.php";
     include "nav.inc.php";
     ?>
     <div class='page-bg'></div>
-    <div class="page-body minw-500">
+    <main class="page-body minw-500">
         <div class="page-content minw-500">
             <div class="container">
                 <?php
@@ -25,8 +25,8 @@ include "head.inc.php";
                 ?>
             </div>
         </div>
-    </div>
-    <?php include "footer.inc.php";?>
+    </main>
+    <?php include "footer.inc.php"; ?>
 
 </body>
 

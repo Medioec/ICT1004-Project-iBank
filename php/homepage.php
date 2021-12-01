@@ -15,7 +15,7 @@
         </div>
     </div>    
 </header>
-<main class="row">
+<div class="row">
     <div class="col-12 col-sm-6">
         <canvas id="myAccountChart" width="400" height="400"></canvas>
     </div>
@@ -258,5 +258,5 @@
             }
         });
     </script>
-</main>
+</div>
 

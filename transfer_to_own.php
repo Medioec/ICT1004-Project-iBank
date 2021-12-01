@@ -17,11 +17,11 @@ include "php/accountSelectHelper.php"
 <body>
     <?php include "nav.inc.php"; ?>
     <div class="page-bg"></div>
-    <div class="page-body">
+    <main class="page-body">
         <div class="page-content">
             <?php include "sideMenu.inc.php"; ?>
-            <main class="main-content">
-                <h2>Transfer to own account</h2>
+            <div class="main-content">
+                <h1>Transfer to own account</h1>
 
                 <form class="form-validate" method="post" novalidate>
                     <?php genericValidate();
@@ -66,9 +66,9 @@ include "php/accountSelectHelper.php"
                         <button class="btn btn-primary submit-button" name="submitClicked" value=1 type="submit">Submit</button>
                     </div>
                 </form>
-            </main>
+            </div>
         </div>
-    </div>
+    </main>
     <?php include "footer.inc.php"; ?>
 </body>
 

@@ -16,16 +16,16 @@ if (isset($_POST["accountId"])) {
 <body>
     <?php include "nav.inc.php"; ?>
     <div class="page-bg"></div>
-    <div class="page-body minw-500">
+    <main class="page-body minw-500">
         <div class="page-content minw-500">
             <?php include "sideMenu.inc.php"; ?>
             <div class="main-content">
-                <h2>Account Balances</h2>
+                <h1>Account Balances</h1>
                 <?php $_SESSION["originTransactionPage"] = $_SERVER['REQUEST_URI'];
                 getBalance($connect); ?>
             </div>
         </div>
-    </div>
+    </main>
     <?php include "footer.inc.php"; ?>
 </body>
 

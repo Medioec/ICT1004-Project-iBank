@@ -11,6 +11,22 @@ and open the template in the editor.
 */
 
 
+/* Globals*/
+
+a {
+    color: darkorchid;
+}
+
+.btn-primary {
+    background-color: darkorchid;
+    border-color: darkorchid;
+}
+
+.btn-primary:hover {
+    background-color: rgb(107, 39, 128)
+}
+
+
 /* Navbar */
 
 .nav-container {
@@ -591,33 +607,6 @@ ul.footer-list {
 
 
 /*Footer end*/
-
-
-/*Account Balnce*/
-
-button.account-card {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: auto;
-    width: 100%;
-    border-style: none;
-    border-radius: 5px;
-    background: linear-gradient(rgb(151, 9, 163), rgb(214, 93, 225));
-}
-
-div.accounts-wrapper {
-    display: flex;
-    flex-direction: column;
-}
-
-.account-card p {
-    margin-bottom: 0;
-}
-
-
-/*Account Balance end*/
 
 
 /*Page carousel*/
