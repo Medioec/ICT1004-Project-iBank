@@ -225,8 +225,8 @@
                         registerUser($connect);
                         
                         // Send confirmation email
-                        //include_once ('php/sendmail.php');
-                        //phpMailerRegistration($_POST["email"], $_POST["lname"]);
+                        include_once ('php/sendmail.php');
+                        phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
                         echo "<h1>Registration Successful!</h1><br>";
                         echo "<p class='h4'>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></p><br>";
