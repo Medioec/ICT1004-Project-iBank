@@ -38,6 +38,7 @@
                     } else {
                         // Additional check on last name field.
                         $lname = sanitize_input($_POST["lname"]);
+                        
                         if (!filter_var($lname, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Name format.<br>";
                             $success = false;
@@ -101,6 +102,7 @@
                     } else {
                         // Additional check on last name field.
                         $street1 = sanitize_input($_POST["street1"]);
+                        //$street1 = htmlentities($_POST["street1"]);
                         if (!filter_var($street1, FILTER_SANITIZE_STRING)) {
                             $errorMsg .= "Invalid Street Name.<br>";
                             $success = false;
@@ -110,6 +112,7 @@
                     // STREET2 VALIDATION AND SANITIZATION, CONSIDER CHANGING TO POSTAL API (Nullable)
                     if (!empty($_POST["street2"])){
                         $street2 = sanitize_input($_POST["street2"]);
+                        //$street2 = htmlentities($_POST["street2"]);
                         if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
                         $errorMsg .= "Invalid Street Name.<br>";
                         $success = false;
@@ -212,19 +215,18 @@
                         registerUser();
                         
                         // Send confirmation email
-                        include_once ('php/sendmail.php');
-                        phpMailerRegistration($_POST["email"], $_POST["lname"]);
+                        //include_once ('php/sendmail.php');
+                        //phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
                         echo "<h2>Registration Successful!</h2><br>";
-                        echo "<h4>" . $_POST["lname"] . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h4><br>";
-                        // TO-DO Implement PHP mail to send success registration email
-                        echo "<div class='alert alert-success' role='alert'> A confirmation email has been sent to ". $_POST["email"]. "</div>";
+                        echo "<h4>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></h4><br>";
+                        echo "<div class='alert alert-success' role='alert'> A confirmation email has been sent to ". sanitize_input($_POST["email"]). "</div>";
                         //date_default_timezone_set('Asia/Singapore');
                         //echo "<h5>" . date("Y/m/d") . " " . date("h:i:sa") . "</h5><br>";
                         echo "<p>Redirecting back to Login page. Click on the button if the page does not redirect.</p>";
                         echo "<button onclick='goHome()' class='btn btn-success'>Login</button>";
                         echo "<br><br><br><br><br><br><br><br>";
-                        header('Refresh: 3; URL=login.php');
+                        header('Refresh: 10; URL=login.php');
                     }
                     // Else, show unsuccessful messages
                     else {
@@ -248,6 +250,7 @@
                     $data = trim($data);
                     $data = stripslashes($data);
                     $data = htmlspecialchars($data);
+                    $data = htmlentities($data);
                     return $data;
                 }
                 ?>
@@ -343,14 +346,7 @@
                     $stmtCredential->bind_param("sssss", $username, $pwd_hashed, $otp, $token, $active);
                     $stmtCredential->execute();
 
-                    if ($stmtCredential->affected_rows != 1) {
-                        $errorMsg = "Execute failed: (" . $stmtCredential->errno . ") " . $stmtCredential->error;
-                        $success = false;
-                    }
-                    
-                    // Insert into user_data and sensitive_info table
-                    else {
-                        
+                    if ($stmtCredential->affected_rows == 1) {
                         // Get the ID of the new registrant
                         $stmtGetID = $conn->prepare("SELECT * FROM customer_credentials WHERE customer_username=?");
                         $username = $_POST["username"];
@@ -370,6 +366,11 @@
                             $stmt_sensitiveInfo = $conn->prepare("INSERT INTO sensitive_info (customer_id, ic_number, gender, date_of_birth) VALUES (?,?,?,?)");
                             $stmt_sensitiveInfo->bind_param("ssss",$id, $nric, $gender, $dob);
                             $stmt_sensitiveInfo->execute();
+                    }
+                    
+                    // Insert into user_data and sensitive_info table
+                    else {
+                        $errorMsg = "Database Error";
                         }
                     }
                         $stmtCredential->close();

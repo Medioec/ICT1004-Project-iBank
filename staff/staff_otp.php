@@ -1,23 +1,23 @@
 <?php 
-include_once ('php/connect.php');
+include_once ('connect.php');
 session_start();
 ob_start();
 
 if(isset($_SESSION['otp'])){
     if($_SESSION['otp'] == "1"){
-        header("url=index.php");
+        header("url=staff_home.php");
     }
 }
 ?>
 <!-- Default HTML structure -->
 
-<html lang="en">
+<html>
     <?php
-        include "head.inc.php";
+        include "staff_head.inc.php";
     ?>
     <body>
         <?php
-            include "nav.inc.php";
+            include "staff_nav.inc.php";
         ?>
         <div class="page-bg"></div>
             <main class="page-body">
@@ -31,7 +31,6 @@ function sanitize_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
-    $data = htmlentities($data);
     return $data;
 }
 $otpBody = "<h2>One-Time Password (OTP)</h2>%s"
@@ -59,16 +58,16 @@ $failBody = "<h4>The OTP is incorrect.</h4><h4>Please enter the OTP sent to your
 // Error message for sprintf with %s as error parameter.
 $errorMsg = "<h2>Oops!</h2>"
         . "<h4>An error were detected: %s</h4>"
-        . "<p>Please contact an administrator for help.</p>"
+        . "<p>Please contact your superior for assistance.</p>"
         . "<p>Redirecting back to Login page. Click on the button if the page does not redirect.</p>"
-        . "<a class='btn btn-danger' href='login.php'>Return to Login</a>";
+        . "<a class='btn btn-danger' href='staff_login.php'>Return to Login</a>";
 
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
-    echo "<script>window.location.href = 'index.php';</script>";
+if (isset($_SESSION['staff_loggedin']) && $_SESSION['staff_loggedin'] == 1) {
+    echo "<script>window.location.href = 'staff_home.php';</script>";
 }
-else if (isset($_SESSION['username'])) {
-	$session_user = $_SESSION['username'];
-        $activeSql = "SELECT `active` FROM `customer_credentials` WHERE `customer_username` = ?";
+else if (isset($_SESSION['staff_username'])) {
+	$session_user = $_SESSION['staff_username'];
+        $activeSql = "SELECT `active` FROM `staff_credentials` WHERE `staff_username` = ?";
 	$activeStmt = $connect->prepare($activeSql);
         $activeStmt->bindParam(1,$session_user, PDO::PARAM_STR);
         $activeStmt->execute();
@@ -76,7 +75,7 @@ else if (isset($_SESSION['username'])) {
 }
 
 if(($activeResult[0]['active'] == "0") || (!isset($activeResult[0]['active']))) {
-    header('URL=index.php');
+    header('URL=staff_login.php');
 }
 
 echo "<html oncontextmenu='return false'>";    
@@ -92,15 +91,15 @@ if (isset($_POST['try'])) {
 	if (!preg_match($patternNumeric, $_POST['otp'])) {
             
             $thisotp = sanitize_input($_POST['otp']);
-            $otpSql = "SELECT `otp`,`customer_id` FROM `customer_credentials` WHERE `customer_username` = ?";
+            $otpSql = "SELECT `otp`,`staff_id`,`full_name` FROM `staff_credentials` WHERE `staff_username` = ?";
             $otpStmt = $connect->prepare($otpSql);
             $otpStmt->bindParam(1,$session_user, PDO::PARAM_STR);
             $otpStmt->execute();
             $otpResult = $otpStmt->fetchAll(PDO::FETCH_ASSOC);
             if($thisotp == $otpResult[0]['otp']) {
-                // $otpSuccess = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','LOGIN - CUSTOMER (OTP-TRUE)',?,CURRENT_TIMESTAMP)";
+                // $otpSuccess = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','LOGIN - STAFF (OTP-TRUE)',?,CURRENT_TIMESTAMP)";
                 $otpSuccess = $logSql;
-                $description = "LOGIN - CUSTOMER (OTP-TRUE)";
+                $description = "LOGIN - STAFF (OTP-TRUE)";
                 $otpSuccessStmt = $connect->prepare($otpSuccess);
                 $otpSuccessStmt->bindParam(1,$logType, PDO::PARAM_STR);
                 $otpSuccessStmt->bindParam(2,$logCategory0, PDO::PARAM_STR);
@@ -108,52 +107,18 @@ if (isset($_POST['try'])) {
                 $otpSuccessStmt->bindParam(4,$session_user, PDO::PARAM_STR);
                 $otpSuccessStmt->execute();
                 
-                $_SESSION['otp'] = "1";
-                $_SESSION['loggedin'] = "1";
-                $_SESSION['customerId'] = $otpResult[0]['customer_id'];
+                $_SESSION['staff_otp'] = "1";
+                $_SESSION['staff_loggedin'] = "1";
+                $_SESSION['staffId'] = $otpResult[0]['staff_id'];
                 
                 echo "<h2>Redirecting to Homepage</h2>";
                 echo "<h4>Click on the button if the page does not redirect.</h4>";
-                echo "<a class='btn btn-success' href='index.php'>Homepage</a>";
+                echo "<a class='btn btn-success' href='staff_home.php'>Homepage</a>";
                 
-                header('Refresh: 3; URL=index.php');
-                //echo "<script>window.location.href = 'index.php';</script>";
-
-                //get customer name
-                $action = 'SELECT `first_name`, `last_name` FROM `user_data` WHERE `customer_id` = ?;';
-                $stmt = $connect->prepare($action);
-                $stmt->bindParam(1, $_SESSION["customerId"], PDO::PARAM_STR);
-                try {
-                    $stmt->execute();
-                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                }
-                catch(PDOException $e) {
-                    //echo "Retrieve failed: " . $e->getMessage();
-                }
+                $_SESSION["displayName"] = $otpResult[0]['full_name'];
                 
-                $_SESSION["firstName"] = sanitize_input($result[0]['first_name']);
-                $_SESSION["lastName"] = sanitize_input($result[0]['last_name']);
-                
-                //get customer gender for salutation title
-                $action = 'SELECT `gender` FROM `sensitive_info` WHERE `customer_id`= ?;';
-                $stmt = $connect->prepare($action);
-                $stmt->bindParam(1, $_SESSION["customerId"], PDO::PARAM_STR);
-                try {
-                    $stmt->execute();
-                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                }
-                catch(PDOException $e) {
-                    //echo "Retrieve failed: " . $e->getMessage();
-                }
-                
-                $_SESSION["gender"] = sanitize_input($result[0]['gender']);
-
-                if ($_SESSION["firstName"]) {
-                    $_SESSION["displayName"] = $_SESSION["firstName"];
-                } else {
-                    $_SESSION["displayName"] = $_SESSION["lastName"];
-                }
-                
+                header('Refresh: 3; URL=staff_home.php');
+                //echo "<script>window.location.href = 'staff_home.php';</script>";
             }
             else {
                 echo sprintf($otpBody,$failBody);
@@ -162,9 +127,9 @@ if (isset($_POST['try'])) {
 	else {
             echo "<center>Special Character found in One Time Password!</center>";
             
-            // $otpFail = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (Special Character appeared OTP)',?,CURRENT_TIMESTAMP)";
+            // $otpFail = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - STAFF (Special Character appeared OTP)',?,CURRENT_TIMESTAMP)";
             $failSql = $logSql;
-            $description = "FAILED LOGIN - CUSTOMER (Special Character appeared OTP)";
+            $description = "FAILED LOGIN - STAFF (Special Character appeared OTP)";
             $failLog = $connect->prepare($failSql);
             $failLog->bindParam(1,$logType, PDO::PARAM_STR);
             $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
@@ -173,26 +138,24 @@ if (isset($_POST['try'])) {
             $failLog->execute();
             
             header('Refresh: 5;');
-            //echo "<script>window.location.href = 'login.php';</script>";
+            //echo "<script>window.location.href = 'staff_login.php';</script>";
 	}
 }
 else if(isset($_POST['retry'])) {
-    $emailSql = "SELECT `email`, `last_name` FROM `user_data` "
-            . "WHERE `customer_id` = (SELECT `customer_id` FROM `customer_credentials` "
-            . "WHERE `customer_username` = ?)";
+    $emailSql = "SELECT `email`, FROM `staff_credentials` "
+            . "WHERE `staff_username` = ?)";
     $emailStmt = $connect->prepare($emailSql);
     $emailStmt->bindParam(1,$session_user, PDO::PARAM_STR);
     $emailStmt->execute();
     $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
 
     if(isset($emailResult[0]['email'])) {
-        $lname = $emailResult[0]['last_name'];
-        include_once ('php/sendmail.php');
+        include_once ('sendmail.php');
         $rndno=rand(100000, 999999);
         if (phpMailerOTP($emailResult[0]['email'], $session_user, $rndno)) {
             // Success
-            $otpSql = "UPDATE `customer_credentials` SET `otp`= ? "
-                    . "WHERE `customer_username` = ?";
+            $otpSql = "UPDATE `staff_credentials` SET `otp`= ? "
+                    . "WHERE `staff_username` = ?";
             $otpStmt = $connect->prepare($otpSql);
             $otpStmt->bindParam(1,$rndno, PDO::PARAM_STR);
             $otpStmt->bindParam(2,$session_user, PDO::PARAM_STR);
@@ -201,9 +164,9 @@ else if(isset($_POST['retry'])) {
         }
         else {
             echo sprintf($errorMsg,"Invalid Email");
-            // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (Invalid email address)',?,CURRENT_TIMESTAMP)";
+            // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - STAFF (Invalid email address)',?,CURRENT_TIMESTAMP)";
             $failSql = $logSql;
-            $description = "FAILED LOGIN - CUSTOMER (Invalid email address)";
+            $description = "FAILED LOGIN - STAFF (Invalid email address)";
             $failLog = $connect->prepare($failSql);
             $failLog->bindParam(1,$logType, PDO::PARAM_STR);
             $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
@@ -211,16 +174,16 @@ else if(isset($_POST['retry'])) {
             $failLog->bindParam(4,$session_user, PDO::PARAM_STR);
             $failLog->execute();
 
-            header('Refresh: 5; URL=login.php');
-            //echo "<script>window.location.href = 'login.php';</script>";
+            header('Refresh: 5; URL=staff_login.php');
+            //echo "<script>window.location.href = 'staff_login.php';</script>";
         }
     }
     else
     {
         echo sprintf($errorMsg,"Invalid Email");
-        // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (No email address)',?,CURRENT_TIMESTAMP)";
+        // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - STAFF (No email address)',?,CURRENT_TIMESTAMP)";
         $failSql = $logSql;
-        $description = "FAILED LOGIN - CUSTOMER (No email address)";
+        $description = "FAILED LOGIN - STAFF (No email address)";
         $failLog = $connect->prepare($failSql);
         $failLog->bindParam(1,$logType, PDO::PARAM_STR);
         $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
@@ -228,8 +191,8 @@ else if(isset($_POST['retry'])) {
         $failLog->bindParam(4,$session_user, PDO::PARAM_STR);
         $failLog->execute();
 
-        header('Refresh: 5; URL=login.php');
-        //echo "<script>window.location.href = 'login.php';</script>";
+        header('Refresh: 5; URL=staff_login.php');
+        //echo "<script>window.location.href = 'staff_login.php';</script>";
     }
 }
 else {
@@ -240,8 +203,8 @@ else {
                     </div>
                 </div>
             <?php
-               include "footer.inc.php";
+               include "staff_footer.inc.php";
             ?>
             </main>
     </body>
-</html>-->
+</html>

@@ -38,14 +38,14 @@
         
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $fname = $row["first_name"];
-            $lname = $row["last_name"];
-            $fullname = $row["full_name"];
-            $street1 = $row["street1"];
-            $street2 = $row["street2"];
-            $postal = $row["postal"];
-            $email = $row["email"];
-            $phone = $row["phone"];
+            $fname = htmlentities($row["first_name"]);
+            $lname = htmlentities($row["last_name"]);
+            $fullname = htmlentities($row["full_name"]);
+            $street1 = htmlentities($row["street1"]);
+            $street2 = htmlentities($row["street2"]);
+            $postal = htmlentities($row["postal"]);
+            $email = htmlentities($row["email"]);
+            $phone = htmlentities($row["phone"]);
         }
         
         else 

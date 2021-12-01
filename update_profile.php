@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="lname">Full name</label>
+                                <label for="fullname">Full name</label>
                                 <input class="form-control" type="text" id="fullname" required name="fullname" value="<?php echo $fullname ?>">
                             </div>
                             

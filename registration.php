@@ -28,7 +28,7 @@
                                 <input class="form-control" type="text" id="lname" name ="lname" maxlength="45" placeholder="Enter your Last Name" required>
                             </div>
                             <div class="form-group">
-                                <label for="lname">Full name*</label>
+                                <label for="fullname">Full name*</label>
                                 <input class="form-control" type="text" id="fullname" name="fullname" maxlength="150" placeholder="Enter your Full Name" required>
                             </div>
                             <div class="form-group">
@@ -73,7 +73,7 @@
                             
                             <!-- TO DO Alter DB to allow char(20), accepting country code -->
                             <div class="form-group">
-                                <label for="postal">Phone*</label><br>
+                                <label for="phone">Phone*</label><br>
                                 <input class="form-control" type="tel" id="phone" name="phone" size="150" maxlength="20" placeholder="Enter your Mobile Number" required>
                             </div>
                             <hr>
