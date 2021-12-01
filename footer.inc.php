@@ -11,7 +11,7 @@
                         <a href="" title="Deposit Insurance Scheme">Deposit Insurance Scheme</a>
                     </li>
                     <li>
-                        <a href="" title="Terms & Condition">Terms and Conditions</a>
+                        <a href="t_and_c.php" title="Terms & Condition">Terms and Conditions</a>
                     </li>
                 </ul>
             </li>
