@@ -22,7 +22,7 @@
                         <a href="about.php" title="Introduction">Introduction</a>
                     </li>
                     <li>
-                        <a href="" title="Frequently Asked Questions">Frequently Asked Questions</a>
+                        <a href="faq.php" title="Frequently Asked Questions">Frequently Asked Questions</a>
                     </li>
                 </ul>
             </li>
