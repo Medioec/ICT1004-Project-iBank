@@ -1,4 +1,4 @@
-<?php //include "session.php"; ?>
+<?php include "session.php"; ?>
 <html lang="en">
     <head>
         <?php
@@ -119,6 +119,7 @@
                             $success = false;
                         }
                         else{
+                            // Check if user edited email, if so, check if email is unique in database
                             if($_POST["email"] != $current_email){
                                 checkEmailExist($connect);
                             }
@@ -274,8 +275,7 @@
             function checkCurrentPwd($connect) {
                 global $curr_pwd_hashed, $errorMsg, $success;
                 
-                //$id = $_SESSION["customerId"];
-                $id = 6;
+                $id = $_SESSION["customerId"];
                 // Prepare the statement:
                 $getPwdSql = "SELECT `password_hash` FROM customer_credentials WHERE customer_id=?"; 
                 $getPwdStmt = $connect->prepare($getPwdSql);
@@ -304,8 +304,7 @@
             function updateUserDetails($connect) {
                 global $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $errorMsg, $success;
                 
-                //$id = $_SESSION["customerId"];
-                $id = 6;
+                $id = $_SESSION["customerId"];
                 // Prepare the statement:
                 $updateInfoSql = "UPDATE user_data SET "
                         . "first_name=?, last_name=?, full_name=?, "
@@ -335,8 +334,7 @@
             function updatePassword($connect) {
                 global $new_pwd_hashed, $errorMsg, $success;
                 
-                //$id = $_SESSION["customerId"];
-                $id = 6;
+                $id = $_SESSION["customerId"];
                 // Prepare the statement:
                 $changePwdSql = "UPDATE customer_credentials SET password_hash=? WHERE customer_id=?"; 
                 $changePwdStmt = $connect->prepare($changePwdSql);
