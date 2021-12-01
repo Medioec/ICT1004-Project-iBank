@@ -96,7 +96,7 @@ if (isset($_POST['username'])) {
                             $otpStmt->bindParam(2,$thisusername, PDO::PARAM_STR);
                             $otpStmt->execute();
                             
-                            $_SESSION['username'] = $thisusername;
+                            $_SESSION['username'] = sanitize_input($thisusername);
                             $_SESSION['loggedin'] = "0";
                             
                             echo "<h2>Redirecting to OTP</h2>";
@@ -192,6 +192,7 @@ function sanitize_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
+    $data = htmlentities($data);
     return $data;
 }
 ?>

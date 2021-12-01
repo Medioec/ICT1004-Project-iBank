@@ -31,6 +31,7 @@ function sanitize_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
+    $data = htmlentities($data);
     return $data;
 }
 $otpBody = "<h2>One-Time Password (OTP)</h2>%s"
@@ -130,8 +131,8 @@ if (isset($_POST['try'])) {
                     //echo "Retrieve failed: " . $e->getMessage();
                 }
                 
-                $_SESSION["firstName"] = $result[0]['first_name'];
-                $_SESSION["lastName"] = $result[0]['last_name'];
+                $_SESSION["firstName"] = sanitize_input($result[0]['first_name']);
+                $_SESSION["lastName"] = sanitize_input($result[0]['last_name']);
                 
                 //get customer gender for salutation title
                 $action = 'SELECT `gender` FROM `sensitive_info` WHERE `customer_id`= ?;';
@@ -145,7 +146,7 @@ if (isset($_POST['try'])) {
                     //echo "Retrieve failed: " . $e->getMessage();
                 }
                 
-                $_SESSION["gender"] = $result[0]['gender'];
+                $_SESSION["gender"] = sanitize_input($result[0]['gender']);
 
                 if ($_SESSION["firstName"]) {
                     $_SESSION["displayName"] = $_SESSION["firstName"];
