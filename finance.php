@@ -190,7 +190,6 @@ include "head.inc.php";
     <?php
     include "footer.inc.php";
     ?>
-    </div>
 </body>
 
 </html>

@@ -28,7 +28,7 @@
     </script>
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css"/>
-    <script defer type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
     <!-- Custom JS -->
     <script defer src="js/main.js"></script>
 </head>
