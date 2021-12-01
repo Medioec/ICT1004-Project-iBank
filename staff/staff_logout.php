@@ -1,5 +1,6 @@
 <?php
 include "staff_session.php";
+ob_start();
 ?>
 <!DOCTYPE html>
 <html>

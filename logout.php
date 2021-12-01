@@ -1,5 +1,6 @@
 <?php
 include "session.php";
+ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">

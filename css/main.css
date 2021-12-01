@@ -17,13 +17,36 @@ a {
     color: darkorchid;
 }
 
+a:hover {
+    color: rgb(107, 39, 128);
+}
+
+a:active {
+    color: rgb(107, 39, 128);
+}
+
+a:visited {
+    color: rgb(107, 39, 128);
+}
+
 .btn-primary {
-    background-color: darkorchid;
-    border-color: darkorchid;
+    background-color: darkorchid !important;
+    border-color: darkorchid !important;
 }
 
 .btn-primary:hover {
-    background-color: rgb(107, 39, 128)
+    background-color: rgb(107, 39, 128) !important;
+    border-color: rgb(107, 39, 128) !important;
+}
+
+.btn-primary:active {
+    background-color: rgb(107, 39, 128) !important;
+    border-color: rgb(107, 39, 128) !important;
+}
+
+.btn-primary:visited {
+    background-color: rgb(107, 39, 128) !important;
+    border-color: rgb(107, 39, 128) !important;
 }
 
 
