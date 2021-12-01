@@ -279,7 +279,7 @@
                 $emailStmt->execute();
                 $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
                 
-                if(!empty($emailResul)) {
+                if(!empty($emailResult)) {
                     $errorMsg .= "This email has been registered.<br>";
                     $success = false;
                 }

@@ -47,10 +47,8 @@
                         <p><a href="forget_password.php">Forget your password? </a></p>
                     </div>
                 </div>
-            <?php
-                include "footer.inc.php";
-            ?>
             </main>
+            <?php include "footer.inc.php";?>
         </div>
     </body>
 </html>

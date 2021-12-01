@@ -198,10 +198,8 @@ function sanitize_input($data) {
 ?>
                     </div>
                 </div>
-                <?php
-                    include "staff_footer.inc.php";
-                ?>
             </main>
+            <?php include "staff_footer.inc.php";?>
         </div>
     </body>
 </html>

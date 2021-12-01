@@ -14,8 +14,8 @@ include "session.php";
                 <?php include "php/logout_handler.php"; ?>
             </div>
         </div>
-        <?php include "footer.inc.php"; ?>
     </main>
+    <?php include "footer.inc.php"; ?>
 </body>
 
 </html>
