@@ -99,6 +99,8 @@
         <script>
         var input = document.querySelector("#phone");
         window.intlTelInput(input,({
+            preferredCountries: ["sg", "my"],
+            initialCountry : "sg"
         }));
  
         $(document).ready(function() {

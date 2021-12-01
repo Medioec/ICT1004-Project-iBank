@@ -1,6 +1,9 @@
 <?php 
 ob_start();
 include "session.php";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <html lang="en">
     <head>
@@ -22,11 +25,11 @@ include "session.php";
                 
                 // Logging Variables
                 $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
-                $logType = "LOGIN";
+                $logType = "ACCOUNT";
                 $logCategory0 = "INFO";
                 $logCategory1 = "WARNING";
                 $description = "";
-                $noUser = "-EMPTY FIELD-";
+                $username = $_SESSION['username'];
                 
                 // IF REQUEST METHOD IS POST, NOT GET
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -39,20 +42,25 @@ include "session.php";
                     if (empty($_POST['pwd'])) {
                         $errorMsg .= "Please enter your current password.<br>";
                         $success = false;
+                        $description = "FAILED USER ACCOUNT DEACTIVATION - CUSTOMER (PW-INPUT-ERR)";
                     }
                     // VALIDATING USING REGEX
                     else {
                         if (strlen($_POST['pwd']) < '12') {
                             $errorMsg = "Incorrect Password!<br>";
+                            $description = "FAILED USER ACCOUNT DEACTIVATION - CUSTOMER (PW-INPUT-ERR)";
                             $success = false;
                         } elseif (!preg_match("#[0-9]+#", $_POST["pwd"])) {
                             $errorMsg = "Incorrect Password!<br>";
+                            $description = "FAILED USER ACCOUNT DEACTIVATION - CUSTOMER (PW-INPUT-ERR)";
                             $success = false;
                         } elseif (!preg_match("#[A-Z]+#", $_POST["pwd"])) {
                             $errorMsg = "Incorrect Password!<br>";
+                            $description = "FAILED USER ACCOUNT DEACTIVATION - CUSTOMER (PW-INPUT-ERR)";
                             $success = false;
                         } elseif (!preg_match("#[a-z]+#", $_POST["pwd"])) {
                             $errorMsg = "Incorrect Password!<br>";
+                            $description = "FAILED USER ACCOUNT DEACTIVATION - CUSTOMER (PW-INPUT-ERR)";
                             $success = false;
                         }
                         // IF Passed REGEX validation, Cross check with DB for current password
@@ -68,6 +76,7 @@ include "session.php";
                     // If Success, Deactive account and destroy session
                     if ($success) {
                         deactivateAccount($connect);
+                        
                         unset($_SESSION["customerId"]);
                         unset($_SESSION['loggedin']);
                         //session_unset();
@@ -87,6 +96,14 @@ include "session.php";
                         echo "<p style='color:red'>" . $errorMsg . "</p>";
                         echo "<p><button onclick='goBack()' class='btn btn-primary'>Back</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
+                        
+                        $failSql = $logSql;
+                        $failLog = $connect->prepare($failSql);
+                        $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+                        $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+                        $failLog->bindParam(3,$description, PDO::PARAM_STR);
+                        $failLog->bindParam(4,$username, PDO::PARAM_STR);
+                        $failLog->execute();
                     }
                 }
 
@@ -112,7 +129,7 @@ include "session.php";
             
             // Function to cross check current password = password in DB
             function checkCurrentPwd($connect) {
-                global $pwd_hashed, $errorMsg, $success;
+                global $pwd_hashed, $errorMsg, $success, $description;
                 
                 $id = $_SESSION["customerId"];
                 // Prepare the statement:
@@ -129,17 +146,19 @@ include "session.php";
                     if (!password_verify($_POST["pwd"], $pwd_hashed)) {
                         $errorMsg = "Incorrect Password... Please enter current password to proceed";
                         $success = false;
+                        $description = "FAILED USER ACCOUNT DEACTIVATION - CUSTOMER (PW-INPUT-INCORRECT)";
                     }
                 }
                 else {
                     $errorMsg = "Error, no data found";
+                    $description = "FAILED USER ACCOUNT DEACTIVATION - CUSTOMER (PW-NOT-FOUND)";
                     $success = false;
                 }
             }
             
             // Function to check if balance in all accounts is 0 before deactivation
             function checkAccountBalance($connect) {
-                global $balance, $errorMsg, $success;
+                global $balance, $errorMsg, $success, $description;
                 
                 $id = $_SESSION["customerId"];
                 // Prepare the statement:
@@ -153,12 +172,13 @@ include "session.php";
                 if ($balance > 0.00) {
                     $errorMsg = "You have outstanding balance in your accounts, please head down to the bank to process deactivation.";
                     $success = false;
+                    $description = "FAILED USER ACCOUNT DEACTIVATION - CUSTOMER (EXISTING-BANK-FUNDS)";
                 }
             }
             
             // Function to deactivate account
             function deactivateAccount($connect) {
-                global $active, $errorMsg, $success;
+                global $active, $errorMsg, $success, $logSql, $logType, $logCategory0, $logCategory1, $username;
                 
                 $id = $_SESSION["customerId"];
                 $active = 0;
@@ -171,8 +191,28 @@ include "session.php";
                 $deactivateAccResult = $deactivateAccStmt->fetchAll(PDO::FETCH_ASSOC);
                 
                 if ($deactivateAccStmt->rowCount() != 1) {
-                    $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+//                    $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                    $errorMsg = "Deactivation failed. Please try again later.";
                     $success = false;
+                    
+                    $failSql = $logSql;
+                    $description = "FAILED USER ACCOUNT DEACTIVATION - CUSTOMER (DB-FAIL)";
+                    $failLog = $connect->prepare($failSql);
+                    $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+                    $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+                    $failLog->bindParam(3,$description, PDO::PARAM_STR);
+                    $failLog->bindParam(4,$username, PDO::PARAM_STR);
+                    $failLog->execute();
+                }
+                else {
+                    $successSql = $logSql;
+                    $description = "USER ACCOUNT DEACTIVATION - CUSTOMER (SUCCESS)";
+                    $successLog = $connect->prepare($successSql);
+                    $successLog->bindParam(1,$logType, PDO::PARAM_STR);
+                    $successLog->bindParam(2,$logCategory0, PDO::PARAM_STR);
+                    $successLog->bindParam(3,$description, PDO::PARAM_STR);
+                    $successLog->bindParam(4,$username, PDO::PARAM_STR);
+                    $successLog->execute();
                 }
             }
             ?>
