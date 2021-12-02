@@ -1,4 +1,8 @@
-<?php ob_start(); ?>
+<?php ob_start(); 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
 <html lang="en">
     <head>
         <?php
@@ -253,8 +257,8 @@
                         registerUser($connect);
                         
                         // Send confirmation email
-                        include_once ('php/sendmail.php');
-                        phpMailerRegistration($_POST["email"], $_POST["lname"]);
+                        //include_once ('php/sendmail.php');
+                        //phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
                         echo "<h1>Registration Successful!</h1><br>";
                         echo "<p class='h4'>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></p><br>";
@@ -440,13 +444,13 @@
                     $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (CUSTOMER-CRED-TABLE-ERR)";
                     $logCategory = $logCategory1;
                 }
-//                $sql = $logSql;
-//                $log = $connect->prepare($sql);
-//                $log->bindParam(1,$logType, PDO::PARAM_STR);
-//                $log->bindParam(2,$logCategory, PDO::PARAM_STR);
-//                $log->bindParam(3,$description, PDO::PARAM_STR);
-//                $log->bindParam(4,$username, PDO::PARAM_STR);
-//                $log->execute();
+                $sql = $logSql;
+                $log = $connect->prepare($sql);
+                $log->bindParam(1,$logType, PDO::PARAM_STR);
+                $log->bindParam(2,$logCategory, PDO::PARAM_STR);
+                $log->bindParam(3,$description, PDO::PARAM_STR);
+                $log->bindParam(4,$username, PDO::PARAM_STR);
+                $log->execute();
             }
                     ?>
 
