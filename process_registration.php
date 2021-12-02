@@ -440,13 +440,13 @@
                     $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (CUSTOMER-CRED-TABLE-ERR)";
                     $logCategory = $logCategory1;
                 }
-                $sql = $logSql;
-                $log = $connect->prepare($sql);
-                $log->bindParam(1,$logType, PDO::PARAM_STR);
-                $log->bindParam(2,$logCategory, PDO::PARAM_STR);
-                $log->bindParam(3,$description, PDO::PARAM_STR);
-                $log->bindParam(4,$username, PDO::PARAM_STR);
-                $log->execute();
+//                $sql = $logSql;
+//                $log = $connect->prepare($sql);
+//                $log->bindParam(1,$logType, PDO::PARAM_STR);
+//                $log->bindParam(2,$logCategory, PDO::PARAM_STR);
+//                $log->bindParam(3,$description, PDO::PARAM_STR);
+//                $log->bindParam(4,$username, PDO::PARAM_STR);
+//                $log->execute();
             }
                     ?>
 

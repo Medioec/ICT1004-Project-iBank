@@ -1,5 +1,6 @@
 <?php 
 ob_start();
+include "session.php"
 ?>
 <html lang="en">
     <head>
