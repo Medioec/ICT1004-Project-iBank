@@ -16,7 +16,7 @@
                 <div class="page-content">
                     <div class="main-content">
                        
-                        <h1>Hello, <?php $_SESSION['displayName'] ?></h1>
+                        <h1>Hello, <?php echo $_SESSION['displayName'] ?></h1>
 
                         <form>
                             <p class="h4">Basic Info</p>

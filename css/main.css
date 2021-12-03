@@ -17,7 +17,8 @@ a {
     color: darkorchid;
 }
 
-a:hover {
+
+/*a:hover {
     color: rgb(107, 39, 128);
 }
 
@@ -30,7 +31,7 @@ a:active {
     border-color: darkorchid !important;
 }
 
-.btn-primary:hover {
+/*.btn-primary:hover {
     background-color: rgb(107, 39, 128) !important;
     border-color: rgb(107, 39, 128) !important;
 }

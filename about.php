@@ -82,13 +82,11 @@
                 </div>
                 <div class="jumbotron jumbotron-fluid mt-5" style="background-image: url('images/community.jpg');">
                     <div class="container text-on-pic">
-                        <div class="row">
-                            <div class=col>
-                                <h1 class="display-4">Community Involvement</h1>
-                                <p class="lead">We have helped those in need and removes interests to those who are need of money and gives them the flexibility to pay back whenever
-                                    they can within a specific time frame in which they decide. The only interest free loan bank.</p>
-                            </div>
-                        </div>
+                       <div class="row">
+                           <h1 class="display-4 col-md-5">Community</h1>
+                           <p class="lead col">We have helped those in need and removes interests to those who are need of money and gives them the flexibility to pay back whenever 
+                           they can within a specific time frame in which they decide. The only interest free loan bank.</p>
+                       </div>
                     </div>
                 </div>
             </div>

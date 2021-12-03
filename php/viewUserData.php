@@ -21,17 +21,16 @@
         $errorMsg = "User data not found";
         echo $errorMsg;
     }
-
-    foreach ($result as $row) {
-        $fname = htmlentities($row["first_name"]);
-        $lname = htmlentities($row["last_name"]);
-        $fullname = htmlentities($row["full_name"]);
-        $street1 = htmlentities($row["street1"]);
-        $street2 = htmlentities($row["street2"]);
-        $postal = htmlentities($row["postal"]);
-        $email = htmlentities($row["email"]);
-        $phone = htmlentities($row["phone"]);
-    }
+    
+    $fname = htmlentities($row[0]["first_name"]);
+    $lname = htmlentities($row[0]["last_name"]);
+    $fullname = htmlentities($row[0]["full_name"]);
+    $street1 = htmlentities($row[0]["street1"]);
+    $street2 = htmlentities($row[0]["street2"]);
+    $postal = htmlentities($row[0]["postal"]);
+    $email = htmlentities($row[0]["email"]);
+    $current_email = htmlentities($row[0]["email"]);
+    $phone = htmlentities($row[0]["phone"]);
 ?>
 
 <?php

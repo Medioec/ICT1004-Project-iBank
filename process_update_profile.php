@@ -19,11 +19,18 @@
                 
                 // Logging Variables
                 $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
-                $logType = "LOGIN";
+                $logType = "PROFILE-UPDATE";
                 $logCategory0 = "INFO";
                 $logCategory1 = "WARNING";
-                $description = "";
-                $noUser = "-EMPTY FIELD-";
+                $description = "FAILED USER PROFILE UPDATE - CUSTOMER ( ";
+                $username = $_SESSION['username'];
+                $id = $_SESSION["customerId"];
+                
+                $patternAlphanumeric = "/^[A-Za-z][A-Za-z0-9]{5,31}$/";
+                $patternAlphaSpace = "/^[\w\-\s]+$/";
+                $patternNumeric = "/^[0-9]*$/";
+                $patternPhone = "/^[0-9 +-]*$/";
+                $patternAddress = "/^[\w\-\s#@]+$/";
                 
                 $changePw = false;
                 
@@ -33,25 +40,35 @@
                     // Initialize variables
                     $errorMsg = "";
                     $success = true;
-
+                    
+                    // Get email address
+                    $getEmailSql = "SELECT * FROM user_data WHERE customer_id=?";
+                    $getEmailStmt = $connect->prepare($getEmailSql);
+                    $getEmailStmt->bindParam(1, $id, PDO::PARAM_INT);
+                    $getEmailStmt->execute();
+                    $getEmailResult = $getEmailStmt->fetchAll(PDO::FETCH_ASSOC);
+                    $current_email = htmlentities($getEmailResult[0]["email"]);
+                    
                     // FIRST NAME VALIDATION AND SANITIZATION (Nullable)
                     if (!empty($_POST["fname"])) {
                         $fname = sanitize_input($_POST["fname"]);
-                        if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
-                        $errorMsg .= "Invalid Name format.<br>";
-                        $success = false;
+                        if (!preg_match($patternAlphaSpace,$fname)) {
+                            $errorMsg .= "Invalid First Name format.<br>";
+                            $description .= "FNAME-ERR ";
+                            $success = false;
                         }
                     }
 
                     // LAST NAME VALIDATION AND SANITIZATION (Required)
                     if (empty($_POST["lname"])) {
                         $errorMsg .= "Last Name is required.<br>";
+                        $description .= "LNAME-ERR ";
                         $success = false;
                     } else {
                         // Additional check on last name field.
                         $lname = sanitize_input($_POST["lname"]);
-                        if (!filter_var($lname, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Name format.";
+                        if (!preg_match($patternAlphaSpace,$lname)) {
+                            $errorMsg .= "Invalid Last Name format.<br>";
                             $success = false;
                         }
                     }
@@ -63,8 +80,9 @@
                     } else {
                         // Additional check on full name field.
                         $fullname = sanitize_input($_POST["fullname"]);
-                        if (!filter_var($fullname, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Name format.";
+                        if (!preg_match($patternAlphaSpace,$fullname)) {
+                            $errorMsg .= "Invalid Full Name format.<br>";
+                            $description .= "FULLNAME-ERR ";
                             $success = false;
                         }
                     }
@@ -76,8 +94,9 @@
                     } else {
                         // Additional check on street1 field.
                         $street1 = sanitize_input($_POST["street1"]);
-                        if (!filter_var($street1, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Street Name.";
+                        if (!preg_match($patternAddress,$street1)) {
+                            $errorMsg .= "Invalid Street 1.<br>";
+                            $description .= "STREET1-ERR ";
                             $success = false;
                         }
                     }
@@ -85,8 +104,9 @@
                     // STREET2 VALIDATION AND SANITIZATION, CONSIDER CHANGING TO POSTAL API (Nullable)
                     if (!empty($_POST["street2"])){
                         $street2 = sanitize_input($_POST["street2"]);
-                        if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
-                        $errorMsg .= "Invalid Street Name.<br>";
+                        if (!preg_match($patternAddress,$street2)) {
+                        $errorMsg .= "Invalid Street 2.<br>";
+                        $description .= "STREET2-ERR ";
                         $success = false;
                         
                         }
@@ -99,8 +119,9 @@
                     } else {
                         // Additional check on postal field.
                         $postal = sanitize_input($_POST["postal"]);
-                        if (!filter_var($postal, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Postal Code.";
+                        if (!preg_match($patternNumeric,$postal)) {
+                            $errorMsg .= "Invalid Postal Code.<br>";
+                            $description .= "POSTAL-ERR ";
                             $success = false;
                         }
                     }
@@ -115,14 +136,17 @@
                         $emailregex = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/";
                         if (!preg_match($emailregex, $email)) {
                             $errorMsg .= "Invalid email format.<br>";
+                            $description .= "EMAIL-ERR ";
                             $success = false;
                         }
-                        // VALIDATING USING PHP BUILT-IN FUNCTION
-                        #if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        #$errorMsg .= "Invalid email format.<br>";
-                        #$success = false;
-                        #}
+                        else{
+                            // Check if user edited email, if so, check if email is unique in database
+                            if($_POST["email"] != $current_email){
+                                checkEmailExist($connect);
+                            }
+                        }
                     }
+					
                     
                     // PHONE NO. VALIDATION AND SANITIZATION (Required)
                     if (empty($_POST["phone"])) {
@@ -131,8 +155,9 @@
                     } else {
                         // Additional check on phone field.
                         $phone = sanitize_input($_POST["phone"]);
-                        if (!filter_var($phone, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Phone Number.";
+                        if (!preg_match($patternPhone,$phone)) {
+                            $errorMsg .= "Invalid Phone Number.<br>";
+                            $description .= "PHONE-ERR ";
                             $success = false;
                         }
                     }
@@ -199,6 +224,10 @@
                                 $new_pwd_hashed = password_hash($_POST["new_pwd"], PASSWORD_DEFAULT);
                                 $changePw = true;
                             }
+                            
+                            if(!$changePw){
+                                $description .= "NEW-PW-INVALID ";
+                            }
                         }
                     }
 
@@ -222,6 +251,15 @@
                         echo "<p style='color:red'>" . $errorMsg . "</p>";
                         echo "<p><button onclick='goBack()' class='btn btn-primary'>Return to Update Details</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
+                        
+                        $description .= ")";
+                        $failSql = $logSql;
+                        $failLog = $connect->prepare($failSql);
+                        $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+                        $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+                        $failLog->bindParam(3,$description, PDO::PARAM_STR);
+                        $failLog->bindParam(4,$username, PDO::PARAM_STR);
+                        $failLog->execute();
                     }
                 }
 
@@ -246,15 +284,22 @@
             <?php            
             // Function to cross check current password = password in DB
             function checkCurrentPwd($connect) {
-                global $curr_pwd_hashed, $errorMsg, $success;
+                global $curr_pwd_hashed, $errorMsg, $success, $description;
                 
                 $id = $_SESSION["customerId"];
                 // Prepare the statement:
                 $getPwdSql = "SELECT `password_hash` FROM customer_credentials WHERE customer_id=?"; 
                 $getPwdStmt = $connect->prepare($getPwdSql);
                 $getPwdStmt->bindParam(1,$id, PDO::PARAM_INT);
-                $getPwdStmt->execute();
-                $getPwdResult = $getPwdStmt->fetchAll(PDO::FETCH_ASSOC);
+                try{
+                    $getPwdStmt->execute();
+                    $getPwdResult = $getPwdStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error, contact support";
+                    //echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
                 if($getPwdStmt->rowCount() == 1) {
                     $curr_pwd_hashed = $getPwdResult[0]["password_hash"];
@@ -262,22 +307,48 @@
                     // Check if current password user has entered == DB password
                     if (!password_verify($_POST["pwd"], $curr_pwd_hashed)) {
                         $errorMsg .= "Incorrect Password... Please verify with your current password<br>";
+                        $description .= "PW-INVALID ";
                         $success = false;
                     }
                 }
                 else {
                     $errorMsg = "Error, no data found";
+                    $description .= "PW-NOT-FOUND ";
                     $success = false;
                 }
             }
-            ?>
+			
+            function checkEmailExist($connect) {
+                global $email, $errorMsg, $success;
 
-            <?php
+                $email = sanitize_input($_POST["email"]);
+                $emailSql = "SELECT * FROM user_data WHERE email=?";
+                $emailStmt = $connect->prepare($emailSql);
+                $emailStmt->bindParam(1, $email, PDO::PARAM_STR);
+                try{
+                    $emailStmt->execute();
+                    $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error, contact support";
+                    //echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
+
+                if (!empty($emailResult)) {
+                    $errorMsg .= "Unable to change email. This email has been registered.<br>";
+                    $success = false;
+                }
+            }
+			
             // Function to update user details into DB
             function updateUserDetails($connect) {
                 global $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $errorMsg, $success;
-                
+                global $logSql, $logType, $logCategory0, $logCategory1, $username;
+                $description = "";
+                $logCategory = $logCategory1;
                 $id = $_SESSION["customerId"];
+                
                 // Prepare the statement:
                 $updateInfoSql = "UPDATE user_data SET "
                         . "first_name=?, last_name=?, full_name=?, "
@@ -293,11 +364,39 @@
                 $updateInfoStmt->bindParam(7,$email, PDO::PARAM_STR);
                 $updateInfoStmt->bindParam(8,$phone, PDO::PARAM_STR);
                 $updateInfoStmt->bindParam(9,$id, PDO::PARAM_STR);
-                $updateInfoStmt->execute();
+                
+                try{
+                    $updateInfoStmt->execute();
+                } 
+                catch (PDOException $e) {
+                    echo "Database error, contact support";
+                    //echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
                 if ($updateInfoStmt->rowCount() != 1) {
                     $errorMsg = "Error, please contact bank for help.";
                     $success = false;
+                    
+                    $description = "FAILED USER PROFILE UPDATE - CUSTOMER (USER-DATA-TABLE-ERR)";
+                    $logCategory = $logCategory1;
+                }
+                else {
+                    $description = "USER PROFILE UPDATE - CUSTOMER (SUCCESS)";
+                    $logCategory = $logCategory0;
+                }
+                $sql = $logSql;
+                $log = $connect->prepare($sql);
+                $log->bindParam(1,$logType, PDO::PARAM_STR);
+                $log->bindParam(2,$logCategory, PDO::PARAM_STR);
+                $log->bindParam(3,$description, PDO::PARAM_STR);
+                $log->bindParam(4,$username, PDO::PARAM_STR);
+                $log->execute();
+                
+                if ($fname) {
+                    $_SESSION["displayName"] = $fname;
+                } else {
+                    $_SESSION["displayName"] = $lname;
                 }
             }
             ?>
@@ -306,19 +405,43 @@
             // Function to update user password into DB
             function updatePassword($connect) {
                 global $new_pwd_hashed, $errorMsg, $success;
-                
+                global $logSql, $logType, $logCategory0, $logCategory1, $username;
+                $description = "";
+                $logCategory = $logCategory1;
                 $id = $_SESSION["customerId"];
+                
                 // Prepare the statement:
                 $changePwdSql = "UPDATE customer_credentials SET password_hash=? WHERE customer_id=?"; 
                 $changePwdStmt = $connect->prepare($changePwdSql);
                 $changePwdStmt->bindParam(1,$new_pwd_hashed, PDO::PARAM_STR);
                 $changePwdStmt->bindParam(2,$id, PDO::PARAM_INT);
-                $changePwdStmt->execute();
+                try{
+                    $changePwdStmt->execute();
+                } 
+                catch (PDOException $e) {
+                    echo "Database error, contact support";
+                    //echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
                 if ($changePwdStmt->rowCount() != 1) {
                     $errorMsg = "Error, please contact bank for help.";
                     $success = false;
+                    
+                    $description = "FAILED USER PASSWORD UPDATE - CUSTOMER (CUSTOMER-CRED-TABLE-ERR)";
+                    $logCategory = $logCategory1;
                 }
+                else {
+                    $description = "USER PASSWORD UPDATE - CUSTOMER (SUCCESS)";
+                    $logCategory = $logCategory0;
+                }
+                $sql = $logSql;
+                $log = $connect->prepare($sql);
+                $log->bindParam(1,$logType, PDO::PARAM_STR);
+                $log->bindParam(2,$logCategory, PDO::PARAM_STR);
+                $log->bindParam(3,$description, PDO::PARAM_STR);
+                $log->bindParam(4,$username, PDO::PARAM_STR);
+                $log->execute();
             }
             ?>
 

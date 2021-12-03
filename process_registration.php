@@ -1,4 +1,8 @@
-<?php ob_start(); ?>
+<?php ob_start(); 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
 <html lang="en">
     <head>
         <?php
@@ -19,11 +23,18 @@
                 
                 // Logging Variables
                 $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
-                $logType = "LOGIN";
+                $logType = "REGISTRATION";
                 $logCategory0 = "INFO";
                 $logCategory1 = "WARNING";
-                $description = "";
-                $noUser = "-EMPTY FIELD-";
+                $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER ( ";
+                $username = "-EMPTY FIELD-";
+                
+                $patternAlphanumeric = "/^[A-Za-z][A-Za-z0-9]{5,31}$/";
+                $patternAlpha = "/^\w\+$/";
+                $patternAlphaSpace = "/^[\w\-\s]+$/";
+                $patternNumeric = "/^[0-9]*$/";
+                $patternPhone = "/^[0-9 +-]*$/";
+                $patternAddress = "/^[\w\-\s#@]+$/";
                 
                 // IF REQUEST METHOD IS POST, NOT GET
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -35,10 +46,11 @@
                     // FIRST NAME VALIDATION AND SANITIZATION (Nullable)
                     if (!empty($_POST["fname"])) {
                         $fname = sanitize_input($_POST["fname"]);
-                        if (!filter_var($fname, FILTER_SANITIZE_STRING)) {
-                        $errorMsg .= "Invalid Name format.<br>";
-                        $success = false;
-                    }
+                        if (!preg_match($patternAlphaSpace,$fname)) {
+                            $errorMsg .= "Invalid First Name format.<br>";
+                            $description .= "FNAME-ERR ";
+                            $success = false;
+                        }
                     }
 
                     // LAST NAME VALIDATION AND SANITIZATION (Required)
@@ -49,8 +61,9 @@
                         // Additional check on last name field.
                         $lname = sanitize_input($_POST["lname"]);
                         
-                        if (!filter_var($lname, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Name format.<br>";
+                        if (!preg_match($patternAlphaSpace,$lname)) {
+                            $errorMsg .= "Invalid Last Name format.<br>";
+                            $description .= "LNAME-ERR ";
                             $success = false;
                         }
                     }
@@ -62,13 +75,14 @@
                     } else {
                         // Additional check on full name field.
                         $fullname = sanitize_input($_POST["fullname"]);
-                        if (!filter_var($fullname, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Name format.<br>";
+                        if (!preg_match($patternAlphaSpace,$fullname)) {
+                            $errorMsg .= "Invalid Full Name format.<br>";
+                            $description .= "FULLNAME-ERR ";
                             $success = false;
                         }
                     }
                     
-                    // NRIC VALIDATION AND SANITIZATION (Required)
+                    // NRIC VALIDATION AND SANITIZATION (Required)*Unique
                     if (empty($_POST["nric"])) {
                         $errorMsg .= "NRIC / Passport No. is required.<br>";
                         $success = false;
@@ -76,10 +90,14 @@
                         // Additional check on nric field.
                         $nric = sanitize_input($_POST["nric"]);
                         
-                        if(!preg_match('/^[A-Za-z]{1}[0-9]{7}[A-Za-z]{1}$/', $nric)){
-                            $errorMsg .= "Invalid NRIC / Password No.<br>";
+                        if(!preg_match("/^[A-Za-z]{1}[0-9]{7}[A-Za-z]{1}$/", $nric)){
+                            $errorMsg .= "Invalid NRIC.<br>";
+                            $description .= "NRIC-ERR ";
                             $success = false;
-                        }  
+                        }
+                        else{
+                            checkNric($connect);
+                        }
                     }
                     
                     // DOB VALIDATION AND SANITIZATION (Required)
@@ -90,10 +108,18 @@
                         // Additional check on dob field.
                         $dob = sanitize_input($_POST["dob"]);
                         
+                        // REGEX for date
                         if(!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $dob)){
                             $errorMsg .= "Invalid Date of Birth.<br>";
+                            $description .= "DOB-ERR ";
                             $success = false;
-                        }  
+                        }
+                        // Check if 16 years old and above
+                        if(time() < strtotime('+16 years', strtotime($dob))){
+                            $errorMsg .= "You must be over 16 years old to register.<br>";
+                            $description .= "DOB-ERR ";
+                            $success = false;
+                        }
                     }
                     
                     // GENDER VALIDATION AND SANITIZATION (Required)
@@ -101,8 +127,15 @@
                         $errorMsg .= "Gender is required.<br>";
                         $success = false;
                     } else {
-                        // Additional check on gender field.
-                        $gender = sanitize_input($_POST["gender"]);
+                        if(!preg_match($patternAlpha,$_POST["gender"])){
+                            // Additional check on gender field.
+                            $gender = sanitize_input($_POST["gender"]);
+                        }
+                        else {
+                            $errorMsg .= "Invalid Gender selection.<br>";
+                            $description .= "GENDER-ERR ";
+                            $success = false;
+                        }
                     }  
 
                     // STREET1 VALIDATION AND SANITIZATION, CONSIDER CHANGING TO POSTAL API (Required)
@@ -112,9 +145,9 @@
                     } else {
                         // Additional check on street1 field.
                         $street1 = sanitize_input($_POST["street1"]);
-                        //$street1 = htmlentities($_POST["street1"]);
-                        if (!filter_var($street1, FILTER_SANITIZE_STRING)) {
-                            $errorMsg .= "Invalid Street Name.<br>";
+                        if (!preg_match($patternAddress,$street1)) {
+                            $errorMsg .= "Invalid Street 1.<br>";
+                            $description .= "STREET1-ERR ";
                             $success = false;
                         }
                     }
@@ -122,10 +155,10 @@
                     // STREET2 VALIDATION AND SANITIZATION, CONSIDER CHANGING TO POSTAL API (Nullable)
                     if (!empty($_POST["street2"])){
                         $street2 = sanitize_input($_POST["street2"]);
-                        //$street2 = htmlentities($_POST["street2"]);
-                        if (!filter_var($street2, FILTER_SANITIZE_STRING)) {
-                        $errorMsg .= "Invalid Street Name.<br>";
-                        $success = false;
+                        if (!preg_match($patternAddress,$street2)) {
+                            $errorMsg .= "Invalid Street 2.<br>";
+                            $description .= "STREET2-ERR ";
+                            $success = false;
                         }
                     }
 
@@ -136,13 +169,14 @@
                     } else {
                         // Additional check on postal field.
                         $postal = sanitize_input($_POST["postal"]);
-                        if (!filter_var($postal, FILTER_SANITIZE_STRING)) {
+                        if (!preg_match($patternNumeric,$postal)) {
                             $errorMsg .= "Invalid Postal Code.<br>";
+                            $description .= "POSTAL-ERR ";
                             $success = false;
                         }
                     }
 
-                    // EMAIL VALIDATION AND SANITIZATION (Required)
+                    // EMAIL VALIDATION AND SANITIZATION (Required)*Unique
                     if (empty($_POST["email"])) {
                         $errorMsg .= "Email is required.<br>";
                         $success = false;
@@ -152,6 +186,7 @@
                         $emailregex = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/";
                         if (!preg_match($emailregex, $email)) {
                             $errorMsg .= "Invalid email format.<br>";
+                            $description .= "EMAIL-ERR ";
                             $success = false;
                         } else {
                             checkEmailExist($connect);
@@ -165,14 +200,15 @@
                     } else {
                         // Additional check on phone field.
                         $phone = sanitize_input($_POST["phone"]);
-                        if (!filter_var($phone, FILTER_SANITIZE_STRING)) {
+                        if (!preg_match($patternPhone,$phone)) {
                             $errorMsg .= "Invalid Phone Number.<br>";
+                            $description .= "PHONE-ERR ";
                             $success = false;
                         }
                     }
                     
                     
-                    // USERNAME VALIDATION AND SANITIZATION (Required)
+                    // USERNAME VALIDATION AND SANITIZATION (Required)*
                     if (empty($_POST["username"])) {
                         $errorMsg .= "Username is required.<br>";
                         $success = false;
@@ -180,8 +216,9 @@
                         // Additional check on username field.
                         $username = sanitize_input($_POST["username"]);
                         
-                        if(!preg_match('/^[A-Za-z][A-Za-z0-9]{5,31}$/', $username)){
+                        if(!preg_match($patternAlphanumeric, $username)){
                             $errorMsg .= "Username should contain only alphanumeric characters, length 5-30.<br>";
+                            $description .= "USERNAME-ERR ";
                             $success = false;
                         }
                         else{
@@ -198,18 +235,23 @@
                     else {
                         if (strlen($_POST['pwd']) < '12') {
                             $errorMsg .= "Password Must Contain At Least 12 Characters!<br>";
+                            $description .= "PW-ERR ";
                             $success = false;
                         } elseif (!preg_match("#[0-9]+#", $_POST["pwd"])) {
                             $errorMsg .= "Password Must Contain At Least 1 Number!<br>";
+                            $description .= "PW-ERR ";
                             $success = false;
                         } elseif (!preg_match("#[A-Z]+#", $_POST["pwd"])) {
                             $errorMsg .= "Password Must Contain At Least 1 Capital Letter!<br>";
+                            $description .= "PW-ERR ";
                             $success = false;
                         } elseif (!preg_match("#[a-z]+#", $_POST["pwd"])) {
                             $errorMsg .= "Password Must Contain At Least 1 Lowercase Letter!<br>";
+                            $description .= "PW-ERR ";
                             $success = false;
                         } elseif ($_POST['pwd'] !== $_POST['cfm_pwd']) {
                             $errorMsg .= "Password Does Not Match!<br>";
+                            $description .= "CNFM-PW-ERR ";
                             $success = false;
                         }
                         // IF Passed REGEX validation, Cross check with DB for current password
@@ -243,8 +285,17 @@
                         echo "<h1><i class='bi bi-exclamation-square'></i> Registration Unsuccessful</h1>";
                         echo "<p class='h4'>The following errors were detected:</p>";
                         echo "<p style='color:red'>". $errorMsg . "</p>";
-                        echo "<p><button onclick='goBack()' class='btn btn-primary'>Return to update details</button></p>";
+                        echo "<p><button onclick='goBack()' class='btn btn-primary'>Return to change details</button></p>";
                         echo "<br><br><br><br><br><br><br><br>";
+                        
+                        $description .= ")";
+                        $failSql = $logSql;
+                        $failLog = $connect->prepare($failSql);
+                        $failLog->bindParam(1,$logType, PDO::PARAM_STR);
+                        $failLog->bindParam(2,$logCategory1, PDO::PARAM_STR);
+                        $failLog->bindParam(3,$description, PDO::PARAM_STR);
+                        $failLog->bindParam(4,$username, PDO::PARAM_STR);
+                        $failLog->execute();
                     }
                     
                 }    
@@ -270,52 +321,96 @@
             <?php
             // Function to check if email has been used
             function checkEmailExist($connect) {
-                global $email, $errorMsg, $success;
+                global $email, $errorMsg, $success, $description;
                 
                 $email = sanitize_input($_POST["email"]);
                 $emailSql = "SELECT * FROM user_data WHERE email=?"; 
                 $emailStmt = $connect->prepare($emailSql);
                 $emailStmt->bindParam(1,$email, PDO::PARAM_STR);
-                $emailStmt->execute();
-                $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
+                try{
+                    $emailStmt->execute();
+                    $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
                 if(!empty($emailResult)) {
-                    $errorMsg .= "This email has been registered.<br>";
+                    $errorMsg .= "Email has been registered.<br>";
+                    $description .= "EMAIL-EXISTS ";
                     $success = false;
                 }
             }
             ?>
             
-            
-            
             <?php
-
             // Function to check if username has been used
             function checkUsernameExist($connect) {
-                global $username, $errorMsg, $success;
+                global $username, $errorMsg, $success, $description;
                 
                 $userSql = "SELECT * FROM customer_credentials WHERE customer_username=?"; 
                 $userStmt = $connect->prepare($userSql);
                 $userStmt->bindParam(1,$username, PDO::PARAM_STR);
-                $userStmt->execute();
-                $userResult = $userStmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                try{
+                    $userStmt->execute();
+                    $userResult = $userStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
+
                 if (!empty($userResult)) {
                     $errorMsg .= "Username has been taken, Please select another username.<br>";
+                    $description .= "USERNAME-EXISTS ";
                     $success = false;
                 }
             }
             ?>
+                
+            <?php
+            // Function to check if ic_number has been used
+            function checkNric($connect) {
+                global $nric, $errorMsg, $success, $description;
+                
+                $userNric = "SELECT * FROM sensitive_info WHERE ic_number=?"; 
+                $nricStmt = $connect->prepare($userNric);
+                $nricStmt->bindParam(1,$nric, PDO::PARAM_STR);
+                
+                try{
+                    $nricStmt->execute();
+                    $nricResult = $nricStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
+
+                if (!empty($nricResult)) {
+                    $errorMsg .= "NRIC / Passport no. has been registered.<br>";
+                    $description .= "NRIC-EXISTS ";
+                    $success = false;
+                }
+            }
+            ?>
+                    
             <?php
 
             // Function to register user into DB
             function registerUser($connect) {
                 global $username, $pwd_hashed, $fname, $lname, $fullname, $street1, $street2, $postal, $email, $phone, $nric, $gender, $dob, $errorMsg, $success;
+                global $logSql, $logType, $logCategory0, $logCategory1;
+                $description = "";
+                $logCategory = $logCategory1;
                 
                 $otp = "12345";
                 $rndno = rand(1, 9999999);
                 $token = md5($rndno);
                 $active = 1;
                 
+                // INSERT into customer_credentials
                 $userCredRegSql = "INSERT INTO customer_credentials (customer_username, password_hash, otp, password_token, active) VALUES (?,?,?,?,?)"; 
                 $userCredRegStmt = $connect->prepare($userCredRegSql);
                 $userCredRegStmt->bindParam(1,$username, PDO::PARAM_STR);
@@ -323,18 +418,32 @@
                 $userCredRegStmt->bindParam(3,$otp, PDO::PARAM_STR);
                 $userCredRegStmt->bindParam(4,$token, PDO::PARAM_STR);
                 $userCredRegStmt->bindParam(5,$active, PDO::PARAM_STR);
-                $userCredRegStmt->execute();
+                try{
+                    $userCredRegStmt->execute();
+                } 
+                catch (PDOException $e) {
+                    echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
+                // If customer_credentials successfully INSERTED
                 if ($userCredRegStmt->rowCount() == 1) {
                     $getIdSql = "SELECT `customer_id` FROM customer_credentials WHERE customer_username=?"; 
                     $getIdStmt = $connect->prepare($getIdSql);
                     $getIdStmt->bindParam(1,$username, PDO::PARAM_STR);
-                    $getIdStmt->execute();
-                    $getIdResult = $getIdStmt->fetchAll(PDO::FETCH_ASSOC);
+                    try{
+                        $getIdStmt->execute();
+                        $getIdResult = $getIdStmt->fetchAll(PDO::FETCH_ASSOC);
+                    } 
+                    catch (PDOException $e) {
+                        echo "Database error: " . $e->getMessage();
+                        $success = false;
+                    }
                     
                     if(!empty($getIdResult)){
                         $id = $getIdResult[0]["customer_id"];
                         
+                        // INSERT into user_data
                         $userDataRegSql = "INSERT INTO user_data "
                                 . "(customer_id, first_name, last_name, full_name, street1, street2, postal, email, phone) "
                                 . "VALUES (?,?,?,?,?,?,?,?,?)"; 
@@ -348,8 +457,15 @@
                         $userDataRegStmt->bindParam(7, $postal, PDO::PARAM_STR);
                         $userDataRegStmt->bindParam(8, $email, PDO::PARAM_STR);
                         $userDataRegStmt->bindParam(9, $phone, PDO::PARAM_STR);
-                        $userDataRegStmt->execute();
+                        try{
+                            $userDataRegStmt->execute();
+                        } 
+                        catch (PDOException $e) {
+                            echo "Database error: " . $e->getMessage();
+                            $success = false;
+                        }
                         
+                        // If user_data successfully INSERTED
                         if ($userDataRegStmt->rowCount() == 1) {
                             $userSensRegSql = "INSERT INTO sensitive_info "
                                     . "(customer_id, ic_number, gender, date_of_birth) "
@@ -359,18 +475,60 @@
                             $userSensRegStmt->bindParam(2, $nric, PDO::PARAM_STR);
                             $userSensRegStmt->bindParam(3, $gender, PDO::PARAM_STR);
                             $userSensRegStmt->bindParam(4, $dob, PDO::PARAM_STR);
-                            $userSensRegStmt->execute();
+                            try{
+                                $userSensRegStmt->execute();
+                            } 
+                            catch (PDOException $e) {
+                                echo "Database error: " . $e->getMessage();
+                                $success = false;
+                            }
+                            
+                            if ($userSensRegStmt->rowCount() != 1) {
+                                $errorMsg = "Database error";
+                                
+                                // FAIL LOG
+                                $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (SENSITIVE-DATA-TABLE-ERR)";
+                                $logCategory = $logCategory1;
+                                
+                            }
+                            // SUCCESS LOG
+                            else {
+                                $description = "USER ACCOUNT REGISTRATION - CUSTOMER (SUCCESS)";
+                                $logCategory = $logCategory0;
+                            }
                         }
                         else{
-                            $errorMsg = "Database Error";
+                            $errorMsg = "Database error";
+                            
+                            // FAIL LOG
+                            $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (USER-DATA-TABLE-ERR)";
+                            $logCategory = $logCategory1;
                         }
                     }
                     else {
-                        $errorMsg = "Database Error";
+                        $errorMsg = "Database error";
+                        
+                        // FAIL LOG
+                        $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (CUSTOMER-ID-NOT-FOUND)";
+                        $logCategory = $logCategory1;
                     }
                 }
+                else {
+                    $errorMsg = "Database error";
+                    
+                    // FAIL LOG
+                    $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (CUSTOMER-CRED-TABLE-ERR)";
+                    $logCategory = $logCategory1;
+                }
+                $sql = $logSql;
+                $log = $connect->prepare($sql);
+                $log->bindParam(1,$logType, PDO::PARAM_STR);
+                $log->bindParam(2,$logCategory, PDO::PARAM_STR);
+                $log->bindParam(3,$description, PDO::PARAM_STR);
+                $log->bindParam(4,$username, PDO::PARAM_STR);
+                $log->execute();
             }
-                    ?>
+            ?>
 
        </div>
     </div>

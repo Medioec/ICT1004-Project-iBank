@@ -37,7 +37,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="dob">D.O.B*</label>
-                                <input class="form-control" onfocus="(this.type='date')" id="dob" name="dob" placeholder="D.O.B (dd/mm/yyyy)" onkeydown="return false" required>
+                                <input class="form-control" onfocus="(this.type='date')" id="dob" name="dob" placeholder="D.O.B (dd/mm/yyyy)" 
+                                       oninvalid="this.setCustomValidity('Min. age for registration is 16 year old and above')" required>
                                 <p style="font-size:10px"><em> (Min. age for registration is 16 year old and above.)</em></p>                           
                             </div>
                             <div class="form-group">
@@ -71,7 +72,6 @@
                                 <input class="form-control" type="email" id="email" name="email" maxlength="100" placeholder="Enter your Email address" required>
                             </div>
                             
-                            <!-- TO DO Alter DB to allow char(20), accepting country code -->
                             <div class="form-group">
                                 <label for="phone">Phone*</label><br>
                                 <input class="form-control" type="tel" id="phone" name="phone" size="150" maxlength="20" placeholder="Enter your Mobile Number" required>
@@ -117,7 +117,9 @@
         <script src="phonecc/js/intlTelInput.js"></script>
         <script>
         var input = document.querySelector("#phone");
-        window.intlTelInput(input,({initialCountry:"sg"
+        window.intlTelInput(input,({
+            preferredCountries: ["sg", "my"],
+            initialCountry : "sg"
         }));
  
         $(document).ready(function() {
