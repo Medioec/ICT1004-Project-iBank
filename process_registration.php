@@ -96,7 +96,7 @@ error_reporting(E_ALL);
                             $success = false;
                         }
                         else{
-                            checknric($connect);
+                            checkNric($connect);
                         }
                     }
                     
@@ -351,7 +351,7 @@ error_reporting(E_ALL);
                 
             <?php
             // Function to check if ic_number has been used
-            function checknric($connect) {
+            function checkNric($connect) {
                 global $nric, $errorMsg, $success, $description;
                 
                 $userNric = "SELECT * FROM sensitive_info WHERE ic_number=?"; 
@@ -471,7 +471,7 @@ error_reporting(E_ALL);
                 $log->bindParam(4,$username, PDO::PARAM_STR);
                 $log->execute();
             }
-                    ?>
+            ?>
 
        </div>
     </div>
