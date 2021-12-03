@@ -3,7 +3,7 @@ include "staff_session.php";
 ob_start();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <?php include "staff_head.inc.php"; ?>
 
 <body>

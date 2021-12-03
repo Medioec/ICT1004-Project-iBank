@@ -10,8 +10,8 @@ if(isset($_SESSION['otp'])){
 }
 ?>
 <!-- Default HTML structure -->
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <?php
         include "staff_head.inc.php";
     ?>

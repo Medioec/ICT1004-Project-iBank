@@ -2,8 +2,8 @@
 include "staff_session.php";
 ?>
 <!-- Default HTML structure -->
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <?php
         include "staff_head.inc.php";
     ?>
