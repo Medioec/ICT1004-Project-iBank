@@ -94,7 +94,10 @@ error_reporting(E_ALL);
                             $errorMsg .= "Invalid NRIC.<br>";
                             $description .= "NRIC-ERR ";
                             $success = false;
-                        }  
+                        }
+                        else{
+                            checknric($connect);
+                        }
                     }
                     
                     // DOB VALIDATION AND SANITIZATION (Required)
@@ -257,8 +260,8 @@ error_reporting(E_ALL);
                         registerUser($connect);
                         
                         // Send confirmation email
-                        //include_once ('php/sendmail.php');
-                        //phpMailerRegistration($_POST["email"], $_POST["lname"]);
+                        include_once ('php/sendmail.php');
+                        phpMailerRegistration($_POST["email"], $_POST["lname"]);
                         
                         echo "<h1>Registration Successful!</h1><br>";
                         echo "<p class='h4'>" . sanitize_input($_POST["lname"]) . ", you're now a member of Double04 Bank <i class='bi bi-emoji-sunglasses'></i></p><br>";
@@ -328,10 +331,7 @@ error_reporting(E_ALL);
             }
             ?>
             
-            
-            
             <?php
-
             // Function to check if username has been used
             function checkUsernameExist($connect) {
                 global $username, $errorMsg, $success, $description;
@@ -348,6 +348,25 @@ error_reporting(E_ALL);
                 }
             }
             ?>
+                
+            <?php
+            // Function to check if ic_number has been used
+            function checknric($connect) {
+                global $nric, $errorMsg, $success, $description;
+                
+                $userNric = "SELECT * FROM sensitive_info WHERE ic_number=?"; 
+                $userStmt = $connect->prepare($userNric);
+                $userStmt->bindParam(1,$nric, PDO::PARAM_STR);
+                $userStmt->execute();
+                $userResult = $userStmt->fetchAll(PDO::FETCH_ASSOC);
+                if (!empty($userResult)) {
+                    $errorMsg .= "NRIC / Passport no. has been registered.<br>";
+                    $description .= "NRIC-EXISTS ";
+                    $success = false;
+                }
+            }
+            ?>
+                    
             <?php
 
             // Function to register user into DB
