@@ -133,8 +133,14 @@ include "session.php"
                 $getPwdSql = "SELECT `password_hash` FROM customer_credentials WHERE customer_id=?"; 
                 $getPwdStmt = $connect->prepare($getPwdSql);
                 $getPwdStmt->bindParam(1,$id, PDO::PARAM_INT);
-                $getPwdStmt->execute();
-                $getPwdResult = $getPwdStmt->fetchAll(PDO::FETCH_ASSOC);
+                try{
+                    $getPwdStmt->execute();
+                    $getPwdResult = $getPwdStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error, contact support";
+                    $success = false;
+                }
                 
                 if($getPwdStmt->rowCount() == 1) {
                     $pwd_hashed = $getPwdResult[0]["password_hash"];
