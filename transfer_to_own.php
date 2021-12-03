@@ -25,8 +25,7 @@ include "php/accountSelectHelper.php"
                     balanceVaidate(); ?>
                     <div class="form-group mb-3">
                         <label for="from-account-select">Transfer from:</label>
-                        <select class="custom-select" id="from-account-select" name="accountId" required="true">
-                            <option value="">Choose account...</option>
+                        <select class="custom-select" size="4" id="from-account-select" name="accountId" required="true">
                             <?php generateAccountSelect($connect, 0); ?>
                         </select>
                         <div class="invalid-feedback">
@@ -36,8 +35,7 @@ include "php/accountSelectHelper.php"
 
                     <div class="form-group mb-3">
                         <label for="to-account-select">Transfer to:</label>
-                        <select class="custom-select" id="to-account-select" name="otherAccountId" required="true">
-                            <option value="">Choose account...</option>
+                        <select class="custom-select" size="4" id="to-account-select" name="otherAccountId" required="true">
                             <?php generateAccountSelect($connect, 1); ?>
                         </select>
                         <div class="invalid-feedback">

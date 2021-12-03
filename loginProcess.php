@@ -2,7 +2,7 @@
 session_start();
 ob_start();
 ?>
-
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Login Results</title>

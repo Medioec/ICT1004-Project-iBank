@@ -21,12 +21,9 @@ include "php/accountSelectHelper.php";
                 <h1>View transactions</h1>
                 <form class="form-validate" method="post" novalidate>
                     <?php genericValidate(); ?>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="account-select">Account:</label>
-                        </div>
-                        <select class="custom-select" id="account-select" name="accountId" required="true">
-                            <option value="">Choose account...</option>
+                    <div class="form-group mb-3">
+                        <label for="account-select">Account:</label>
+                        <select class="custom-select" size="4" id="account-select" name="accountId" required="true">
                             <?php generateAccountSelect($connect, 0); ?>
                         </select>
                         <div class="invalid-feedback">

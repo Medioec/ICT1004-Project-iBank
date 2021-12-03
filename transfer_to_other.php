@@ -25,8 +25,7 @@ include "php/accountSelectHelper.php"
                     balanceVaidate(); ?>
                     <div class="form-group mb-3">
                         <label for="from-account-select">Transfer from:</label>
-                        <select class="custom-select" id="from-account-select" name="accountId" required="true">
-                            <option value="">Choose account...</option>
+                        <select class="custom-select" size="4" id="from-account-select" name="accountId" required="true">
                             <?php generateAccountSelect($connect, 0); ?>
                         </select>
                         <div class="invalid-feedback">
@@ -45,9 +44,14 @@ include "php/accountSelectHelper.php"
 
                     <div class="form-group">
                         <label for="transfer-amount">Amount:</label>
-                        <input class="form-control" type="text" id="transfer-amount" name="amountIn" max length="45" placeholder="Enter amount" pattern="^[0-9]+$" required="true" title="Enter a valid amount to transfer, accepts numbers only" value="<?php echo sanitize_input($_POST["amountIn"]); ?>">
-                        <div class="invalid-feedback">
-                            Please use only numbers to enter a valid amount
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">$</span>
+                            </div>
+                            <input class="form-control" type="text" id="transfer-amount" name="amountIn" max length="45" placeholder="Enter amount" pattern="^[0-9]+$" required="true" title="Enter a valid amount to transfer, accepts numbers only" value="<?php echo sanitize_input($_POST["amountIn"]); ?>">
+                            <div class="invalid-feedback">
+                                Please use only numbers to enter a valid amount
+                            </div>
                         </div>
                     </div>
 

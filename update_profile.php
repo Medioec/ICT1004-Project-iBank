@@ -1,4 +1,5 @@
 <?php include "session.php";?>
+<!DOCTYPE html>
 <html lang="en">
     <head>
     <?php
@@ -99,8 +100,6 @@
         <script>
         var input = document.querySelector("#phone");
         window.intlTelInput(input,({
-            preferredCountries: ["sg", "my"],
-            initialCountry : "sg"
         }));
  
         $(document).ready(function() {

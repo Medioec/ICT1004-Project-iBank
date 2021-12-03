@@ -2,13 +2,9 @@
     function getTransaction($connect)
     {
         $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
-        $logType0 = "BANKING";
         $logType1 = "BANKING FAIL";
-        $logCategory0 = "INFO";
         $logCategory1 = "WARNING";
         $description = "";
-        $table1InsertFail = 0;
-        $table2InsertFail = 0;
 
         $accountId = $fromDate = $toDate = "";
         $accountId = sanitize_input($_POST["accountId"]);
