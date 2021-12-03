@@ -11,16 +11,24 @@
                 </button>
             </div>
             <div class="collapse navbar-collapse col-md" id="navbarTogglerDemo02">
+                <?php
+                if (!isset($_SESSION["staffId"])) {
+                echo '
                 <ul class="navbar-nav mt-lg-0 navbar-col-1">
-				<?php
-				if (!isset($_SESSION["staffId"])) {
-					echo '
+                    <li class="nav-item">
+                        <a class="nav-link bi bi-person-circle" href="instant_staff_login.php"> Login Direct for Professors Viewing</a>
+                    </li>
+                </ul>
+                ';
+                echo '
+                <ul class="navbar-nav mt-lg-0 navbar-col-1">
                     <li class="nav-item">
                         <a class="nav-link bi bi-person-circle" href="../login.php"> Customer Login</a>
-                    </li>';
-				}
-				?>
+                    </li>
                 </ul>
+                ';
+                }
+                ?>
                 <ul class="navbar-nav mt-lg-0 navbar-col-2">
                     <?php
                     if (isset($_SESSION["staffId"])) {

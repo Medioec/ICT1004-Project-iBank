@@ -22,15 +22,15 @@
         echo $errorMsg;
     }
     
-    $fname = htmlentities($row[0]["first_name"]);
-    $lname = htmlentities($row[0]["last_name"]);
-    $fullname = htmlentities($row[0]["full_name"]);
-    $street1 = htmlentities($row[0]["street1"]);
-    $street2 = htmlentities($row[0]["street2"]);
-    $postal = htmlentities($row[0]["postal"]);
-    $email = htmlentities($row[0]["email"]);
-    $current_email = htmlentities($row[0]["email"]);
-    $phone = htmlentities($row[0]["phone"]);
+    $fname = htmlentities($result[0]["first_name"]);
+    $lname = htmlentities($result[0]["last_name"]);
+    $fullname = htmlentities($result[0]["full_name"]);
+    $street1 = htmlentities($result[0]["street1"]);
+    $street2 = htmlentities($result[0]["street2"]);
+    $postal = htmlentities($result[0]["postal"]);
+    $email = htmlentities($result[0]["email"]);
+    $current_email = htmlentities($result[0]["email"]);
+    $phone = htmlentities($result[0]["phone"]);
 ?>
 
 <?php

@@ -28,4 +28,7 @@
     <script defer type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
     <!-- Custom JS -->
     <script defer src="staff_main.js"></script>
+    
+    <!-- Google reCaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>

@@ -1,10 +1,8 @@
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <?php
-        include "head.inc.php";
-        ?>
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    </head>
+    <?php
+    include "head.inc.php";
+    ?>
     <body>
         <?php
         include "nav.inc.php";
@@ -29,7 +27,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="pwd">Password:</label>
+                                <label for="password">Password:</label>
                                 <input class="form-control" type="password" id="password" required name="password"
                                     placeholder="Enter password">
                                 <div class="invalid-feedback">

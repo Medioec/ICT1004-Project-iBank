@@ -1,9 +1,9 @@
+<!DOCTYPE html>
 <!-- Default HTML structure -->
 <html lang="en">
     <?php
         include "head.inc.php";
     ?>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <body>
         <?php
             include "nav.inc.php";
