@@ -4,6 +4,7 @@ include "php/connect.php";
 include "php/balanceHandler.php";
 include "php/balanceDatatable.php";
 include "php/inputCheckHandler.php";
+include "php/formValidateHelper.php";
 if (isset($_POST["accountId"])) {
     $_SESSION["selectedAccount"] = sanitize_input($_POST["accountId"]);
     header("Location: accounts_manage.php");

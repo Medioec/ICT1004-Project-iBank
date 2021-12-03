@@ -1,8 +1,8 @@
 <?php
 include "session.php";
 include "php/inputCheckHandler.php";
+include "php/transferFundHandler.php";
 if (isset($_POST["submitClicked"])) {
-    include "php/transferFundHandler.php";
     verifyTransaction($connect);
 }
 include "php/formValidateHelper.php";

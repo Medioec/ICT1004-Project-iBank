@@ -1,8 +1,9 @@
 <?php
 include "session.php";
-if (!$_SESSION["sqlFailed"]) {
+if (!isset($_SESSION["sqlFailed"])) {
     header("Location: accounts_view.php");
 }
+unset($_SESSION["sqlFailed"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">

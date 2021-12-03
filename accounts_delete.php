@@ -101,7 +101,7 @@ if ($_POST["confirmDeleteClicked"]) {
                     header("Location: request_error.php");
                 }
             }
-            
+            //SQL statements successfully executed
             if (!$table1Fail && !$table2Fail) {
                 $pagecontent = '
                 <h1>Account Deleted</h1>
@@ -123,6 +123,9 @@ if ($_POST["confirmDeleteClicked"]) {
                 catch(PDOException $e) {
                     //echo "Retrieve failed: " . $e->getMessage();
                 }
+
+                unset($_SESSION["selectedAccount"]);
+                unset($_SESSION["deleteAccountClicked"]);
 
             } else {
                 //Create fail log

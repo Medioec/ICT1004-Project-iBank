@@ -1,4 +1,6 @@
 <?php
+    //Include in every banking page that has a possibility of setting account IDs etc. to reduce chances of abuse
+    //Reason: to ensure transfer_confirm.php can only be accessed through transfer pages
     $_SESSION["originTransactionPage"] = $_SERVER['REQUEST_URI'];
 
     

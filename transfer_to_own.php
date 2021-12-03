@@ -1,8 +1,8 @@
 <?php
 include "session.php";
 include "php/inputCheckHandler.php";
+include "php/transferFundHandler.php";
 if (isset($_POST["submitClicked"])) {
-    include "php/transferFundHandler.php";
     verifyTransaction($connect);
 }
 include "php/formValidateHelper.php";
@@ -20,7 +20,6 @@ include "php/accountSelectHelper.php"
             <?php include "sideMenu.inc.php"; ?>
             <div class="main-content">
                 <h1>Transfer to own account</h1>
-
                 <form class="form-validate" method="post" novalidate>
                     <?php genericValidate();
                     balanceVaidate(); ?>
