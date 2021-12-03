@@ -1,4 +1,4 @@
-<?php include "session.php"; ?>
+<?php //include "session.php"; ?>
 <html lang="en">
     <head>
         <?php
@@ -286,13 +286,21 @@
             function checkCurrentPwd($connect) {
                 global $curr_pwd_hashed, $errorMsg, $success, $description;
                 
-                $id = $_SESSION["customerId"];
+                $id = 6;
+                //$id = $_SESSION["customerId"];
                 // Prepare the statement:
                 $getPwdSql = "SELECT `password_hash` FROM customer_credentials WHERE customer_id=?"; 
                 $getPwdStmt = $connect->prepare($getPwdSql);
                 $getPwdStmt->bindParam(1,$id, PDO::PARAM_INT);
-                $getPwdStmt->execute();
-                $getPwdResult = $getPwdStmt->fetchAll(PDO::FETCH_ASSOC);
+                try{
+                    $getPwdStmt->execute();
+                    $getPwdResult = $getPwdStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error, contact support";
+                    //echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
                 if($getPwdStmt->rowCount() == 1) {
                     $curr_pwd_hashed = $getPwdResult[0]["password_hash"];
@@ -318,8 +326,15 @@
                 $emailSql = "SELECT * FROM user_data WHERE email=?";
                 $emailStmt = $connect->prepare($emailSql);
                 $emailStmt->bindParam(1, $email, PDO::PARAM_STR);
-                $emailStmt->execute();
-                $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
+                try{
+                    $emailStmt->execute();
+                    $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error, contact support";
+                    //echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
 
                 if (!empty($emailResult)) {
                     $errorMsg .= "Unable to change email. This email has been registered.<br>";
@@ -333,7 +348,8 @@
                 global $logSql, $logType, $logCategory0, $logCategory1, $username;
                 $description = "";
                 $logCategory = $logCategory1;
-                $id = $_SESSION["customerId"];
+                $id = 6;
+                //$id = $_SESSION["customerId"];
                 
                 // Prepare the statement:
                 $updateInfoSql = "UPDATE user_data SET "
@@ -350,7 +366,15 @@
                 $updateInfoStmt->bindParam(7,$email, PDO::PARAM_STR);
                 $updateInfoStmt->bindParam(8,$phone, PDO::PARAM_STR);
                 $updateInfoStmt->bindParam(9,$id, PDO::PARAM_STR);
-                $updateInfoStmt->execute();
+                
+                try{
+                    $updateInfoStmt->execute();
+                } 
+                catch (PDOException $e) {
+                    echo "Database error, contact support";
+                    //echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
                 if ($updateInfoStmt->rowCount() != 1) {
                     $errorMsg = "Error, please contact bank for help.";
@@ -386,14 +410,22 @@
                 global $logSql, $logType, $logCategory0, $logCategory1, $username;
                 $description = "";
                 $logCategory = $logCategory1;
-                $id = $_SESSION["customerId"];
+                $id = 6;
+                //$id = $_SESSION["customerId"];
                 
                 // Prepare the statement:
                 $changePwdSql = "UPDATE customer_credentials SET password_hash=? WHERE customer_id=?"; 
                 $changePwdStmt = $connect->prepare($changePwdSql);
                 $changePwdStmt->bindParam(1,$new_pwd_hashed, PDO::PARAM_STR);
                 $changePwdStmt->bindParam(2,$id, PDO::PARAM_INT);
-                $changePwdStmt->execute();
+                try{
+                    $changePwdStmt->execute();
+                } 
+                catch (PDOException $e) {
+                    echo "Database error, contact support";
+                    //echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
                 if ($changePwdStmt->rowCount() != 1) {
                     $errorMsg = "Error, please contact bank for help.";
