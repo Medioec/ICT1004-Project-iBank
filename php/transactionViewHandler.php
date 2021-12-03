@@ -1,6 +1,15 @@
 <?php
     function getTransaction($connect)
     {
+        $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+        $logType0 = "BANKING";
+        $logType1 = "BANKING FAIL";
+        $logCategory0 = "INFO";
+        $logCategory1 = "WARNING";
+        $description = "";
+        $table1InsertFail = 0;
+        $table2InsertFail = 0;
+
         $accountId = $fromDate = $toDate = "";
         $accountId = sanitize_input($_POST["accountId"]);
         $fromDate = sanitize_input($_POST["fromDateIn"]);
@@ -24,7 +33,21 @@
             $fetchedAccountId = $result[0]["account_id"];
         } else {
             $_SESSION["inputInvalid"] = 1;
-            echo"";
+
+            //Create fail log, possible abuse
+            $action = $logSql;
+            $description = "VIEW - ACCOUNT/USER MISMATCH";
+            $stmt = $connect->prepare($action);
+            $stmt->bindParam(1, $logType1, PDO::PARAM_STR);
+            $stmt->bindParam(2, $logCategory1, PDO::PARAM_STR);
+            $stmt->bindParam(3, $description, PDO::PARAM_STR);
+            $stmt->bindParam(4, $_SESSION["username"], PDO::PARAM_STR);
+            try {
+                $stmt->execute();
+            }
+            catch(PDOException $e) {
+                //echo "Retrieve failed: " . $e->getMessage();
+            }
             return;
         }
         

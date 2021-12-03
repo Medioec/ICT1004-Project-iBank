@@ -93,6 +93,20 @@ function createAccount($connect) {
         }
     } else {
         $_SESSION["inputInvalid"] = 1;
+        //Create fail log
+        $action = $logSql;
+        $description = "ACCOUNT CREATE - INVALID TYPE SELECTED";
+        $stmt = $connect->prepare($action);
+        $stmt->bindParam(1, $logType1, PDO::PARAM_STR);
+        $stmt->bindParam(2, $logCategory1, PDO::PARAM_STR);
+        $stmt->bindParam(3, $description, PDO::PARAM_STR);
+        $stmt->bindParam(4, $_SESSION["username"], PDO::PARAM_STR);
+        try {
+            $stmt->execute();
+        }
+        catch(PDOException $e) {
+            //echo "Retrieve failed: " . $e->getMessage();
+        }
     }
 }
 ?>

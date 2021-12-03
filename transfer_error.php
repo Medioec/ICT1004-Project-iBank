@@ -1,4 +1,7 @@
-<?php include "session.php"; ?>
+<?php
+include "session.php";
+if (!isset($_SESSION["sqlFailed"])) header("Location: transfer_to_own.php")
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include "head.inc.php"; ?>

@@ -3,6 +3,7 @@ include "session.php";
 include "php/connect.php";
 include "php/inputCheckHandler.php";
 include "php/transactionDatatable.php";
+include "php/formValidateHelper.php";
 if (!isset($_SESSION["selectedAccount"])) {
     header("Location: accounts_view.php");
 }
@@ -54,8 +55,7 @@ try {
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    echo "Retrieve failed: " . $e->getMessage();
-    $_SESSION["sqlFailed"] = 1;
+    //echo "Retrieve failed: " . $e->getMessage();
 }
 ?>
 <!DOCTYPE html>

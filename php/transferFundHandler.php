@@ -1,6 +1,23 @@
 <?php
+    //Unset all used session variables just in case
+    //Remember to set transfer_confirm.php to only be accessible via transfer pages
+    if (basename($_SERVER["REQUEST_URI"]) != "transfer_confirm.php") {
+        unset($_SESSION["otherAccountId"]);
+        unset($_SESSION["accountId"]);
+        unset($_SESSION["amountIn"]);
+        unset($_SESSION["verified"]);
+    }
+
+
     function verifyTransaction($connect)
     {
+        $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+        $logType0 = "BANKING";
+        $logType1 = "BANKING FAIL";
+        $logCategory0 = "INFO";
+        $logCategory1 = "WARNING";
+        $description = "";
+
         $customerId = $_SESSION["customerId"];
         $accountId = $otherAccountId = $amountIn = $abort = "";
         $accountId = sanitize_input($_POST["accountId"]);
@@ -18,13 +35,15 @@
         if ($amountIn == 0) {
             $_SESSION["inputInvalid"] = 1;
             $_SESSION["errormsg"] = "Please input a valid amount to transfer.";
+            return;
         }
 
         if ($otherAccountId == $accountId) {
             $_SESSION["inputInvalid"] = 1;
             $_SESSION["errormsg"] = "Please select a different account to transfer to.";
+            return;
         }
-
+        //Check that customer owns the selected bank account, balance is valid etc
         $action = "SELECT `account_id`,`balance` FROM `bank_account` WHERE (`account_id` = 
             (select `account_id` FROM `bank_accounts_ref` WHERE (account_id = ? AND customer_id = ?)));";
 
@@ -43,12 +62,47 @@
 
         if(!$success) {
             $_SESSION["sqlFailed"] = 1;
+            
+            //Create fail log
+            $action = $logSql;
+            $description = "TRANSFER - SQL FAIL";
+            $stmt = $connect->prepare($action);
+            $stmt->bindParam(1, $logType1, PDO::PARAM_STR);
+            $stmt->bindParam(2, $logCategory1, PDO::PARAM_STR);
+            $stmt->bindParam(3, $description, PDO::PARAM_STR);
+            $stmt->bindParam(4, $_SESSION["username"], PDO::PARAM_STR);
+            try {
+                $stmt->execute();
+            }
+            catch(PDOException $e) {
+                //echo "Retrieve failed: " . $e->getMessage();
+            }
+
             header("Location: transfer_error.php");
             return;
         }
 
         $fetchedAccountId = $result[0]['account_id'];
         $fetchedAccountBalance = $result[0]['balance'];
+        //Account does not belong to customer
+        if ($fetchedAccountId == null) {
+            //Create fail log, possible abuse
+            $action = $logSql;
+            $description = "TRANSFER - ACCOUNT/USER MISMATCH";
+            $stmt = $connect->prepare($action);
+            $stmt->bindParam(1, $logType1, PDO::PARAM_STR);
+            $stmt->bindParam(2, $logCategory1, PDO::PARAM_STR);
+            $stmt->bindParam(3, $description, PDO::PARAM_STR);
+            $stmt->bindParam(4, $_SESSION["username"], PDO::PARAM_STR);
+            try {
+                $stmt->execute();
+            }
+            catch(PDOException $e) {
+                //echo "Retrieve failed: " . $e->getMessage();
+            }
+            $_SESSION["inputInvalid"] = 1;
+            return;
+        }
 
         $action = "SELECT `account_id`,`balance` FROM `bank_account` WHERE `account_id` = ?;";
 
@@ -65,14 +119,30 @@
 
         if(!$success) {
             $_SESSION["sqlFailed"] = 1;
+
+            //Create fail log
+            $action = $logSql;
+            $description = "TRANSFER - SQL FAIL";
+            $stmt = $connect->prepare($action);
+            $stmt->bindParam(1, $logType1, PDO::PARAM_STR);
+            $stmt->bindParam(2, $logCategory1, PDO::PARAM_STR);
+            $stmt->bindParam(3, $description, PDO::PARAM_STR);
+            $stmt->bindParam(4, $_SESSION["username"], PDO::PARAM_STR);
+            try {
+                $stmt->execute();
+            }
+            catch(PDOException $e) {
+                //echo "Retrieve failed: " . $e->getMessage();
+            }
+
             header("Location: transfer_error.php");
             return;
         }
 
         $fetchedOtherAccountId = $result[0]['account_id'];
-        $fetchedOtherAccountBalance = $result[0]['balance'];
         //check for problems
-        if($fetchedOtherAccountId == null||$fetchedAccountId == null||$abort||($amountIn <= 0) ){
+
+        if($fetchedOtherAccountId == null||$abort||($amountIn <= 0) ){
 
             $_SESSION["inputInvalid"] = 1;
             
@@ -96,6 +166,11 @@
     }
     function executeTransaction($connect)
     {
+        $logSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+        $logType1 = "BANKING FAIL";
+        $logCategory1 = "WARNING";
+        $description = "";
+
         $fetchedOtherAccountId = $_SESSION["otherAccountId"];
         $fetchedAccountId = $_SESSION["accountId"];
         $amountIn = $_SESSION["amountIn"];
@@ -121,6 +196,22 @@
         }
 
         if ($connect->lastInsertId() == NULL||!$success) {
+            $_SESSION["sqlFailed"] = 1;
+            //Create fail log
+            $action = $logSql;
+            $description = "TRANSFER - SQL FAIL";
+            $stmt = $connect->prepare($action);
+            $stmt->bindParam(1, $logType1, PDO::PARAM_STR);
+            $stmt->bindParam(2, $logCategory1, PDO::PARAM_STR);
+            $stmt->bindParam(3, $description, PDO::PARAM_STR);
+            $stmt->bindParam(4, $_SESSION["username"], PDO::PARAM_STR);
+            try {
+                $stmt->execute();
+            }
+            catch(PDOException $e) {
+                //echo "Retrieve failed: " . $e->getMessage();
+            }
+
             header("Location: transfer_error.php");
             return;
         }
@@ -141,6 +232,21 @@
         }
 
         if (!$success) {
+            $_SESSION["sqlFailed"] = 1;
+            //Create fail log
+            $action = $logSql;
+            $description = "TRANSFER - SQL FAIL, TABLE MISMATCH";
+            $stmt = $connect->prepare($action);
+            $stmt->bindParam(1, $logType1, PDO::PARAM_STR);
+            $stmt->bindParam(2, $logCategory1, PDO::PARAM_STR);
+            $stmt->bindParam(3, $description, PDO::PARAM_STR);
+            $stmt->bindParam(4, $_SESSION["username"], PDO::PARAM_STR);
+            try {
+                $stmt->execute();
+            }
+            catch(PDOException $e) {
+                //echo "Retrieve failed: " . $e->getMessage();
+            }
             header("Location: transfer_error.php");
             return;
         }
@@ -161,6 +267,21 @@
         }
 
         if (!$success) {
+            $_SESSION["sqlFailed"] = 1;
+            //Create fail log
+            $action = $logSql;
+            $description = "TRANSFER - SQL FAIL, TABLE MISMATCH";
+            $stmt = $connect->prepare($action);
+            $stmt->bindParam(1, $logType1, PDO::PARAM_STR);
+            $stmt->bindParam(2, $logCategory1, PDO::PARAM_STR);
+            $stmt->bindParam(3, $description, PDO::PARAM_STR);
+            $stmt->bindParam(4, $_SESSION["username"], PDO::PARAM_STR);
+            try {
+                $stmt->execute();
+            }
+            catch(PDOException $e) {
+                //echo "Retrieve failed: " . $e->getMessage();
+            }
             header("Location: transfer_error.php");
             return;
         }
