@@ -17,6 +17,7 @@ a {
     color: darkorchid;
 }
 
+
 /*a:hover {
     color: rgb(107, 39, 128);
 }
@@ -24,10 +25,6 @@ a {
 a:active {
     color: rgb(107, 39, 128);
 }
-
-a:visited {
-    color: rgb(107, 39, 128);
-}*/
 
 .btn-primary {
     background-color: darkorchid !important;
@@ -43,11 +40,6 @@ a:visited {
     background-color: rgb(107, 39, 128) !important;
     border-color: rgb(107, 39, 128) !important;
 }
-
-.btn-primary:visited {
-    background-color: rgb(107, 39, 128) !important;
-    border-color: rgb(107, 39, 128) !important;
-}*/
 
 
 /* Navbar */
@@ -291,9 +283,9 @@ button.navbar-toggler {
 .page-content {
     margin: auto;
     margin-top: 80px;
+    margin-bottom: 100px;
     display: flex;
     flex-direction: row;
-    margin-bottom: 100px;
     background-color: white;
     justify-content: center;
     gap: 30px;
@@ -354,9 +346,9 @@ button.navbar-toggler {
 .index-page-content {
     margin: auto;
     margin-top: 0;
+    margin-bottom: 100px;
     display: flex;
     flex-direction: row;
-    margin-bottom: 100px;
     background-color: white;
     z-index: 2;
     justify-content: center;
