@@ -18,10 +18,12 @@ ob_start();
 include_once ('php/connect.php');
 include_once ('php/recaptchalib.php');
 
+// Google reCaptcha variables
 $secret = "6Lcj-EQUAAAAAD-ujIV87baNc6XHVg0VpPqaabxc";
 $response = null;
 $reCaptcha = new ReCaptcha($secret);
 
+// Forget Password HTML elements with %s for printf messages
 $forgetPasswordBody = "<h2>Forget Password</h2>"
                     . "<form method=\"post\">"
                         . "<div class=\"form-group\">"
@@ -51,17 +53,22 @@ $logCategory1 = "WARNING";
 $description = "";
 $noUser = "-EMPTY FIELD-";
 
+// Check if state is after form postback
 if (isset($_POST['try'])) {
+    // Verify email given
     if (isset($_POST['email'])) {
+        // Verify Google reCaptcha
         if ($_POST["g-recaptcha-response"]) {
             $response = $reCaptcha->verifyResponse(
                 $_SERVER["REMOTE_ADDR"],
                 $_POST["g-recaptcha-response"]
             );
         }
+        // Verify Google reCaptcha Success
         if ($response != null && $response->success) {
             $email = sanitize_input($_POST["email"]);
-
+            
+            // Get customer id based on email
             $getInfoSql = "SELECT `customer_id`,`customer_username`,`active` FROM `customer_credentials` "
                     . "WHERE `customer_id` = "
                     . "(SELECT `customer_id` FROM `user_data` WHERE `email` = ?)";
@@ -74,16 +81,19 @@ if (isset($_POST['try'])) {
             
             include_once ('php/sendmail.php');
             
+            // If email exists and user is active
             if ($getInfoResult[0]['active'] == "1") {
                 $rndno = rand(1, 9999999);
                 $token = md5($rndno);
                 
+                // Generate password reset URL
                 $url = "http://".$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
                 // Changes "http://[url]/forget_password.php" to "http://[url]/reset_password.php"
                 $url = str_replace("forget_password","reset_password",$url);
                 
+                // If mail sent successfully
                 if (phpMailerPwd($email, $thisusername, $token, $url)) {
-                    // Success
+                    // Update token for one time
                     $tokenSql = "UPDATE `customer_credentials` SET `password_token`= ? "
                             . "WHERE `customer_id` = ?";
                     $tokenStmt = $connect->prepare($tokenSql);
@@ -101,8 +111,8 @@ if (isset($_POST['try'])) {
                     $successLog->bindParam(4,$thisusername, PDO::PARAM_STR);
                     $successLog->execute();
                 }
+                // If mail sent unsuccessfully
                 else {
-                    // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED PASSWORD RESET - CUSTOMER (Invalid email address)',?,CURRENT_TIMESTAMP)";
                     $failSql = $logSql;
                     $description = "FAILED PASSWORD RESET - CUSTOMER (Invalid email address)";
                     $failLog = $connect->prepare($failSql);
@@ -115,6 +125,7 @@ if (isset($_POST['try'])) {
             }
             $message = "<div class=\"alert alert-success\" role=\"alert\">Email sent.</div>";
         }
+        // Below are all the failed attempts and their logging
         else {
             $message = "<div class=\"alert alert-warning\" role=\"alert\">reCaptcha Error</div>";
             // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM',' FAILED PASSWORD RESET - CUSTOMER (reCaptcha)','-EMPTY FIELD-',CURRENT_TIMESTAMP)";
@@ -149,6 +160,7 @@ function sanitize_input($data) {
     return $data;
 }
 
+// Insert error messages into %s in HTML element block
 $forgetPasswordBody = sprintf($forgetPasswordBody,$message);
 echo $forgetPasswordBody;
 

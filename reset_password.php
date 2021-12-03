@@ -72,6 +72,7 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
                 else {
                     // HASH THE PASSWORD and check if it matches password in DB
                     $pwd_hashed = password_hash($pwd, PASSWORD_DEFAULT);
+                    // Put new token to render old token useless
                     $rndno = rand(1, 9999999);
                     $newtoken = md5($rndno);
                     $updatePwdSql = "UPDATE `customer_credentials` "
@@ -91,7 +92,6 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
                     $logCategory1 = "WARNING";
                     $description = "";
 
-                    // $successSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','PASSWORD RESET - CUSTOMER (SUCCESS)',?,CURRENT_TIMESTAMP)";
                     $successSql = $logSql;
                     $description = "PASSWORD RESET - CUSTOMER (SUCCESS)";
                     $successLog = $connect->prepare($successSql);
@@ -105,7 +105,6 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
                 }
             }
             if (!$success) {
-                // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED PASSWORD RESET - CUSTOMER (INVALID INPUT)',?,CURRENT_TIMESTAMP)";
                 $failSql = $logSql;
                 $description = "FAILED PASSWORD RESET - CUSTOMER (INVALID INPUT)";
                 $failLog = $connect->prepare($failSql);
@@ -116,6 +115,7 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
                 $successLog->execute();
             }
         }
+        // If Password reset is successful
         if ($success) {
             $resetPasswordBody = "<h2>Password Reset</h2>"
                                 . "%s"
@@ -127,6 +127,7 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
             
             header('Refresh: 3; URL=login.php');
         }
+        // Default reset password body
         else {
             $resetPasswordBody = "<h2>Reset Password</h2>"
                                 . "%s"
@@ -154,7 +155,7 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
 function sanitize_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
-    $data = htmlspecialchars($data);
+    $data = htmlentities($data);
     return $data;
 }
 

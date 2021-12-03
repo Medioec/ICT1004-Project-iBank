@@ -44,18 +44,24 @@ $logCategory1 = "WARNING";
 $description = "";
 $noUser = "-EMPTY FIELD-";
 
+// Check if username is set
 if (isset($_POST['username'])) {
+    // Convert symbols and special char to safe
     $thisusername = sanitize_input($_POST['username']);
+    
     if (isset($_POST['submit'])) {
+        // Check Google reCaptcha 
         if ($_POST["g-recaptcha-response"]) {
             $response = $reCaptcha->verifyResponse(
                 $_SERVER["REMOTE_ADDR"],
                 $_POST["g-recaptcha-response"]
             );
         }
-
+        
+        // Verify Google reCaptcha
         if ($response != null && $response->success) {
                 $thispassword = $_POST['password'];
+                // Get password hash from DB
                 $pwSql = "SELECT `password_hash`, `active` FROM `customer_credentials` "
                         . "WHERE `customer_id` = (SELECT `customer_id` FROM `customer_credentials` "
                         . "WHERE `customer_username` = ?)"; 
@@ -63,10 +69,11 @@ if (isset($_POST['username'])) {
                 $pwStmt->bindParam(1,$thisusername, PDO::PARAM_STR);
                 $pwStmt->execute();
                 $pwResult = $pwStmt->fetchAll(PDO::FETCH_ASSOC);
-
+                
+                // Verify password hash
                 if(password_verify($thispassword, $pwResult[0]['password_hash']) && $pwResult[0]['active']=="1") {
                     
-                    // $successSql = "INSERT INTO `log`(`type`,`category`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','LOGIN - CUSTOMER (PW-TRUE)',?,CURRENT_TIMESTAMP)";
+                    // If successful verification
                     $successSql = $logSql;
                     $description = "LOGIN - CUSTOMER (PW-TRUE)";
                     $successLog = $connect->prepare($successSql);
@@ -75,7 +82,8 @@ if (isset($_POST['username'])) {
                     $successLog->bindParam(3,$description, PDO::PARAM_STR);
                     $successLog->bindParam(4,$thisusername, PDO::PARAM_STR);
                     $successLog->execute();
-
+                    
+                    // Get email and last name for OTP mail
                     $emailSql = "SELECT `email`, `last_name` FROM `user_data` "
                             . "WHERE `customer_id` = (SELECT `customer_id` FROM `customer_credentials` "
                             . "WHERE `customer_username` = ?)";
@@ -84,12 +92,15 @@ if (isset($_POST['username'])) {
                     $emailStmt->execute();
                     $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
                     
+                    // If email exists
                     if(isset($emailResult[0]['email'])) {
                         $lname = $emailResult[0]['last_name'];
                         include_once ('php/sendmail.php');
                         $rndno = rand(100000, 999999);
+                        
+                        // If OTP email sent successfully
                         if (phpMailerOTP($emailResult[0]['email'], $thisusername, $rndno)) {
-                            // Success
+                            // Set OTP for verification
                             $otpSql = "UPDATE `customer_credentials` SET `otp`= ? "
                                     . "WHERE `customer_username` = ?";
                             $otpStmt = $connect->prepare($otpSql);
@@ -97,9 +108,11 @@ if (isset($_POST['username'])) {
                             $otpStmt->bindParam(2,$thisusername, PDO::PARAM_STR);
                             $otpStmt->execute();
                             
+                            // Set session variables 
                             $_SESSION['username'] = sanitize_input($thisusername);
                             $_SESSION['loggedin'] = "0";
                             
+                            // Success message
                             echo "<h2>Redirecting to OTP</h2>";
                             echo "<p class='h4'>Click on the button if the page does not redirect.</p>";
                             echo "<a class='btn btn-success' href='otp.php'>OTP</a>";
@@ -107,7 +120,9 @@ if (isset($_POST['username'])) {
                             header('Refresh: 3; URL=otp.php');
                             //echo "<script>window.location.replace('otp.php');</script>";
                         }
+                        // Below are the failed attempt(s) and their logging
                         else {
+                            // If OTP email sent successfully
                             echo sprintf($errorMsg,"Invalid Email");
                             // $failSql = "INSERT INTO `log`(`type`, `description`, `user_performed`, `timestamp`) VALUES ('SYSTEM','FAILED LOGIN - CUSTOMER (Invalid email address)',?,CURRENT_TIMESTAMP)";
                             $failSql = $logSql;
