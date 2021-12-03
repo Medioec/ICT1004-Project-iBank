@@ -82,7 +82,7 @@ error_reporting(E_ALL);
                         }
                     }
                     
-                    // NRIC VALIDATION AND SANITIZATION (Required)
+                    // NRIC VALIDATION AND SANITIZATION (Required)*Unique
                     if (empty($_POST["nric"])) {
                         $errorMsg .= "NRIC / Passport No. is required.<br>";
                         $success = false;
@@ -108,11 +108,18 @@ error_reporting(E_ALL);
                         // Additional check on dob field.
                         $dob = sanitize_input($_POST["dob"]);
                         
+                        // REGEX for date
                         if(!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $dob)){
                             $errorMsg .= "Invalid Date of Birth.<br>";
                             $description .= "DOB-ERR ";
                             $success = false;
-                        }  
+                        }
+                        // Check if 16 years old and above
+                        if(time() < strtotime('+16 years', strtotime($dob))){
+                            $errorMsg .= "You must be over 16 years old to register.<br>";
+                            $description .= "DOB-ERR ";
+                            $success = false;
+                        }
                     }
                     
                     // GENDER VALIDATION AND SANITIZATION (Required)
@@ -169,7 +176,7 @@ error_reporting(E_ALL);
                         }
                     }
 
-                    // EMAIL VALIDATION AND SANITIZATION (Required)
+                    // EMAIL VALIDATION AND SANITIZATION (Required)*Unique
                     if (empty($_POST["email"])) {
                         $errorMsg .= "Email is required.<br>";
                         $success = false;
@@ -201,7 +208,7 @@ error_reporting(E_ALL);
                     }
                     
                     
-                    // USERNAME VALIDATION AND SANITIZATION (Required)
+                    // USERNAME VALIDATION AND SANITIZATION (Required)*
                     if (empty($_POST["username"])) {
                         $errorMsg .= "Username is required.<br>";
                         $success = false;
@@ -320,11 +327,17 @@ error_reporting(E_ALL);
                 $emailSql = "SELECT * FROM user_data WHERE email=?"; 
                 $emailStmt = $connect->prepare($emailSql);
                 $emailStmt->bindParam(1,$email, PDO::PARAM_STR);
-                $emailStmt->execute();
-                $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
+                try{
+                    $emailStmt->execute();
+                    $emailResult = $emailStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
                 if(!empty($emailResult)) {
-                    $errorMsg .= "This email has been registered.<br>";
+                    $errorMsg .= "Email has been registered.<br>";
                     $description .= "EMAIL-EXISTS ";
                     $success = false;
                 }
@@ -339,8 +352,16 @@ error_reporting(E_ALL);
                 $userSql = "SELECT * FROM customer_credentials WHERE customer_username=?"; 
                 $userStmt = $connect->prepare($userSql);
                 $userStmt->bindParam(1,$username, PDO::PARAM_STR);
-                $userStmt->execute();
-                $userResult = $userStmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                try{
+                    $userStmt->execute();
+                    $userResult = $userStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
+
                 if (!empty($userResult)) {
                     $errorMsg .= "Username has been taken, Please select another username.<br>";
                     $description .= "USERNAME-EXISTS ";
@@ -355,11 +376,19 @@ error_reporting(E_ALL);
                 global $nric, $errorMsg, $success, $description;
                 
                 $userNric = "SELECT * FROM sensitive_info WHERE ic_number=?"; 
-                $userStmt = $connect->prepare($userNric);
-                $userStmt->bindParam(1,$nric, PDO::PARAM_STR);
-                $userStmt->execute();
-                $userResult = $userStmt->fetchAll(PDO::FETCH_ASSOC);
-                if (!empty($userResult)) {
+                $nricStmt = $connect->prepare($userNric);
+                $nricStmt->bindParam(1,$nric, PDO::PARAM_STR);
+                
+                try{
+                    $nricStmt->execute();
+                    $nricResult = $nricStmt->fetchAll(PDO::FETCH_ASSOC);
+                } 
+                catch (PDOException $e) {
+                    echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
+
+                if (!empty($nricResult)) {
                     $errorMsg .= "NRIC / Passport no. has been registered.<br>";
                     $description .= "NRIC-EXISTS ";
                     $success = false;
@@ -381,6 +410,7 @@ error_reporting(E_ALL);
                 $token = md5($rndno);
                 $active = 1;
                 
+                // INSERT into customer_credentials
                 $userCredRegSql = "INSERT INTO customer_credentials (customer_username, password_hash, otp, password_token, active) VALUES (?,?,?,?,?)"; 
                 $userCredRegStmt = $connect->prepare($userCredRegSql);
                 $userCredRegStmt->bindParam(1,$username, PDO::PARAM_STR);
@@ -388,18 +418,32 @@ error_reporting(E_ALL);
                 $userCredRegStmt->bindParam(3,$otp, PDO::PARAM_STR);
                 $userCredRegStmt->bindParam(4,$token, PDO::PARAM_STR);
                 $userCredRegStmt->bindParam(5,$active, PDO::PARAM_STR);
-                $userCredRegStmt->execute();
+                try{
+                    $userCredRegStmt->execute();
+                } 
+                catch (PDOException $e) {
+                    echo "Database error: " . $e->getMessage();
+                    $success = false;
+                }
                 
+                // If customer_credentials successfully INSERTED
                 if ($userCredRegStmt->rowCount() == 1) {
                     $getIdSql = "SELECT `customer_id` FROM customer_credentials WHERE customer_username=?"; 
                     $getIdStmt = $connect->prepare($getIdSql);
                     $getIdStmt->bindParam(1,$username, PDO::PARAM_STR);
-                    $getIdStmt->execute();
-                    $getIdResult = $getIdStmt->fetchAll(PDO::FETCH_ASSOC);
+                    try{
+                        $getIdStmt->execute();
+                        $getIdResult = $getIdStmt->fetchAll(PDO::FETCH_ASSOC);
+                    } 
+                    catch (PDOException $e) {
+                        echo "Database error: " . $e->getMessage();
+                        $success = false;
+                    }
                     
                     if(!empty($getIdResult)){
                         $id = $getIdResult[0]["customer_id"];
                         
+                        // INSERT into user_data
                         $userDataRegSql = "INSERT INTO user_data "
                                 . "(customer_id, first_name, last_name, full_name, street1, street2, postal, email, phone) "
                                 . "VALUES (?,?,?,?,?,?,?,?,?)"; 
@@ -413,8 +457,15 @@ error_reporting(E_ALL);
                         $userDataRegStmt->bindParam(7, $postal, PDO::PARAM_STR);
                         $userDataRegStmt->bindParam(8, $email, PDO::PARAM_STR);
                         $userDataRegStmt->bindParam(9, $phone, PDO::PARAM_STR);
-                        $userDataRegStmt->execute();
+                        try{
+                            $userDataRegStmt->execute();
+                        } 
+                        catch (PDOException $e) {
+                            echo "Database error: " . $e->getMessage();
+                            $success = false;
+                        }
                         
+                        // If user_data successfully INSERTED
                         if ($userDataRegStmt->rowCount() == 1) {
                             $userSensRegSql = "INSERT INTO sensitive_info "
                                     . "(customer_id, ic_number, gender, date_of_birth) "
@@ -424,10 +475,16 @@ error_reporting(E_ALL);
                             $userSensRegStmt->bindParam(2, $nric, PDO::PARAM_STR);
                             $userSensRegStmt->bindParam(3, $gender, PDO::PARAM_STR);
                             $userSensRegStmt->bindParam(4, $dob, PDO::PARAM_STR);
-                            $userSensRegStmt->execute();
+                            try{
+                                $userSensRegStmt->execute();
+                            } 
+                            catch (PDOException $e) {
+                                echo "Database error: " . $e->getMessage();
+                                $success = false;
+                            }
                             
-                            if ($userSensRegStmt->rowCount() == 1) {
-                                $errorMsg = "Database Error";
+                            if ($userSensRegStmt->rowCount() != 1) {
+                                $errorMsg = "Database error";
                                 
                                 // FAIL LOG
                                 $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (SENSITIVE-DATA-TABLE-ERR)";
@@ -441,7 +498,7 @@ error_reporting(E_ALL);
                             }
                         }
                         else{
-                            $errorMsg = "Database Error";
+                            $errorMsg = "Database error";
                             
                             // FAIL LOG
                             $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (USER-DATA-TABLE-ERR)";
@@ -449,7 +506,7 @@ error_reporting(E_ALL);
                         }
                     }
                     else {
-                        $errorMsg = "Database Error";
+                        $errorMsg = "Database error";
                         
                         // FAIL LOG
                         $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (CUSTOMER-ID-NOT-FOUND)";
@@ -457,7 +514,7 @@ error_reporting(E_ALL);
                     }
                 }
                 else {
-                    $errorMsg = "Database Error";
+                    $errorMsg = "Database error";
                     
                     // FAIL LOG
                     $description = "FAILED USER ACCOUNT REGISTRATION - CUSTOMER (CUSTOMER-CRED-TABLE-ERR)";
