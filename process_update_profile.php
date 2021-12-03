@@ -1,4 +1,4 @@
-<?php //include "session.php"; ?>
+<?php include "session.php"; ?>
 <html lang="en">
     <head>
         <?php
@@ -286,8 +286,7 @@
             function checkCurrentPwd($connect) {
                 global $curr_pwd_hashed, $errorMsg, $success, $description;
                 
-                $id = 6;
-                //$id = $_SESSION["customerId"];
+                $id = $_SESSION["customerId"];
                 // Prepare the statement:
                 $getPwdSql = "SELECT `password_hash` FROM customer_credentials WHERE customer_id=?"; 
                 $getPwdStmt = $connect->prepare($getPwdSql);
@@ -348,8 +347,7 @@
                 global $logSql, $logType, $logCategory0, $logCategory1, $username;
                 $description = "";
                 $logCategory = $logCategory1;
-                $id = 6;
-                //$id = $_SESSION["customerId"];
+                $id = $_SESSION["customerId"];
                 
                 // Prepare the statement:
                 $updateInfoSql = "UPDATE user_data SET "
@@ -410,8 +408,7 @@
                 global $logSql, $logType, $logCategory0, $logCategory1, $username;
                 $description = "";
                 $logCategory = $logCategory1;
-                $id = 6;
-                //$id = $_SESSION["customerId"];
+                $id = $_SESSION["customerId"];
                 
                 // Prepare the statement:
                 $changePwdSql = "UPDATE customer_credentials SET password_hash=? WHERE customer_id=?"; 
