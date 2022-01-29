@@ -6,4 +6,4 @@ phpmailer installed with composer
 phpmailer/vendor folder at /var/www/phpmailer/vendor
 db-config.ini at /var/www/private/db-config.ini
 
-Live demo available at: redapplepie.com/ibank
+Live demo available at: https://redapplepie.com/ibank
